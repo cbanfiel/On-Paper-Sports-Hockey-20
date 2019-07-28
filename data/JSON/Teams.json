@@ -1,0 +1,50 @@
+[
+    {
+      "name": "BOS",
+      "id": 0,
+      "conferenceId": 0,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/bos.png"
+    },
+    {
+      "name": "Chicago Blackhawks",
+      "id": 1,
+      "conferenceId": 1,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/chi.png"
+    },
+    {
+      "name": "Dallas Stars",
+      "id": 2,
+      "conferenceId": 0,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/dal.png"
+    },
+    {
+      "name": "Detroit Red Wings",
+      "id": 3,
+      "conferenceId": 1,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/det.png"
+    },
+    {
+      "name": "Minnesota",
+      "id": 4,
+      "conferenceId": 0,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/min.png"
+    },
+    {
+      "name": "Brazil",
+      "id": 5,
+      "conferenceId": 1,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/phi.png"
+    },
+    {
+      "name": "Belgium",
+      "id": 6,
+      "conferenceId": 0,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/tor.png"
+    },
+    {
+      "name": "Australia",
+      "id": 7,
+      "conferenceId": 1,
+      "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/van.png"
+    },
+  ]
