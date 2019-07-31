@@ -1501,10 +1501,10 @@ export class Game {
             let difficultySliderFactor = 0;
 
             if(off === selectedTeam){
-                difficultySliderFactor = difficulty
+                difficultySliderFactor = (difficulty/2)
             }
             if(def === selectedTeam){
-                difficultySliderFactor = -difficulty
+                difficultySliderFactor = (-difficulty/2)
             }
 
             let saveFactor = (goalieSavePercentage - shooterRatingFactor + offVsDef - assistFactor + off.qualityVsQuantity - offVsDefSliders - aggressiveVsConservativeSliders - freezeThePuckVsPlayThePuckSliders + difficultySliderFactor);
@@ -1569,6 +1569,10 @@ export class Game {
                     homeScore: this.homescore,
                     awayScore: this.awayscore
                 })
+
+                if(this.overtime){
+                    this.time = 0;
+                }
 
             }
 
@@ -4557,6 +4561,7 @@ export async function getDataFromLink(link, type, sliderType) {
             importDraftClassJson(responseJson);
         } else if (type === 'communityroster') {
             communityRosters = responseJson;
+            console.log(responseJson);
         }
     } catch (error) {
         console.log(error);
@@ -4566,7 +4571,7 @@ export async function getDataFromLink(link, type, sliderType) {
 
 
 export let communityRosters = [];
-// communityRosters = getDataFromLink('https://raw.githubusercontent.com/cbanfiel/On-Paper-Sports-Basketball-2020-Rosters/master/AndroidRosters.json', 'communityroster');
+communityRosters = getDataFromLink('https://raw.githubusercontent.com/cbanfiel/On-Paper-Sports-Hockey-20-Rosters/master/communityfiles.json', 'communityroster');
 
 
 export function loadRosterJson(loadedDataIn) {
@@ -4976,7 +4981,13 @@ export function manageSaveName(value) {
 
 export function returnStatsView(player) {
     let str;
-    str = "GOALS: " + player.goals + "\nSHOTS: " + player.seasonShots + "\nASSISTS: " + player.seasonAssists + "\nSAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10;
+    str = "GOALS: " + player.seasonGoals + "\nSHOTS: " + player.seasonShots + "\nASSISTS: " + player.seasonAssists + "\nSAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10;
+    return str;
+}
+
+export function returnSeasonStatsListView(player) {
+    let str;
+    str = "GOALS: " + player.seasonGoals + " SHOTS: " + player.seasonShots + " ASSISTS: " + player.seasonAssists + " SAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10;
     return str;
 }
 
@@ -5014,24 +5025,18 @@ export function saveFranchise(slot) {
             qualityVsQuantity: teams[i].qualityVsQuantity,
             defenseAggresiveVsConservative: teams[i].defenseAggresiveVsConservative,
             forwardsVsDefensemen: teams[i].forwardsVsDefensemen,
-            rotationSize: teams[i].rotationSize,
             frontCourtVsBackCourt: teams[i].frontCourtVsBackCourt,
             freezeThePuckVsPlayThePuck: teams[i].freezeThePuckVsPlayThePuck,
             scheduleString: scheduleString,
             wins: teams[i].wins,
             losses: teams[i].losses,
+            otLosses: teams[i].otLosses,
             played: teams[i].played,
             seasonPoints: teams[i].seasonPoints,
             seasonPointsAllowed: teams[i].seasonPointsAllowed,
-            seasonRebounds: teams[i].seasonRebounds,
-            seasonOffRebounds: teams[i].seasonOffRebounds,
-            seasonFieldGoalsAttempted: teams[i].seasonFieldGoalsAttempted,
-            seasonFieldGoalsMade: teams[i].seasonFieldGoalsMade,
-            seasonThreesAttempted: teams[i].seasonThreesAttempted,
-            seasonThreesMade: teams[i].seasonThreesMade,
-            seasonFreeThrowsMade: teams[i].seasonFreeThrowsMade,
-            seasonFreeThrowsAttempted: teams[i].seasonFreeThrowsAttempted,
-
+            seasonShots: teams[i].seasonShots,
+            seasonSaves: teams[i].seasonSaves,
+            seasonGoalsAllowed: teams[i].seasonGoalsAllowed,
         };
 
 
@@ -5042,13 +5047,6 @@ export function saveFranchise(slot) {
 
     data.freeAgents = availableFreeAgents;
     data.sliders = {
-        twoPointPercentageLow: twoPointPercentageLow,
-        twoPointPercentageHigh: twoPointPercentageHigh,
-        threePointPercentageLow: threePointPercentageLow,
-        threePointPercentageHigh: threePointPercentageHigh,
-        defenseLow: defenseLow,
-        defenseHigh: defenseHigh,
-        secondsOffClock: secondsOffClock,
         gamesPerSeason: gamesPerSeason,
         playoffSeeds: playoffSeeds,
         seriesWinCount: seriesWinCount,
@@ -5110,20 +5108,16 @@ export const loadFranchise = (data) => {
             teams[i].qualityVsQuantity = loadedData.teams[i].qualityVsQuantity;
             teams[i].defenseAggresiveVsConservative = loadedData.teams[i].defenseAggresiveVsConservative;
             teams[i].forwardsVsDefensemen = loadedData.teams[i].forwardsVsDefensemen;
-            teams[i].rotationSize = loadedData.teams[i].rotationSize;
             teams[i].frontCourtVsBackCourt = loadedData.teams[i].frontCourtVsBackCourt;
             teams[i].freezeThePuckVsPlayThePuck = loadedData.teams[i].freezeThePuckVsPlayThePuck;
             //stats
             teams[i].seasonPoints = loadedData.teams[i].seasonPoints;
             teams[i].seasonPointsAllowed = loadedData.teams[i].seasonPointsAllowed;
-            teams[i].seasonRebounds = loadedData.teams[i].seasonRebounds;
-            teams[i].seasonOffRebounds = loadedData.teams[i].seasonOffRebounds;
-            teams[i].seasonFieldGoalsAttempted = loadedData.teams[i].seasonFieldGoalsAttempted;
-            teams[i].seasonFieldGoalsMade = loadedData.teams[i].seasonFieldGoalsMade;
-            teams[i].seasonThreesAttempted = loadedData.teams[i].seasonThreesAttempted;
-            teams[i].seasonThreesMade = loadedData.teams[i].seasonThreesMade;
-            teams[i].seasonFreeThrowsMade = loadedData.teams[i].seasonFreeThrowsMade;
-            teams[i].seasonFreeThrowsAttempted = loadedData.teams[i].seasonFreeThrowsAttempted;
+            teams[i].seasonSaves = loadedData.teams[i].seasonSaves;
+            teams[i].seasonGoalsAllowed = loadedData.teams[i].seasonGoalsAllowed;
+            teams[i].seasonShots = loadedData.teams[i].seasonShots;
+            teams[i].seasonAssists = loadedData.teams[i].seasonAssists;
+
 
             for (let j = 0; j < loadedData.teams[i].roster.length; j++) {
                 ply = new Player(loadedData.teams[i].roster[j]);
@@ -5133,17 +5127,11 @@ export const loadFranchise = (data) => {
                 ply.teamName = teams[i].name;
                 ply.previousSeasonsStats = loadedData.teams[i].roster[j].previousSeasonsStats;
                 ply.statsHistory = loadedData.teams[i].roster[j].statsHistory;
-                ply.seasonPoints = loadedData.teams[i].roster[j].seasonPoints;
-                ply.seasonRebounds = loadedData.teams[i].roster[j].seasonRebounds;
-                ply.seasonOffRebounds = loadedData.teams[i].roster[j].seasonOffRebounds;
-                ply.seasonTwoPointersAtt = loadedData.teams[i].roster[j].seasonThreePointersAtt;
-                ply.seasonTwoPointersMade = loadedData.teams[i].roster[j].seasonTwoPointersMade;
-                ply.seasonThreePointersAtt = loadedData.teams[i].roster[j].seasonThreePointersAtt;
-                ply.seasonThreePointersMade = loadedData.teams[i].roster[j].seasonThreePointersMade;
-                ply.seasonFreeThrowsMade = loadedData.teams[i].roster[j].seasonFreeThrowsMade;
-                ply.seasonFreeThrowsAttempted = loadedData.teams[i].roster[j].seasonFreeThrowsAttempted;
-                ply.minutesPlayed = loadedData.teams[i].roster[j].minutesPlayed;
-
+                ply.seasonGoals = loadedData.teams[i].roster[j].seasonGoals;
+                ply.seasonShots = loadedData.teams[i].roster[j].seasonShots;
+                ply.seasonSaves = loadedData.teams[i].roster[j].seasonSaves;
+                ply.seasonGoalsAllowed = loadedData.teams[i].roster[j].seasonGoalsAllowed;
+                ply.seasonAssists = loadedData.teams[i].roster[j].seasonAssists;
             }
 
 
@@ -5179,12 +5167,11 @@ export const loadFranchise = (data) => {
             availableFreeAgents.roster[i].teamName = availableFreeAgents.name;
             for (let j = 0; j < loadedData.day; j++)
                 availableFreeAgents.roster[i].statsHistory.push({
-                    points: 0,
-                    twoPointersAtt: 0,
-                    twoPointersMade: 0,
-                    rebounds: 0,
-                    threePointersAtt: 0,
-                    threePointersMade: 0
+                    goals: 0,
+                    saves: 0,
+                    shots: 0,
+                    goalsAllowed: 0,
+                    assists: 0,
                 });
 
         }

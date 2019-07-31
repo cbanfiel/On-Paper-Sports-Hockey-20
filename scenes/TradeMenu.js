@@ -78,15 +78,88 @@ export default class TradeMenu extends React.Component {
                 t2PlayerAmount++;
             }
         }
+        let fws=0;
+        let def = 0;
+        let goalies = 0;
+        let t2fws=0;
+        let t2def = 0;
+        let t2goalies = 0;
+        let t1CanTrade = false;
+        let t2CanTrade = false;
+
+        for(let i=0; i<selectedTeam.roster.length; i++){
+            let ply = selectedTeam.roster[i];
+            if(ply.position < 3){
+                //forward
+                fws++;
+            }else if(ply.position === 3){
+                def++;
+            }else if(ply.position === 4){
+                goalies++;
+            }
+        }
+
+        for(let i=0; i<selectedTeam2.roster.length; i++){
+            let ply = selectedTeam2.roster[i];
+            if(ply.position < 3){
+                //forward
+                t2fws++;
+            }else if(ply.position === 3){
+                t2def++;
+            }else if(ply.position === 4){
+                t2goalies++;
+            }
+        }
+        for(let i=0; i<this.state.t1Offers.length; i++){
+            let ply = this.state.t1Offers[i];
+            if(ply.isPick){
+                //draft pick
+            }
+            else if(ply.position < 3){
+                //forward
+                fws--;
+                t2fws++;
+            }else if(ply.position === 3){
+                def--;
+                t2def++;
+            }else if(ply.position === 4){
+                goalies--;
+                t2goalies++;
+            }
+        }
+        for(let i=0; i<this.state.t2Offers.length; i++){
+            let ply = this.state.t2Offers[i];
+            if(ply.isPick){
+                //draft pick
+            }
+            else if(ply.position < 3){
+                //forward
+                fws++;
+                t2fws--;
+            }else if(ply.position === 3){
+                def++;
+                t2def--;
+            }else if(ply.position === 4){
+                goalies++;
+                t2goalies--;
+            }
+        }
+
+        if(fws >= 12 && def>=6 && goalies>=2){
+            t1CanTrade = true;
+        }
+        if(t2fws >= 12 && t2def>=6 && t2goalies>=2){
+            t2CanTrade = true;
+        }
 
 
         //Check for requirements DOES NOT HAPPEN IN OFFSEASON
         if (this.props.requirementsOff != true) {
-            if (selectedTeam.roster.length - t1PlayerAmount + t2PlayerAmount < 10) {
+            if (!t1CanTrade) {
                 Alert.alert('Roster Requirements Not Met', 'This move will set the ' + selectedTeam.name + ' under the roster requirements, please sign more players before making this move');
                 return;
             }
-            if (selectedTeam2.roster.length - t2PlayerAmount + t1PlayerAmount < 10) {
+            if (!t2CanTrade) {
                 Alert.alert('Roster Requirements Not Met', 'This move will set the ' + selectedTeam2.name + ' under the roster requirements, please sign more players before making this move');
                 return;
             }

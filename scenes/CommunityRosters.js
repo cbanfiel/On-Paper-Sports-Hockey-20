@@ -50,7 +50,7 @@ export default class CommunityRosters extends React.Component {
                 <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {
-                        this.state.filteredList.length > 1 ?
+                        this.state.filteredList.length > 0 ?
                         
                         
                         this.state.filteredList.map((item, i) => (
