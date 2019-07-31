@@ -100,8 +100,8 @@ export default class TeamList extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -117,11 +117,11 @@ export default class TeamList extends React.Component {
                     ) : null
                 }
 
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {sortedTeams().map((team, i) => (
                         <ListItem 
-                        titleStyle={{ fontFamily: 'advent-pro' }} 
+                        titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} 
                         subtitleStyle={{ fontFamily: 'advent-pro' }} 
                         onPress={this.setTeam.bind(this, team)} 
                         title={team.name} 

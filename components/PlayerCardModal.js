@@ -9,7 +9,7 @@ import { returnStatsView } from '../data/script';
 export default class PlayerCardModal extends Component {
     render() {
         return (
-            <ScrollView style={{flex:1}}>
+            <ScrollView style={{flex:1, backgroundColor:'white'}}>
                 <View style={{ flexDirection: 'row', padding: 10, justifyContent: 'center', alignItems: 'center' }}>
                     <CachedImage
                         style={{ resizeMode: 'contain', height: 50, flex: 1 }}
@@ -31,9 +31,9 @@ export default class PlayerCardModal extends Component {
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"OVR: " + this.props.modalPlayer.rating}</Text>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"OFF: " + this.props.modalPlayer.off}</Text>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"DEF: " + this.props.modalPlayer.def}</Text>
-                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"3PT: " + this.props.modalPlayer.threePoint}</Text>
-                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"REB: " + this.props.modalPlayer.reb}</Text>
-                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"FT: " + this.props.modalPlayer.ft}</Text>
+                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"PASS: " + this.props.modalPlayer.pass}</Text>
+                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"FACEOFF: " + this.props.modalPlayer.faceOff}</Text>
+                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"SAVE: " + this.props.modalPlayer.save}</Text>
                     <Divider style={{ height: 1, margin: 10, backgroundColor: 'black', width: '90%', alignSelf: 'center' }}></Divider>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{returnStatsView(this.props.modalPlayer)}</Text>
                 </View>

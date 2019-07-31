@@ -22,7 +22,7 @@ export default class PlayerStatsHistory extends React.Component {
   render() {
     return (
       <Background>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
           {this.props.player.previousSeasonsStats.map((year, i) => (
             <ListItem 

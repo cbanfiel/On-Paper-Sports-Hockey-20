@@ -39,8 +39,8 @@ export default class GameStats extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -56,25 +56,24 @@ export default class GameStats extends React.Component {
                     ) : null
                 }
 
-                <View style={{ backgroundColor: 'rgba(255,255,255,0.75)', borderBottomWidth: 1 }}>
+                <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
                     <CachedImage
                         style={{ resizeMode: 'contain', height: 50 }}
                         uri ={ selectedTeam.logoSrc } />
                     <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 30 }}>{selectedTeam.played[this.props.currentGame].userScore}</Text>
                     <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{selectedTeam.name}</Text>
                 </View>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {
 
                             sortedRoster(selectedTeam, 'position').map((player, i) => (
-                            <ListItem titleStyle={{ fontFamily: 'advent-pro' }}
+                            <ListItem titleStyle={{ fontFamily: 'advent-pro', color: 'black' }}
                                 subtitleStyle={{ fontFamily: 'advent-pro' }}
-                                containerStyle={{ backgroundColor: 'rgba(255,255,255,0.75)', }}
+                                containerStyle={{ backgroundColor: 'rgba(255,255,255,0)', }}
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={player.faceSrc } 
-                                subtitle={"PTS: " + player.statsHistory[this.props.currentGame].points + " FG% " + Math.floor((player.statsHistory[this.props.currentGame].twoPointersMade / player.statsHistory[this.props.currentGame].twoPointersAtt) * 100)
-                                    + " 3P% " + Math.floor((player.statsHistory[this.props.currentGame].threePointersMade / player.statsHistory[this.props.currentGame].threePointersAtt) * 100)+ " FT% " + Math.floor((player.statsHistory[this.props.currentGame].freeThrowsMade / player.statsHistory[this.props.currentGame].freeThrowsAttempted) * 100)}
+                                subtitle={"GOALS: " + player.statsHistory[this.props.currentGame].goals + " SHOTS: " + player.statsHistory[this.props.currentGame].shots + " ASSISTS: " + player.statsHistory[this.props.currentGame].assists + " SAVE%: " + Math.round((player.statsHistory[this.props.currentGame].saves/ (player.statsHistory[this.props.currentGame].saves + player.statsHistory[this.props.currentGame].goalsAllowed))*1000)/10}
                                 onLongPress={() => this.setModalVisible(true, player)}
     
                             ></ListItem>
@@ -82,23 +81,22 @@ export default class GameStats extends React.Component {
                     ))}
                 </ScrollView>
 
-                <View style={{ backgroundColor: 'rgba(255,255,255,0.75)', borderBottomWidth: 1 }}>
+                <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
                     <CachedImage
                         style={{ resizeMode: 'contain', height: 50 }}
                         uri ={ selectedTeam2.logoSrc }/>
                     <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 30 }}>{selectedTeam2.played[this.props.currentGame].userScore}</Text>
                     <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{selectedTeam2.name}</Text>
                 </View>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {sortedRoster(selectedTeam2, 'position').map((player, i) => (
                         <ListItem
-                            titleStyle={{ fontFamily: 'advent-pro' }} subtitleStyle={{ fontFamily: 'advent-pro' }}
-                            containerStyle={{ backgroundColor: 'rgba(255,255,255,0.75)' }}
+                            titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} subtitleStyle={{ fontFamily: 'advent-pro' }}
+                            containerStyle={{ backgroundColor: 'rgba(255,255,255,0)' }}
                             title={player.positionString + ' #' + player.number + ' ' + player.name}
                             key={i} leftAvatar={player.faceSrc }
-                            subtitle={"PTS: " + player.statsHistory[this.props.currentGame].points + " FG% " + Math.floor((player.statsHistory[this.props.currentGame].twoPointersMade / player.statsHistory[this.props.currentGame].twoPointersAtt) * 100)
-                                + " 3P% " + Math.floor((player.statsHistory[this.props.currentGame].threePointersMade / player.statsHistory[this.props.currentGame].threePointersAtt) * 100)}
+                            subtitle={"GOALS: " + player.statsHistory[this.props.currentGame].goals + " SHOTS: " + player.statsHistory[this.props.currentGame].shots + " ASSISTS: " + player.statsHistory[this.props.currentGame].assists + " SAVE%: " + Math.round((player.statsHistory[this.props.currentGame].saves/ (player.statsHistory[this.props.currentGame].saves + player.statsHistory[this.props.currentGame].goalsAllowed))*1000)/10}
                             onLongPress={() => this.setModalVisible(true, player)}
 
                         />

@@ -48,7 +48,7 @@ export default class DraftMenu extends React.Component {
     render() {
         return (
             <Background>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
                     {
                         this.state.advance === false ? (
 
@@ -58,16 +58,16 @@ export default class DraftMenu extends React.Component {
                             <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: draftClass, view: 'draft', selectable: true, franchise: franchise, update: this.update }) }}>
                                 <Card
                                     containerStyle={{
-                                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                        borderRadius: 25,
+                                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                        borderColor: 'black',
                                         alignSelf: 'center'
                                     }}
                                 >
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: this.state.onTheClock.logoSrc }} />
                                     </View>
-                                    <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'On The Clock: ' + this.state.onTheClock.name}</Text>
+                                    <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'On The Clock: ' + this.state.onTheClock.name}</Text>
                                 </Card>
                             </TouchableOpacity>
 
@@ -82,8 +82,8 @@ export default class DraftMenu extends React.Component {
                             <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: franchise.currentDraft.drafted, view: 'draft' }) }}>
                                 <Card
                                     containerStyle={{
-                                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                        borderRadius: 25,
+                                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                        borderColor: 'black',
                                         alignSelf: 'center'
                                     }}
                                 >
@@ -91,10 +91,10 @@ export default class DraftMenu extends React.Component {
                                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: this.state.drafted.roster[0].teamLogoSrc }} />
                                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: this.state.drafted.roster[0].faceSrc }} />
                                     </View>
-                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.drafted.roster[0].positionString + ' ' + this.state.drafted.roster[0].name + ' OVR:' + this.state.drafted.roster[0].rating}</Text>
-                                    <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.drafted.roster[0].positionString + ' ' + this.state.drafted.roster[0].name + ' OVR:' + this.state.drafted.roster[0].rating}</Text>
+                                    <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
 
-                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Draft Board'}</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Draft Board'}</Text>
                                 </Card>
                             </TouchableOpacity>
                         ) : null
@@ -107,8 +107,8 @@ export default class DraftMenu extends React.Component {
 
                                 <Card
                                     containerStyle={{
-                                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                        borderRadius: 25,
+                                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                        borderColor: 'black',
                                         alignSelf: 'center'
                                     }}
                                 >
@@ -116,8 +116,8 @@ export default class DraftMenu extends React.Component {
                                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
                                     </View>
-                                    <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Advance To Free Agency'}</Text>
+                                    <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Advance To Free Agency'}</Text>
                                 </Card>
                             </TouchableOpacity>
 
@@ -132,8 +132,8 @@ export default class DraftMenu extends React.Component {
                                 <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.teamlist({ home: 3, back: 'season', isForced: false, updateScene: this.update, requirementsOff: true })}>
                                     <Card
                                         containerStyle={{
-                                            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                            borderRadius: 25,
+                                            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                            borderColor: 'black',
                                             alignSelf: 'center'
                                         }}
                                     >
@@ -141,8 +141,8 @@ export default class DraftMenu extends React.Component {
                                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                             <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc} />
                                         </View>
-                                        <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
+                                        <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
                                     </Card>
                                 </TouchableOpacity>
 
@@ -150,12 +150,12 @@ export default class DraftMenu extends React.Component {
                                 <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.currentDraft.simPick(), this.update() }}>
                                     <Card
                                         containerStyle={{
-                                            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                            borderRadius: 25,
+                                            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                            borderColor: 'black',
                                             alignSelf: 'center'
                                         }}
                                     >
-                                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Sim Pick'}</Text>
+                                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim Pick'}</Text>
                                     </Card>
                                 </TouchableOpacity>
 
@@ -173,12 +173,12 @@ export default class DraftMenu extends React.Component {
                             <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.currentDraft.simDraft(), this.update(), this.setState({pick: teams.length, round : 2}) }}>
                                 <Card
                                     containerStyle={{
-                                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                        borderRadius: 25,
+                                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                        borderColor: 'black',
                                         alignSelf: 'center'
                                     }}
                                 >
-                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Sim To End'}</Text>
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim To End'}</Text>
                                 </Card>
                             </TouchableOpacity>
 
@@ -189,14 +189,14 @@ export default class DraftMenu extends React.Component {
                         <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.currentDraft.simToNextUserPick(), this.update() }}>
                             <Card
                                 containerStyle={{
-                                    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                    borderRadius: 25,
+                                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                    borderColor: 'black',
                                     alignSelf: 'center'
                                 }}
                             // image={{ uri: selectedTeam.logoSrc }}
                             // 
                             >
-                                <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Sim To Next User Pick'}</Text>
+                                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim To Next User Pick'}</Text>
                             </Card>
                         </TouchableOpacity>
                     ) : null

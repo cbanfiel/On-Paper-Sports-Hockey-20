@@ -82,6 +82,16 @@ setModalVisible(visible, player) {
         allPlayers.push(availableFreeAgents.roster[i]);
     }
 
+    allPlayers.sort(function(a,b){
+      if (a.rating < b.rating) {
+        return 1;
+    }
+    if (a.rating > b.rating) {
+        return -1;
+    }
+    return 0;
+    })
+
     for(let i=0; i<allPlayers.length; i++){
       data.push({
         type:'NORMAL',
@@ -146,8 +156,8 @@ setModalVisible(visible, player) {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -164,7 +174,7 @@ setModalVisible(visible, player) {
                 }
 
 
-    <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0.75)', padding: 15}} onChangeText={value => {this.search(value)}} placeholder={'Enter player name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} ></Input>
+    <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => {this.search(value)}} placeholder={'Enter player name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} ></Input>
 
 
 <RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>

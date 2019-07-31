@@ -12,11 +12,11 @@ export default class InGame extends React.Component {
 
   resetCoachingSliders(){
     selectedTeam.offVsDefFocus = this.state.offVsDefFocus;
-    selectedTeam.offTwoVsThree = this.state.offTwoVsThree;
-    selectedTeam.defTwoVsThree = this.state.defTwoVsThree;
-    selectedTeam.tempo = this.state.tempo;
+    selectedTeam.qualityVsQuantity = this.state.qualityVsQuantity;
+    selectedTeam.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
+    selectedTeam.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
     selectedTeam.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
-    selectedTeam.reboundVsRunInTransition =  this.state.reboundVsRunInTransition;
+    selectedTeam.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
   }
 
 
@@ -30,12 +30,12 @@ export default class InGame extends React.Component {
     speed: 100,
     completed: false,
     offVsDefFocus: selectedTeam.offVsDefFocus,
-    offTwoVsThree: selectedTeam.offTwoVsThree,
-    defTwoVsThree: selectedTeam.defTwoVsThree,
-    tempo: selectedTeam.tempo,
+    qualityVsQuantity: selectedTeam.qualityVsQuantity,
+    defenseAggresiveVsConservative: selectedTeam.defenseAggresiveVsConservative,
+    forwardsVsDefensemen: selectedTeam.forwardsVsDefensemen,
     rotationSize: selectedTeam.rotationSize,
     frontCourtVsBackCourt: selectedTeam.frontCourtVsBackCourt,
-    reboundVsRunInTransition: selectedTeam.reboundVsRunInTransition
+    freezeThePuckVsPlayThePuck: selectedTeam.freezeThePuckVsPlayThePuck
   }
 
   time = () => {
@@ -77,7 +77,7 @@ export default class InGame extends React.Component {
 
 
   slowSim = () => {
-    if(this.props.game.time === (48*60)){
+    if(this.props.game.time === (60*60)){
     this.props.game.clearStats();
     if(this.props.game.jumpBall()){
       poss = home;
@@ -224,24 +224,24 @@ leavePage(){
     return (
       <Background>
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
           <TouchableOpacity style={{ width: '100%' }} onPress={ this.state.completed ? null : this.slowSim}>
 
           <Card
                     containerStyle={{
-                      width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                      borderRadius: 25,
+                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                      borderColor: 'black',
                       alignSelf:'center'
                     }}
                     >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{'PERIOD: ' + this.state.quarter}</Text>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{'TIME: ' + this.state.time}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{'PERIOD: ' + this.state.quarter}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{'TIME: ' + this.state.time}</Text>
 
                     </View>
-                    <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Sim Game'}</Text>
+                    <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim Game'}</Text>
                   </Card>
                 </TouchableOpacity>
 
@@ -249,20 +249,20 @@ leavePage(){
 
           <Card
                     containerStyle={{
-                      width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                      borderRadius: 25,
+                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                      borderColor: 'black',
                       alignSelf:'center'
                     }}
                     >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{this.state.homescore}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{this.state.homescore}</Text>
                       <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} source={{uri: home.logoSrc }} />
                       <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} source= {{uri: away.logoSrc }} />
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{this.state.awayscore}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{this.state.awayscore}</Text>
 
                     </View>
-                    <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Stats'}</Text>
+                    <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Stats'}</Text>
                   </Card>
                 </TouchableOpacity>
 
@@ -271,8 +271,8 @@ leavePage(){
                 <TouchableOpacity style={{ width: '100%' }} onPress={() => { this.leavePage(), Actions.lastplay({game : this.props.game})}}>
                 <Card
                     containerStyle={{
-                      width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                      borderRadius: 25,
+                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                      borderColor: 'black',
                       alignSelf:'center'
                     }}
                     >
@@ -283,9 +283,9 @@ leavePage(){
 
 
                     </View>
-                  <Text style={{ textAlign: 'center', fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.playByPlay.shooter.positionString + ' #' + this.state.playByPlay.shooter.number + ' ' + this.state.playByPlay.shooter.name + ' ' + this.state.playByPlay.result}</Text>
-                    <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Last Play'}</Text>
+                  <Text style={{ textAlign: 'center', fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.playByPlay.shooter.positionString + ' #' + this.state.playByPlay.shooter.number + ' ' + this.state.playByPlay.shooter.name + ' ' + this.state.playByPlay.result}</Text>
+                    <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Last Play'}</Text>
                   </Card>
                 </TouchableOpacity>
 
@@ -297,8 +297,8 @@ leavePage(){
 <Card     
 
           containerStyle={{
-            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-            borderRadius: 25,
+            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+            borderColor: 'black',
             alignSelf:'center'
           }}
           >
@@ -313,9 +313,9 @@ leavePage(){
                             onValueChange={value => this.setState({ speed: 1000 - value })}
                         />
 
-          <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{1000 - this.state.speed}</Text>
-          <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-          <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Simulation Speed'}</Text>
+          <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{1000 - this.state.speed}</Text>
+          <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+          <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Simulation Speed'}</Text>
         </Card>
 
 {
@@ -326,8 +326,8 @@ leavePage(){
         <TouchableOpacity style={{ width: '100%' }} onPress={() => {this.leavePage(), Actions.push('coachsettings', {inGame : true})}}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -335,8 +335,8 @@ leavePage(){
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri = { selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'In Game Adjustments'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'In Game Adjustments'}</Text>
                         </Card>
                     </TouchableOpacity>
         ):null):null

@@ -128,8 +128,8 @@ export default class TradeMenu extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -145,7 +145,7 @@ export default class TradeMenu extends React.Component {
                     ) : null
                 }
 
-                <View style={{ backgroundColor: 'rgba(255,255,255,0.75)', borderBottomWidth: 1 }}>
+                <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
                     <CachedImage
                         style={{ resizeMode: 'contain', height: 50 }}
                         uri={selectedTeam.logoSrc} />
@@ -157,27 +157,27 @@ export default class TradeMenu extends React.Component {
 
                     this.state.declined === true ? (
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)' }} title="Offer Declined" disabled disabledTitleStyle={{ color: 'white' }} disabledStyle={{ backgroundColor: 'rgba(255,0,0,0.75)' }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)' }} title="Offer Declined" disabled disabledTitleStyle={{ color: 'black' }} disabledStyle={{ backgroundColor: 'rgba(255,0,0,0.75)' }}></Button>
 
 
                     ) :
                         this.state.declined === false ? (
-                            <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)' }} title="Offer Accepted" disabled disabledTitleStyle={{ color: 'white' }} disabledStyle={{ backgroundColor: 'rgba(10,200,60,0.75)' }}></Button>
+                            <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)' }} title="Offer Accepted" disabled disabledTitleStyle={{ color: 'black' }} disabledStyle={{ backgroundColor: 'rgba(10,200,60,0.75)' }}></Button>
 
                         ) :
-                            <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)' }} title="Offer Trade" onPress={() => { this.offer(), Actions.refresh() }}></Button>
+                            <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)' }} title="Offer Trade" onPress={() => { this.offer(), Actions.refresh() }}></Button>
 
                 }
 
 
                 {       //JUST CHECKING WHAT MENU TO GO BACK TO SEASON OR ROSTER
                     //         this.props.back==='rostermenu' ? (
-                    // <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Back To Rosters" onPress={() => { Actions.rostermenu() }}></Button>
+                    // <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Back To Rosters" onPress={() => { Actions.rostermenu() }}></Button>
                     //         ) :
-                    // <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Back To Season" onPress={() => { Actions.seasonmenu() }}></Button>
+                    // <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Back To Season" onPress={() => { Actions.seasonmenu() }}></Button>
 
                 }
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {sortedRoster(selectedTeam, 'rating').map((player, i) => (
                         <ListItem onPress={() => { this.addToTrade(player, selectedTeam) }}
@@ -203,7 +203,7 @@ export default class TradeMenu extends React.Component {
                     }
                 </ScrollView>
 
-                <View style={{ backgroundColor: 'rgba(255,255,255,0.75)', borderBottomWidth: 1 }}>
+                <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
                     <CachedImage
                         style={{ resizeMode: 'contain', height: 50 }}
                         uri={selectedTeam2.logoSrc} />
@@ -211,7 +211,7 @@ export default class TradeMenu extends React.Component {
                     <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{'Cap Space: $' + displaySalary((this.state.t2salary - CAPROOM) * -1)}</Text>
 
                 </View>
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {sortedRoster(selectedTeam2, 'rating').map((player, i) => (
                         <ListItem

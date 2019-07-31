@@ -97,8 +97,8 @@ setModalVisible(visible, player) {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -113,7 +113,7 @@ setModalVisible(visible, player) {
                         </Modal>
                     ) : null
                 }
-            <View style={{ backgroundColor: 'rgba(255,255,255,0.75)', borderBottomWidth:1 }}>
+            <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth:1 }}>
                     <CachedImage
                         style={{ resizeMode:'contain', height: 50 }}
                         uri= {selectedTeam.logoSrc }/>

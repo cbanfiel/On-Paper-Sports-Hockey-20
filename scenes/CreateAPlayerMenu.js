@@ -12,12 +12,12 @@ export default class CreateAPlayerMenu extends React.Component {
     state = {
         name: 'New Player',
         number: 0,
-        positionString: 'PG',
+        positionString: 'C',
         position: 0,
         age: 21,
         salary: 1200000,
         faceSrc: 'https://www.2kratings.com/wp-content/uploads/NBA-Player.png',
-        height:"6\"6'",
+        height:"6\"0'",
         team : null
     }
 
@@ -130,19 +130,19 @@ export default class CreateAPlayerMenu extends React.Component {
     position(value) {
         var str = '';
         if (value === 0) {
-            str = "PG"
+            str = "C"
         }
         if (value === 1) {
-            str = "SG"
+            str = "LW"
         }
         if (value === 2) {
-            str = "SF"
+            str = "RW"
         }
         if (value === 3) {
-            str = "PF"
+            str = "D"
         }
         if (value === 4) {
-            str = "C"
+            str = "G"
         }
 
         this.setState({ position: value, positionString: str })
@@ -152,12 +152,12 @@ export default class CreateAPlayerMenu extends React.Component {
     render() {
         return (
             <Background>
-                <ScrollView >
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     <Card
                         containerStyle={{
-                            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                            borderRadius: 25,
+                            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                            borderColor: 'black',
                             alignSelf:'center'
                         }} >
 
@@ -169,21 +169,21 @@ export default class CreateAPlayerMenu extends React.Component {
                                 : null
                             }
 
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.team == null? 'Free Agents' : this.state.team.name}</Text>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team == null? 'Free Agents' : this.state.team.name}</Text>
                         </View>
-                        <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>   
+                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>   
 
                         <Image rounded style={{ height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} source={{ uri: this.state.faceSrc }} />
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.positionString + ' #' + this.state.number + ' ' + this.state.name}</Text>
-                        <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.positionString + ' #' + this.state.number + ' ' + this.state.name}</Text>
+                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"NAME: "}</Text>
-                        <Input onChangeText={value => this.setState({ name: value })} placeholder={this.state.name} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"NAME: "}</Text>
+                        <Input onChangeText={value => this.setState({ name: value })} placeholder={this.state.name} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"FACE LINK: "}</Text>
-                        <Input onChangeText={value => this.setFaceSource(value)} placeholder={'Paste Link To Photo'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"FACE LINK: "}</Text>
+                        <Input onChangeText={value => this.setFaceSource(value)} placeholder={'Paste Link To Photo'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"POS: " + this.state.positionString}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"POS: " + this.state.positionString}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -196,7 +196,7 @@ export default class CreateAPlayerMenu extends React.Component {
 
 
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"#: " + this.state.number}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"#: " + this.state.number}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -207,7 +207,7 @@ export default class CreateAPlayerMenu extends React.Component {
                             onValueChange={value => this.setState({ number: value })}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"AGE: " + this.state.age}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"AGE: " + this.state.age}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -218,18 +218,18 @@ export default class CreateAPlayerMenu extends React.Component {
                             onValueChange={value => this.setState({ age: value })}
                         />
 
-<Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"HEIGHT: " + this.state.height}</Text>
+<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"HEIGHT: " + this.state.height}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
                             minimumValue={0}
                             maximumValue={25}
-                            value={13}
+                            value={7}
                             onValueChange={value => this.height(value)}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"SALARY: $" + this.state.salary}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"SALARY: $" + this.state.salary}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -240,10 +240,10 @@ export default class CreateAPlayerMenu extends React.Component {
                             onValueChange={value => this.setState({ salary: value })}
                         />
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25, marginBottom:10 }} title="Select Team" onPress={() => { Actions.push('teamlist', {updateTeam : this.updateTeam, home:6}) }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginBottom:10 }} title="Select Team" onPress={() => { Actions.push('teamlist', {updateTeam : this.updateTeam, home:6}) }}></Button>
                         
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25 }} title="Create Player" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black' }} title="Create Player" onPress={() => { this.saveChanges() }}></Button>
 
 
                     </Card>

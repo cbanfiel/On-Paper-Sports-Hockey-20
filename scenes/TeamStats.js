@@ -37,8 +37,8 @@ export default class TeamStats extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -55,24 +55,24 @@ export default class TeamStats extends React.Component {
                 }
 
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
           {teamStats().map((team, i) => (
             <ListItem
               title={team.name}
               key={i}
               leftAvatar={team.logoSrc }
-              subtitle={'PTS: ' + Math.round(team.seasonPoints/franchise.season.day)
-               + ', ' + 'OPPPTS : ' + Math.round(team.seasonPointsAllowed/franchise.season.day) 
-               + ', REB: ' + Math.round(team.seasonRebounds/franchise.season.day)
-               + ', OREB: ' + Math.round(team.seasonOffRebounds/franchise.season.day)
-            + ', FGA ' + Math.round(team.seasonFieldGoalsAttempted/franchise.season.day) 
-            + ', FGM ' + Math.round(team.seasonFieldGoalsMade/franchise.season.day) 
-            + ', FG% ' + Math.round((team.seasonFieldGoalsMade/team.seasonFieldGoalsAttempted)*100) 
-            + ', 3P% ' + Math.round((team.seasonThreesMade/team.seasonThreesAttempted)*100) 
-            + ', FTA ' + Math.round((team.seasonFreeThrowsAttempted/franchise.season.day)) 
-            + ', FTM ' + Math.round((team.seasonFreeThrowsMade/franchise.season.day)) 
-            + ', FT% ' + Math.round((team.seasonFreeThrowsMade/team.seasonFreeThrowsAttempted)*100) 
+              subtitle={'GOALS: ' + Math.round(team.seasonPoints/franchise.season.day)
+               + ', ' + 'OPPGOALS : ' + Math.round(team.seasonPointsAllowed/franchise.season.day) 
+               + ', SHOTS: ' + Math.round(team.seasonShots/franchise.season.day)
+               + ', SAVE%: ' + Math.round((team.seasonSaves/(team.seasonSaves + team.seasonGoalsAllowed)*1000))/10
+            // + ', FGA ' + Math.round(team.seasonFieldGoalsAttempted/franchise.season.day) 
+            // + ', FGM ' + Math.round(team.seasonFieldGoalsMade/franchise.season.day) 
+            // + ', FG% ' + Math.round((team.seasonFieldGoalsMade/team.seasonFieldGoalsAttempted)*100) 
+            // + ', 3P% ' + Math.round((team.seasonThreesMade/team.seasonThreesAttempted)*100) 
+            // + ', FTA ' + Math.round((team.seasonFreeThrowsAttempted/franchise.season.day)) 
+            // + ', FTM ' + Math.round((team.seasonFreeThrowsMade/franchise.season.day)) 
+            // + ', FT% ' + Math.round((team.seasonFreeThrowsMade/team.seasonFreeThrowsAttempted)*100) 
           
           }
           onLongPress={() => this.setModalVisible(true, team)}

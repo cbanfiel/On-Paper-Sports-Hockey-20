@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Alert, TouchableOpacity, Modal, Text } from 'react-native';
+import { View, ScrollView, Alert, TouchableOpacity, Modal, Text, Dimensions } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { sortedRoster, collegeMode, releasePlayer, saveAsDraftClass, manageSaveName, selectedTeam } from '../data/script';
@@ -7,12 +7,27 @@ import Background from '../components/background';
 import TeamHeader from '../components/TeamHeader';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
+import { LayoutProvider, DataProvider, RecyclerListView } from 'recyclerlistview';
+var {height, width} = Dimensions.get('window');
+
 
 
 export default class RosterList extends React.Component {
 
     updateState = () =>{
-        this.setState({forUpdating: ''});
+        let data = [];
+
+        for(let i=0; i<this.props.selectedTeam.roster.length; i++){
+            data.push({
+              type:'NORMAL',
+              item: sortedRoster(this.props.selectedTeam,'rating')[i]
+            })
+          }
+        this.setState({
+          list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+          modalPlayer: null,
+          modalVisible:false
+        });
     }
 
     state={
@@ -45,6 +60,127 @@ export default class RosterList extends React.Component {
         }
     }
 
+    constructor(props){
+        super(props);
+    
+        const data = [];
+
+        if(this.props.view === 'resigning'){
+
+            for(let i=0; i<this.props.selectedTeam.expiring.roster.length; i++){
+                data.push({
+                  type:'NORMAL',
+                  item: sortedRoster(this.props.selectedTeam.expiring,'rating')[i]
+                })
+              }
+        }else{
+
+            for(let i=0; i<this.props.selectedTeam.roster.length; i++){
+              data.push({
+                type:'NORMAL',
+                item: sortedRoster(this.props.selectedTeam,'rating')[i]
+              })
+            }
+        }
+    
+    
+        this.state={
+          list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+          modalPlayer: null,
+          modalVisible:false
+        };
+      
+        this.layoutProvider = new LayoutProvider((i) => {
+          return this.state.list.getDataForIndex(i).type
+        }, (type, dim) => {
+          switch(type){
+            case 'NORMAL':
+              dim.width = width;
+              dim.height = 70;
+              break;
+            default :
+              dim.width=0;
+              dim.height=0;
+              break
+          }
+        })
+      }
+    
+      rowRenderer = (type,data) => {
+            let player = data.item;
+            if(this.props.view === 'draft'){
+                return(
+                <ListItem
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={player.faceSrc} 
+                    subtitle={'Rating: ' + player.rating}
+                    rightAvatar = {player.teamLogoSrc}
+                    onPress={this.props.selectable === true ? () => Actions.playerprofile({selectedPlayer: player, view: 'draft', franchise: this.props.franchise, update: this.props.update}) : null }
+                    onLongPress={() => this.setModalVisible(true, player)}
+                    ></ListItem>
+                )
+            } 
+            if(this.props.view === 'resigning'){
+                return(
+                    <ListItem
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={ player.faceSrc }
+                    subtitle={'Rating: ' + player.rating}
+                    onPress={() => {Actions.offercontractmenu({selectedPlayer : player, playerpool : this.props.selectedTeam.expiring, back:this.props.back, forced:this.props.forced})}}
+                    onLongPress={() => this.setModalVisible(true, player)}
+                    ></ListItem>
+                )
+            } 
+            if(this.props.view === 'retirements'){
+                return(
+                    <ListItem 
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={ player.faceSrc } 
+                    subtitle={'Rating: ' + player.rating}
+                    onPress={() => {Actions.playerstatshistory({ player: player })}}
+                    onLongPress={() => this.setModalVisible(true, player)}
+
+                    ></ListItem>
+                )
+            } 
+            if(this.props.view === 'releasePlayer'){
+                return(
+                    <ListItem 
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={ player.faceSrc } 
+                    subtitle={'Rating: ' + player.rating}
+                    onPress={() => {releasePlayer(player), Actions.pop()}}
+                    onLongPress={() => this.setModalVisible(true, player)}
+
+                    ></ListItem>
+                )
+            } 
+            if(this.props.view === 'training'){
+                return(
+                    <ListItem
+                                title={player.positionString + ' #' + player.number + ' ' + player.name}
+                                 leftAvatar={ player.faceSrc } 
+                                subtitle={'Rating: ' + player.rating}
+                                rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
+                                onPress={() => {Actions.trainingscreen({player: player, points: this.props.selectedTeam.trainingPoints, update:this.updateState})}}
+                                onLongPress={() => this.setModalVisible(true, player)}
+
+                                ></ListItem>
+                )
+            } 
+                return(
+                    <ListItem
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={ player.faceSrc } 
+                    subtitle={'Rating: ' + player.rating}
+                    rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
+                    onPress={() => {Actions.playerprofile({selectedPlayer : player, update:this.updateState})}}
+                    onLongPress={() => this.setModalVisible(true, player)}
+
+                    ></ListItem>
+                )
+      }
+
     render() {
         return (
             <Background>
@@ -65,7 +201,7 @@ export default class RosterList extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
+                                    width: '95%',
                                     height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
                                 }}>
                                     <TouchableOpacity
@@ -99,123 +235,24 @@ export default class RosterList extends React.Component {
 
             {
                 this.props.view === 'resigning' ? 
-                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Release All" onPress={() => { this.props.selectedTeam.releaseExpiring(), Actions.pop() }}></Button>
+                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0.75)'}} title="Release All" onPress={() => { this.props.selectedTeam.releaseExpiring(), Actions.pop() }}></Button>
                 : null
             }
 
  
 
 {
-    this.props.view === 'draft' ? (
-        <ScrollView>
-        {sortedRoster(this.props.selectedTeam,'rating').map((player, i) => (
-                <ListItem
-                    title={player.positionString + ' #' + player.number + ' ' + player.name}
-                    key={i} leftAvatar={player.faceSrc} 
-                    subtitle={'Rating: ' + player.rating}
-                    rightAvatar = {player.teamLogoSrc}
-                    onPress={this.props.selectable === true ? () => Actions.playerprofile({selectedPlayer: player, view: 'draft', franchise: this.props.franchise, update: this.props.update}) : null }
-                    onLongPress={() => this.setModalVisible(true, player)}
-                    ></ListItem>
-        ))}
-    </ScrollView>
-
-
-    ) : 
-    this.props.view === 'resigning' ? (
-                <ScrollView style={{paddingBottom:50}}>
-                    {sortedRoster(this.props.selectedTeam.expiring,'rating').map((player, i) => (
-                            <ListItem
-                                title={player.positionString + ' #' + player.number + ' ' + player.name}
-                                key={i} leftAvatar={ player.faceSrc }
-                                subtitle={'Rating: ' + player.rating}
-                                onPress={() => {Actions.offercontractmenu({selectedPlayer : player, playerpool : this.props.selectedTeam.expiring, back:this.props.back, forced:this.props.forced})}}
-                                onLongPress={() => this.setModalVisible(true, player)}
-                                ></ListItem>
-                    ))}
-                </ScrollView>
-
-    ) :
-    this.props.view === 'retirements' ? (
-        <ScrollView>
-        {sortedRoster(this.props.selectedTeam,'rating').map((player, i) => (
-                <ListItem 
-                    title={player.positionString + ' #' + player.number + ' ' + player.name}
-                    key={i} leftAvatar={ player.faceSrc } 
-                    subtitle={'Rating: ' + player.rating}
-                    onPress={() => {Actions.playerstatshistory({ player: player })}}
-                    onLongPress={() => this.setModalVisible(true, player)}
-
-                    ></ListItem>
-        ))}
-    </ScrollView>
-    
-    
-        ): 
-
-        this.props.view === 'releasePlayer' ? (
-            <ScrollView>
-            {sortedRoster(this.props.selectedTeam,'rating').map((player, i) => (
-                    <ListItem 
-                        title={player.positionString + ' #' + player.number + ' ' + player.name}
-                        key={i} leftAvatar={ player.faceSrc } 
-                        subtitle={'Rating: ' + player.rating}
-                        onPress={() => {releasePlayer(player), Actions.pop()}}
-                        onLongPress={() => this.setModalVisible(true, player)}
-
-                        ></ListItem>
-            ))}
-        </ScrollView>
-        
-        
-            ): 
-
             this.props.view === 'training' ? (
-                <View style={{flex:1}}>
-                    <View style={{backgroundColor:'rgba(255,255,255,0.75)', borderBottomWidth:1}}>
+                <View>
+                    <View style={{backgroundColor:'rgba(255,255,255,0)', borderBottomWidth:1}}>
                     <Text style={{ fontFamily: 'advent-pro', textAlign:'center', fontSize:20, padding:20}}>{'Training Points: ' + this.props.selectedTeam.trainingPoints}</Text>
                     </View>
-                <ScrollView>
-                    {sortedRoster(this.props.selectedTeam,'rating').map((player, i) => (
-                            <ListItem
-                                title={player.positionString + ' #' + player.number + ' ' + player.name}
-                                key={i} leftAvatar={ player.faceSrc } 
-                                subtitle={'Rating: ' + player.rating}
-                                rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
-                                onPress={() => {Actions.trainingscreen({player: player, points: this.props.selectedTeam.trainingPoints, update:this.updateState})}}
-                                onLongPress={() => this.setModalVisible(true, player)}
-
-                                ></ListItem>
-                    ))}
-                </ScrollView>
                 </View>
-
-
-
-
-                
-            ):
-
-    <ScrollView>
-                    {sortedRoster(this.props.selectedTeam,'rating').map((player, i) => (
-                            <ListItem
-                                title={player.positionString + ' #' + player.number + ' ' + player.name}
-                                key={i} leftAvatar={ player.faceSrc } 
-                                subtitle={'Rating: ' + player.rating}
-                                rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
-                                onPress={() => {Actions.playerprofile({selectedPlayer : player, update:this.updateState})}}
-                                onLongPress={() => this.setModalVisible(true, player)}
-
-                                ></ListItem>
-                    ))}
-                </ScrollView>
-
-
-
-
-
-
+            ):null
 }
+
+<RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>
+
             </Background>
 
 

@@ -18,12 +18,12 @@ export default class SeasonRosterMenu extends React.Component {
 
         return (
             <Background>
-                <ScrollView >
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: selectedTeam, back: 'seasonmenu' }) }}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -31,16 +31,16 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
                         </Card>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.editlineupmenu()}}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -48,16 +48,16 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Edit Lineup'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Edit Lineup'}</Text>
                         </Card>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.playerrolemenu()}}>
+                    {/* <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.playerrolemenu()}}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -65,16 +65,16 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Edit Player Roles'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Edit Player Roles'}</Text>
                         </Card>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.push('coachsettings')}}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -82,8 +82,8 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri = { selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Coach Settings'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Coach Settings'}</Text>
                         </Card>
                     </TouchableOpacity>
 
@@ -93,8 +93,8 @@ export default class SeasonRosterMenu extends React.Component {
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.teamlist({ home: 3, back: 'season', isForced: false })}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -102,16 +102,16 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
                         </Card>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.signplayermenu({ back: 'seasonmenu', forced:false }) }}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -119,8 +119,8 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Free Agency'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Free Agency'}</Text>
                         </Card>
                     </TouchableOpacity>
 
@@ -129,8 +129,8 @@ export default class SeasonRosterMenu extends React.Component {
                     <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.draftclassmenu({ back: 'seasonmenu' }) }}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -138,8 +138,8 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'View Draft Class'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'View Draft Class'}</Text>
                         </Card>
                     </TouchableOpacity>
                     </View>
@@ -150,8 +150,8 @@ export default class SeasonRosterMenu extends React.Component {
 <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.playersearch() }}>
                         <Card
                             containerStyle={{
-                                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                borderRadius: 25,
+                                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                borderColor: 'black',
                                 alignSelf:'center'
                             }}
                             >
@@ -159,8 +159,8 @@ export default class SeasonRosterMenu extends React.Component {
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                             </View>
-                            <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Player Search'}</Text>
+                            <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Player Search'}</Text>
                         </Card>
                     </TouchableOpacity>
 

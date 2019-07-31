@@ -20,22 +20,22 @@ export let franchise;
 export let selectedTeam;
 export let home;
 export let away;
-const POS_PG = 0;
-const POS_SG = 1;
-const POS_SF = 2;
-const POS_PF = 3;
-const POS_C = 4;
+const POS_C = 0;
+const POS_LW = 1;
+const POS_RW = 2;
+const POS_D = 3;
+const POS_G = 4;
 
 
-const rosterSize = 17;
-export const CAPROOM = 110000000;
-const VETERANSMINIMUM = 1200000;
+const rosterSize = 500;
+export const CAPROOM = 85000000;
+const VETERANSMINIMUM = 900000;
 
-const POS_PG_REQUIREMENTS = 2;
-const POS_SG_REQUIREMENTS = 2;
-const POS_SF_REQUIREMENTS = 2;
-const POS_PF_REQUIREMENTS = 2;
-const POS_C_REQUIREMENTS = 2;
+const POS_C_REQUIREMENTS = 4;
+const POS_LW_REQUIREMENTS = 4;
+const POS_RW_REQUIREMENTS = 4;
+const POS_D_REQUIREMENTS = 6;
+const POS_G_REQUIREMENTS = 2;
 
 
 //sliders
@@ -182,9 +182,9 @@ class Player {
         this.reboundUsage = 0;
         this.number = player.number;
         this.height = "6\"2'";
-        this.years = 2;
+        this.years = player.years;
         this.age = player.age;
-        this.salary = 1000000;
+        this.salary = player.salary;
         this.previousSeasonsStats = [];
         this.role = 0;
         this.tempRole = 0;
@@ -230,9 +230,9 @@ class Player {
         //for training screen
         this.offOld = player.off;
         this.defOld = player.def;
-        this.threePointOld = player.threePoint;
-        this.rebOld = player.reb;
-        this.ftOld = player.ft;
+        this.passOld = player.pass;
+        this.faceOffOld = player.faceOff;
+        this.saveOld = player.save;
 
         this.rating = 80;
 
@@ -240,8 +240,26 @@ class Player {
         this.team = player.team;
 
         //hockey
-        this.save = 80;
-        this.faceOff = 80;
+        this.save = player.save;
+        this.faceOff = player.faceOff;
+        this.pass = player.pass;
+
+        //hockey stats
+        this.saves = 0;
+        this.goalsAllowed = 0;
+        this.shots = 0;
+        this.goals = 0;
+        this.assists = 0;
+        this.assistUsage = 0;
+
+        this.iceTime = 0;
+        this.shiftLength = 0;
+
+        this.seasonGoals = 0;
+        this.seasonSaves = 0;
+        this.seasonGoalsAllowed = 0;
+        this.seasonShots = 0;
+        this.seasonAssists = 0;
 
         // console.log(this.name + " " + this.years + " " + this.salary);
 
@@ -271,14 +289,14 @@ class Player {
         if (this.def >= 99) {
             this.def = 99;
         }
-        if (this.reb >= 99) {
-            this.reb = 99;
+        if (this.save >= 99) {
+            this.save = 99;
         }
-        if (this.threePoint >= 99) {
-            this.threePoint = 99;
+        if (this.faceOff >= 99) {
+            this.faceOff = 99;
         }
-        if (this.ft >= 99) {
-            this.ft = 99;
+        if (this.pass >= 99) {
+            this.pass = 99;
         }
 
         //under 40 too
@@ -288,18 +306,18 @@ class Player {
         if (this.def <= 40) {
             this.def = 40;
         }
-        if (this.reb <= 40) {
-            this.reb = 40;
+        if (this.save <= 40) {
+            this.save = 40;
         }
-        if (this.threePoint <= 40) {
-            this.threePoint = 40;
+        if (this.faceOff <= 40) {
+            this.faceOff = 40;
         }
-        if (this.ft <= 40) {
-            this.ft = 40;
+        if (this.pass <= 40) {
+            this.pass = 40;
         }
 
 
-        let bestrating = [this.off, this.def, this.reb, this.threePoint];
+        let bestrating = [this.off, this.def, this.pass, this.faceOff];
         bestrating.sort(function (a, b) {
             if (a < b) {
                 return 1;
@@ -312,10 +330,15 @@ class Player {
 
 
 
-        this.rating = Math.round(((this.off * 2) + (this.def * 2) + (this.threePoint / 2) + (this.reb / 2) + (bestrating[0] * 2)) / 7);
-        if (this.rating >= 99) {
-            this.rating = 99;
+        if (this.position != 4) {
+            this.rating = Math.round(((this.off * 2) + (this.def * 2) + (this.faceOff / 2) + (this.pass / 2) + (bestrating[0] * 2)) / 7);
+            if (this.rating >= 99) {
+                this.rating = 99;
+            }
+        } else {
+            this.rating = this.save;
         }
+
     }
 
 }
@@ -332,6 +355,7 @@ class Team {
         this.played = [];
         this.wins = 0;
         this.losses = 0;
+        this.otLosses = 0;
         this.roster = [];
         this.lineup = [];
         this.history = [];
@@ -364,7 +388,52 @@ class Team {
             isPick: true,
             projectedPick: null,
             currentTeam: null
-        }
+        },
+        {
+            round: 3,
+            originalTeam: this.name,
+            value: null,
+            salary: 0,
+            isPick: true,
+            projectedPick: null,
+            currentTeam: null
+        },
+        {
+            round: 4,
+            originalTeam: this.name,
+            value: null,
+            salary: 0,
+            isPick: true,
+            projectedPick: null,
+            currentTeam: null
+        },
+        {
+            round: 5,
+            originalTeam: this.name,
+            value: null,
+            salary: 0,
+            isPick: true,
+            projectedPick: null,
+            currentTeam: null
+        },
+        {
+            round: 6,
+            originalTeam: this.name,
+            value: null,
+            salary: 0,
+            isPick: true,
+            projectedPick: null,
+            currentTeam: null
+        },
+        {
+            round: 7,
+            originalTeam: this.name,
+            value: null,
+            salary: 0,
+            isPick: true,
+            projectedPick: null,
+            currentTeam: null
+        },
         ]
 
 
@@ -372,6 +441,10 @@ class Team {
         //stats
         this.seasonPoints = 0;
         this.seasonPointsAllowed = 0;
+        this.seasonShots = 0;
+        this.seasonSaves = 0;
+        this.seasonGoalsAllowed = 0;
+
         this.seasonRebounds = 0;
         this.seasonOffRebounds = 0;
         this.seasonFieldGoalsAttempted = 0;
@@ -410,15 +483,12 @@ class Team {
 
         //Coach Sliders
         this.offVsDefFocus = Math.round(Math.random() * 6) - 3;
-        this.offTwoVsThree = Math.round(Math.random() * 6) - 3;
-        this.defTwoVsThree = Math.round(Math.random() * 6) - 3;
-        this.tempo = Math.round(Math.random() * 6) - 3;
-        this.rotationSize = Math.round(Math.random() * 2) + 9;
+        this.qualityVsQuantity = Math.round(Math.random() * 6) - 3;
+        this.defenseAggresiveVsConservative = Math.round(Math.random() * 6) - 3;
+        this.forwardsVsDefensemen = Math.round(Math.random() * 6) - 3;
 
-        //usage only 
-        this.frontCourtVsBackCourt = Math.round(Math.random() * 6) - 3;
-        //+- rebounding and +- off/def (not including 3pt)
-        this.reboundVsRunInTransition = Math.round(Math.random() * 6) - 3;
+        //hockey coach sliders
+        this.freezeThePuckVsPlayThePuck = Math.round(Math.random() * 6) - 3;
 
         //hockey
         this.offLine1 = [];
@@ -432,61 +502,131 @@ class Team {
         this.onIce = [];
 
 
+        this.defShiftOnIce = 1;
+        this.offShiftOnIce = 1;
+
+
     }
 
-    manageHockeyLineups(){
-        for(let i=0; i<this.roster.length; i++){
+    manageHockeyLineups() {
+        this.roster.sort(function (a, b) {
+            if (a.rating > b.rating)
+                return -1;
+            if (a.rating < b.rating)
+                return 1;
+            return 0;
+        })
+
+        this.offLine1 = [];
+        this.offLine2 = [];
+        this.offLine3 = [];
+        this.offLine4 = [];
+        this.defLine1 = [];
+        this.defLine2 = [];
+        this.defLine3 = [];
+        this.goalies = [];
+
+
+        for (let i = 0; i < this.roster.length; i++) {
             let ply = this.roster[i];
-            if(ply.position <= 2){
+            if (ply.position <= 2) {
                 //off
-                if(this.offLine1.length < 3){
+                if (this.offLine1.length < 3) {
                     this.offLine1.push(ply);
                 }
-                else if(this.offLine2.length<3){
+                else if (this.offLine2.length < 3) {
                     this.offLine2.push(ply);
 
                 }
-                else if(this.offLine3.length<3){
+                else if (this.offLine3.length < 3) {
                     this.offLine3.push(ply);
 
                 }
-                else if(this.offLine4.length<3){
+                else if (this.offLine4.length < 3) {
                     this.offLine4.push(ply);
 
                 }
             }
-            if(ply.position === 3){
-                if(this.defLine1.length < 2){
+            if (ply.position === 3) {
+                if (this.defLine1.length < 2) {
                     this.defLine1.push(ply);
 
                 }
-                else if(this.defLine2.length<2){
+                else if (this.defLine2.length < 2) {
                     this.defLine2.push(ply);
 
                 }
-                else if(this.defLine3.length<2){
+                else if (this.defLine3.length < 2) {
                     this.defLine3.push(ply);
 
                 }
-               
+
             }
-            if(ply.position === 4){
+            if (ply.position === 4) {
                 this.goalies.push(ply);
 
             }
 
         }
 
-        console.log(this.name);
-        for(let i=0; i<this.offLine1.length; i++){
-            console.log(this.offLine1[i].name);
+        if (this.offLine1.length < 3) {
+            console.log(this.name);
         }
-        for(let i=0; i<this.goalies.length; i++){
-            console.log(this.goalies[i].name);
+        if (this.offLine2.length < 3) {
+            console.log(this.name);
         }
-        console.log(' ')
-    }
+        if (this.offLine3.length < 3) {
+            console.log(this.name);
+        }
+        if (this.offLine4.length < 3) {
+            console.log(this.name);
+        }
+        if (this.defLine1.length < 2) {
+            console.log(this.name);
+        }
+        if (this.defLine2.length < 2) {
+            console.log(this.name);
+        }
+        if (this.defLine3.length < 2) {
+            console.log(this.name);
+        }
+        if (this.goalies.length < 2) {
+            console.log(this.name);
+        }
 
+        this.onIce = this.offLine1.concat(this.defLine1);
+        //quick fixs
+        this.firstTeam = this.onIce;
+
+        this.offLine1.sort(function (a, b) {
+            if (a.position < b.position)
+                return -1;
+            if (a.position > b.position)
+                return 1;
+            return 0;
+        })
+        this.offLine2.sort(function (a, b) {
+            if (a.position < b.position)
+                return -1;
+            if (a.position > b.position)
+                return 1;
+            return 0;
+        })
+        this.offLine3.sort(function (a, b) {
+            if (a.position < b.position)
+                return -1;
+            if (a.position > b.position)
+                return 1;
+            return 0;
+        })
+        this.offLine4.sort(function (a, b) {
+            if (a.position < b.position)
+                return -1;
+            if (a.position > b.position)
+                return 1;
+            return 0;
+        })
+    }
 
     releaseExpiring() {
         for (let i = 0; i < this.expiring.roster.length; i++) {
@@ -501,18 +641,16 @@ class Team {
         try {
 
             let total = 0;
-            for (let i = 0; i < this.firstTeam.length; i++) {
-                total += this.firstTeam[i].rating;
+            for (let i = 0; i < this.roster.length; i++) {
+                total += this.roster[i].rating;
+            }
+            let bests = 0;
+            for (let i = 0; i < 6; i++) {
+                bests += this.roster[i].rating;
             }
 
-            for (let i = 0; i < this.bench.length; i++) {
-                total += this.bench[i].rating;
-            }
 
-
-
-
-            this.rating = Math.round(total / (this.firstTeam.length + this.bench.length));
+            this.rating = Math.round((total + bests + bests + bests + bests) / (this.roster.length + 24));
         } catch (err) {
             console.log(this.name);
         }
@@ -533,331 +671,7 @@ class Team {
 
 
     reorderLineup() {
-        this.roster.sort(function (a, b) {
-            if (a.rating > b.rating)
-                return -1;
-            if (a.rating < b.rating)
-                return 1;
-            return 0;
-        })
-
-
-        let pg = [];
-        let sg = [];
-        let sf = [];
-        let pf = [];
-        let c = [];
-
-
-        for (let i = 0; i < this.roster.length; i++) {
-            if (this.roster[i].position === POS_PG) {
-                pg.push(this.roster[i]);
-            }
-            if (this.roster[i].position === POS_SG) {
-                sg.push(this.roster[i]);
-            }
-            if (this.roster[i].position === POS_SF) {
-                sf.push(this.roster[i]);
-            }
-            if (this.roster[i].position === POS_PF) {
-                pf.push(this.roster[i]);
-            }
-            if (this.roster[i].position === POS_C) {
-                c.push(this.roster[i]);
-            }
-        }
-
-        this.firstTeam = [null, null, null, null, null];
-        this.secondTeam = [null, null, null, null, null];
-
-        if (this.firstTeam[0] == null) {
-            if (pg.length > 0) {
-                this.firstTeam[0] = pg[0];
-                pg.splice(0, 1);
-            } else if (sg.length > 0) {
-                this.firstTeam[0] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.firstTeam[0] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.firstTeam[0] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.firstTeam[0] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error, Most likely during offseason when teams have lacking roster requirements');
-            }
-        }
-        if (this.firstTeam[1] == null) {
-            if (sg.length > 0) {
-                this.firstTeam[1] = sg[0];
-                sg.splice(0, 1);
-            } else if (pg.length > 0) {
-                this.firstTeam[1] = pg[0];
-                pg.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.firstTeam[1] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.firstTeam[1] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.firstTeam[1] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.firstTeam[2] == null) {
-            if (sf.length > 0) {
-                this.firstTeam[2] = sf[0];
-                sf.splice(0, 1);
-            } else if (sg.length > 0) {
-                this.firstTeam[2] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.firstTeam[2] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.firstTeam[2] = pg[0];
-                pg.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.firstTeam[2] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.firstTeam[3] == null) {
-            if (pf.length > 0) {
-                this.firstTeam[3] = pf[0];
-                pf.splice(0, 1);
-            } else if (sf.length > 0) {
-                this.firstTeam[3] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.firstTeam[3] = c[0];
-                c.splice(0, 1);
-            }
-            else if (sg.length > 0) {
-                this.firstTeam[3] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.firstTeam[3] = pg[0];
-                pg.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.firstTeam[4] == null) {
-            if (c.length > 0) {
-                this.firstTeam[4] = c[0];
-                c.splice(0, 1);
-            } else if (pf.length > 0) {
-                this.firstTeam[4] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.firstTeam[4] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (sg.length > 0) {
-                this.firstTeam[4] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.firstTeam[4] = pg[0];
-                pg.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-
-        //SECOND TEAM
-
-        if (this.secondTeam[0] == null) {
-            if (pg.length > 0) {
-                this.secondTeam[0] = pg[0];
-                pg.splice(0, 1);
-            } else if (sg.length > 0) {
-                this.secondTeam[0] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.secondTeam[0] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.secondTeam[0] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.secondTeam[0] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.secondTeam[1] == null) {
-            if (sg.length > 0) {
-                this.secondTeam[1] = sg[0];
-                sg.splice(0, 1);
-            } else if (pg.length > 0) {
-                this.secondTeam[1] = pg[0];
-                pg.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.secondTeam[1] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.secondTeam[1] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.secondTeam[1] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.secondTeam[2] == null) {
-            if (sf.length > 0) {
-                this.secondTeam[2] = sf[0];
-                sf.splice(0, 1);
-            } else if (sg.length > 0) {
-                this.secondTeam[2] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pf.length > 0) {
-                this.secondTeam[2] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.secondTeam[2] = pg[0];
-                pg.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.secondTeam[2] = c[0];
-                c.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.secondTeam[3] == null) {
-            if (pf.length > 0) {
-                this.secondTeam[3] = pf[0];
-                pf.splice(0, 1);
-            } else if (sf.length > 0) {
-                this.secondTeam[3] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (c.length > 0) {
-                this.secondTeam[3] = c[0];
-                c.splice(0, 1);
-            }
-            else if (sg.length > 0) {
-                this.secondTeam[3] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.secondTeam[3] = pg[0];
-                pg.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-        if (this.secondTeam[4] == null) {
-            if (c.length > 0) {
-                this.secondTeam[4] = c[0];
-                c.splice(0, 1);
-            } else if (pf.length > 0) {
-                this.secondTeam[4] = pf[0];
-                pf.splice(0, 1);
-            }
-            else if (sf.length > 0) {
-                this.secondTeam[4] = sf[0];
-                sf.splice(0, 1);
-            }
-            else if (sg.length > 0) {
-                this.secondTeam[4] = sg[0];
-                sg.splice(0, 1);
-            }
-            else if (pg.length > 0) {
-                this.secondTeam[4] = pg[0];
-                pg.splice(0, 1);
-            } else {
-                console.log('Reorder Lineup Error');
-            }
-        }
-
-
-
-        // if (pg[0] != null) {
-        //     this.firstTeam[0] = pg[0];
-        // }
-        // if (pg[1] != null) {
-        //     this.secondTeam[0] = pg[1];
-        // }
-        // if (sg[0] != null) {
-        //     this.firstTeam[1] = sg[0];
-        // }
-        // if (sg[1] != null) {
-        //     this.secondTeam[1] = sg[1];
-        // }
-        // if (sf[0] != null) {
-        //     this.firstTeam[2] = sf[0];
-        // }
-        // if (sf[1] != null) {
-        //     this.secondTeam[2] = sf[1];
-        // }
-        // if (pf[0] != null) {
-        //     this.firstTeam[3] = pf[0];
-        // }
-        // if (pf[1] != null) {
-        //     this.secondTeam[3] = pf[1];
-        // }
-        // if (c[0] != null) {
-        //     this.firstTeam[4] = c[0];
-        // }
-        // if (c[1] != null) {
-        //     this.secondTeam[4] = c[1];
-        // }
-
-        //set bench
-
-
-        //second team is just bench here
-        this.secondTeam = [];
-        for (let i = 0; i < this.roster.length; i++) {
-            if (this.secondTeam.length + this.firstTeam.length >= this.rotationSize) {
-                break;
-            }
-            if (!this.firstTeam.includes(this.roster[i])) {
-                this.secondTeam.push(this.roster[i]);
-
-            }
-        }
-
-        this.bench = [...this.secondTeam];
-
-
-        this.setPlayerRoles();
-        this.manageUsage();
-
+        this.manageHockeyLineups();
         this.calculateRating();
     }
 
@@ -1185,7 +999,7 @@ export function generateCustomRoster(team, rating) {
     let sf = 0;
     let pf = 0;
     let c = 0;
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 24; i++) {
         let name = draftData[Math.floor(Math.random() * draftData.length)].firstname + " " + draftData[Math.floor(Math.random() * draftData.length)].lastname;
         let faceSrc = draftData[0].faceSrc;
         let number = draftData[Math.floor(Math.random() * draftData.length)].number;
@@ -1227,33 +1041,17 @@ export function generateCustomRoster(team, rating) {
         let height = draftData[playerComparison].height;
         let off = (draftData[playerComparison].off - 8) + Math.floor(Math.random() * 5);
         let def = (draftData[playerComparison].def - 8) + Math.floor(Math.random() * 5);
-        let reb = (draftData[playerComparison].reb - 8) + Math.floor(Math.random() * 5);
-        let ft = (draftData[playerComparison].ft - 3) + Math.floor(Math.random() * 5);
-        let threePoint = (draftData[playerComparison].threePoint - 8) + Math.floor(Math.random() * 5);
+        let save = (draftData[playerComparison].save - 8) + Math.floor(Math.random() * 5);
+        let faceOff = (draftData[playerComparison].faceOff - 3) + Math.floor(Math.random() * 5);
+        let pass = (draftData[playerComparison].pass - 8) + Math.floor(Math.random() * 5);
         //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
         let years = Math.floor(Math.random() * 3) + 1;
         let salary = 2400000;
 
 
-
-        if (off < 40) {
-            off = 40;
-        }
-        if (def < 40) {
-            def = 40;
-        }
-        if (reb < 40) {
-            reb = 40;
-        }
-        if (threePoint < 40) {
-            threePoint = 40;
-        }
-
-
         //RATING FORMULA
-        let rating = Math.round((off + def + ((reb / 2) + (threePoint / 2))) / 3);
 
-        team.roster.push(new Player({
+        let ply = new Player({
             name: name,
             faceSrc: faceSrc,
             number: number,
@@ -1262,13 +1060,15 @@ export function generateCustomRoster(team, rating) {
             height: height,
             off: off,
             def: def,
-            reb: reb,
-            ft: ft,
-            threePoint: threePoint,
+            save: save,
+            pass: pass,
+            faceOff: faceOff,
             years: years,
             salary: salary,
             rating: rating
-        }))
+        });
+        ply.calculateRating();
+        team.roster.push(ply);
 
 
     }
@@ -1332,9 +1132,9 @@ export function generateFreeAgents(amount, ratingSubtraction) {
         let height = draftData[playerComparison].height;
         let off = (draftData[playerComparison].off - ratingSubtraction) + Math.floor(Math.random() * 5);
         let def = (draftData[playerComparison].def - ratingSubtraction) + Math.floor(Math.random() * 5);
-        let reb = (draftData[playerComparison].reb - ratingSubtraction) + Math.floor(Math.random() * 5);
-        let ft = (draftData[playerComparison].ft - 3) + Math.floor(Math.random() * 5);
-        let threePoint = (draftData[playerComparison].threePoint - ratingSubtraction) + Math.floor(Math.random() * 5);
+        let pass = (draftData[playerComparison].pass - ratingSubtraction) + Math.floor(Math.random() * 5);
+        let save = (draftData[playerComparison].save - ratingSubtraction) + Math.floor(Math.random() * 5);
+        let faceOff = (draftData[playerComparison].faceOff - ratingSubtraction) + Math.floor(Math.random() * 5);
         //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
         let years = 2 + 1;
         let salary = 1200000;
@@ -1342,21 +1142,6 @@ export function generateFreeAgents(amount, ratingSubtraction) {
         if (collegeMode) {
             years = 4;
         }
-
-
-        if (off < 40) {
-            off = 40;
-        }
-        if (def < 40) {
-            def = 40;
-        }
-        if (reb < 40) {
-            reb = 40;
-        }
-        if (threePoint < 40) {
-            threePoint = 40;
-        }
-
 
         //RATING FORMULA
 
@@ -1370,9 +1155,9 @@ export function generateFreeAgents(amount, ratingSubtraction) {
             height: height,
             off: off,
             def: def,
-            reb: reb,
-            ft: ft,
-            threePoint: threePoint,
+            pass: pass,
+            save: save,
+            faceOff: faceOff,
             years: years,
             salary: salary,
         })
@@ -1387,7 +1172,7 @@ export function generateFreeAgents(amount, ratingSubtraction) {
 
 function generateDraftClass() {
     draftClass.roster = [];
-    for (let i = 0; i < Math.floor(teams.length * 2.5); i++) {
+    for (let i = 0; i < Math.floor(teams.length * 10); i++) {
         let name = draftData[Math.floor(Math.random() * draftData.length)].firstname + " " + draftData[Math.floor(Math.random() * draftData.length)].lastname;
         let faceSrc = draftData[0].faceSrc;
         let number = draftData[Math.floor(Math.random() * draftData.length)].number;
@@ -1396,29 +1181,14 @@ function generateDraftClass() {
         let playerComparison = Math.floor(Math.random() * draftData.length);
         let position = draftData[playerComparison].position;
         let height = draftData[playerComparison].height;
-        let off = (draftData[playerComparison].off - 12) + Math.floor(Math.random() * 5);
-        let def = (draftData[playerComparison].def - 12) + Math.floor(Math.random() * 5);
-        let reb = (draftData[playerComparison].reb - 12) + Math.floor(Math.random() * 5);
-        let ft = (draftData[playerComparison].ft - 3) + Math.floor(Math.random() * 5);
-        let threePoint = (draftData[playerComparison].threePoint - 12) + Math.floor(Math.random() * 5);
+        let off = (draftData[playerComparison].off - 15) + Math.floor(Math.random() * 5);
+        let def = (draftData[playerComparison].def - 15) + Math.floor(Math.random() * 5);
+        let save = (draftData[playerComparison].save - 15) + Math.floor(Math.random() * 5);
+        let pass = (draftData[playerComparison].pass - 15) + Math.floor(Math.random() * 5);
+        let faceOff = (draftData[playerComparison].faceOff - 15) + Math.floor(Math.random() * 5);
         //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
         let years = 2 + 1;
         let salary = 1200000;
-
-
-        if (off < 40) {
-            off = 40;
-        }
-        if (def < 40) {
-            def = 40;
-        }
-        if (reb < 40) {
-            reb = 40;
-        }
-        if (threePoint < 40) {
-            threePoint = 40;
-        }
-
 
         //RATING FORMULA
 
@@ -1431,9 +1201,9 @@ function generateDraftClass() {
             height: height,
             off: off,
             def: def,
-            reb: reb,
-            ft: ft,
-            threePoint: threePoint,
+            save: save,
+            pass: pass,
+            faceOff: faceOff,
             years: years,
             salary: salary,
         });
@@ -1527,72 +1297,284 @@ export class Game {
         this.shotsMade = 0;
         this.threesAtt = 0;
         this.threesMade = 0;
+        this.iceTime = 0;
         this.possResult = [];
         this.quarter = 1;
+        this.overtime = false;
 
     }
 
-    hockeyPossesion(off, def){
-        try{
-        if(this.time<=0){
-            return;
+    manageOnIceUsage(off) {
+        //offense
+        let total = 0;
+        for (let i = 0; i < off.onIce.length; i++) {
+            let ply = off.onIce[i];
+            total += ply.off;
+            if (i > 2) {
+                //defensemen
+                total -= off.forwardsVsDefensemen * 3;
+            } else {
+                total += off.forwardsVsDefensemen * 3;
+            }
         }
-        //set up first lineups for now
-        off.onIce = [];
-        def.onIce = [];
-
-
-        for(let i=0; i<off.offLine1.length; i++){
-            off.onIce.push(off.offLine1[i]);
-        }
-        for(let i=0; i<off.defLine1.length; i++){
-            off.onIce.push(off.defLine1[i]);
-        }
-        for(let i=0; i<def.offLine1.length; i++){
-            off.onIce.push(def.offLine1[i]);
-        }
-        for(let i=0; i<def.defLine1.length; i++){
-            off.onIce.push(def.defLine1[i]);
-        }
-    
-        // console.log(off.onIce.length);
-
-        let shooter = off.onIce[Math.floor(Math.random()*off.onIce.length)];
-        let assister = off.onIce[Math.floor(Math.random()*off.onIce.length)];
-        while(assister === shooter){
-            assister = off.onIce[Math.floor(Math.random()*off.onIce.length)];
-        }
-        let goalie = def.goalies[0];
-
-        // console.log(shooter.name);
-
-        //shot
-        let shooterRatingFactor = scaleBetween(shooter.off, -3,3,40,99);
-        
-        let goalieSavePercentage = scaleBetween(goalie.save, 76,96, 40, 99);
-
-        //time off clock
-        this.time-= 55 + Math.floor(Math.random()*15);
-
-        let saveFactor = (goalieSavePercentage - shooterRatingFactor);
-        // console.log(saveFactor);
-        let chance = Math.random()*100;
-        // console.log(chance);
-        if(saveFactor >= chance){
-            //save
-            return;
-        }else{
-            //goal
-            if(off === home){
-                this.homescore++;
-            }else{
-                this.awayscore++;
+        for (let i = 0; i < off.onIce.length; i++) {
+            let ply = off.onIce[i];
+            let posFactor = 0;
+            if (i > 2) {
+                //defensemen
+                posFactor -= off.forwardsVsDefensemen * 3;
+            } else {
+                posFactor += off.forwardsVsDefensemen * 3;
             }
 
+            ply.usage = ((ply.off + posFactor) / total) * 100;
         }
-    }catch(err){
-        console.log(err);
+
+        //TODO assist usage
+        let totalAssist = 0;
+        for (let i = 0; i < off.onIce.length; i++) {
+            let ply = off.onIce[i];
+            totalAssist += ply.pass;
+        }
+        for (let i = 0; i < off.onIce.length; i++) {
+            let ply = off.onIce[i];
+            ply.assistUsage = (ply.pass / totalAssist) * 100;
+        }
     }
+
+    manageShift(team) {
+        let newOffShift;
+        let newDefShift;
+
+        //
+        if (team.offShiftOnIce === 1) {
+            newOffShift = team.offLine1;
+        }
+        else if (team.offShiftOnIce === 2) {
+            newOffShift = team.offLine2;
+        }
+        else if (team.offShiftOnIce === 3) {
+            newOffShift = team.offLine3;
+        }
+        else if (team.offShiftOnIce === 4) {
+            newOffShift = team.offLine4;
+        }
+        if (team.defShiftOnIce === 1) {
+            newDefShift = team.defLine1;
+        }
+        else if (team.defShiftOnIce === 2) {
+            newDefShift = team.defLine2;
+        }
+        else if (team.defShiftOnIce === 3) {
+            newDefShift = team.defLine3;
+        }
+
+
+
+        if (team.offShiftOnIce === 1 && this.iceTime >= 60) {
+            newOffShift = team.offLine2;
+            team.offShiftOnIce = 2;
+            this.iceTime = 0;
+        }
+        else if (team.offShiftOnIce === 2 && this.iceTime >= 50) {
+            newOffShift = team.offLine3;
+            team.offShiftOnIce = 3;
+            this.iceTime = 0;
+
+        }
+        else if (team.offShiftOnIce === 3 && this.iceTime >= 35) {
+            newOffShift = team.offLine4;
+            team.offShiftOnIce = 4;
+            this.iceTime = 0;
+
+        }
+        else if (team.offShiftOnIce === 4 && this.iceTime >= 25) {
+            newOffShift = team.offLine1;
+            team.offShiftOnIce = 1;
+            this.iceTime = 0;
+        }
+        if (team.defShiftOnIce === 1) {
+            newDefShift = team.defLine2;
+            team.defShiftOnIce = 2;
+            this.iceTime = 0;
+        }
+        else if (team.defShiftOnIce === 2) {
+            newDefShift = team.defLine3;
+            team.defShiftOnIce = 3;
+            this.iceTime = 0;
+        }
+        else if (team.defShiftOnIce === 3) {
+            newDefShift = team.defLine1;
+            team.defShiftOnIce = 1;
+            this.iceTime = 0;
+        }
+
+        team.onIce = newOffShift.concat(newDefShift);
+    }
+
+    hockeyPossesion(off, def) {
+        try {
+            if (this.time <= 0) {
+                return;
+            }
+            //set up first lineups for now
+
+            this.manageShift(off);
+            this.manageShift(def);
+
+            this.manageOnIceUsage(off);
+            this.manageOnIceUsage(def);
+
+
+            let shooter;
+            let total = 0;
+            let selection = Math.random() * 100;
+            for (let i = 0; i < off.onIce.length; i++) {
+                total += off.onIce[i].usage;
+                if (total >= selection) {
+                    shooter = off.onIce[i];
+                    break;
+                }
+            }
+
+            // console.log(off.onIce.length);
+
+            // let shooter = off.onIce[Math.floor(Math.random()*off.onIce.length)];
+            let assister;
+            total = 0;
+            selection = Math.random() * 100;
+            for (let i = 0; i < off.onIce.length; i++) {
+                total += off.onIce[i].assistUsage;
+                if (total >= selection) {
+                    assister = off.onIce[i];
+                    break;
+                }
+            }
+
+
+
+            let goalie = def.goalies[0];
+
+            // console.log(shooter.name);
+
+            //shot
+            let defenseOverall = 0;
+            let offenseOverall = 0;
+
+            for (let i = 0; i < def.onIce.length; i++) {
+                let ply = def.onIce[i];
+                defenseOverall += ply.def;
+            }
+
+            for (let i = 0; i < off.onIce.length; i++) {
+                let ply = off.onIce[i];
+                offenseOverall += ply.off;
+            }
+
+            // // TURNOVER
+            // if(Math.random()*100 < (5  + (2*def.defenseAggresiveVsConservative))){
+            //     return;
+            // }
+
+            let scaledDef = scaleBetween(defenseOverall, 0, 20, 200, 495);
+            let scaledOff = scaleBetween(offenseOverall, 0, 16, 200, 495);
+            let assistFactor = scaleBetween(assister.pass, 0, 7, 40, 99);
+
+            let offVsDef = scaledDef - scaledOff;
+
+            // console.log('def' + scaledDef);
+            // console.log('off' + scaledOff);
+
+            let offVsDefSliders = (off.offVsDefFocus - def.offVsDefFocus) / 4;
+            let aggressiveVsConservativeSliders = (off.defenseAggresiveVsConservative - def.defenseAggresiveVsConservative) / 4;
+            let freezeThePuckVsPlayThePuckSliders = (off.freezeThePuckVsPlayThePuck - def.freezeThePuckVsPlayThePuck) / 4;
+
+            let shooterRatingFactor = scaleBetween(shooter.off, -5, 6, 40, 99);
+
+            let goalieSavePercentage = scaleBetween(goalie.save, 76, 96, 40, 99);
+
+            //time off clock
+            let timeOff = Math.floor(Math.random() * 60) + 30 - (off.qualityVsQuantity * 8);
+            this.time -= timeOff;
+            this.iceTime = timeOff;
+
+            let difficultySliderFactor = 0;
+
+            if(off === selectedTeam){
+                difficultySliderFactor = difficulty
+            }
+            if(def === selectedTeam){
+                difficultySliderFactor = -difficulty
+            }
+
+            let saveFactor = (goalieSavePercentage - shooterRatingFactor + offVsDef - assistFactor + off.qualityVsQuantity - offVsDefSliders - aggressiveVsConservativeSliders - freezeThePuckVsPlayThePuckSliders + difficultySliderFactor);
+            // if(def.name === 'Detroit Red Wings'){
+            //     console.log('END: ' + saveFactor);
+            //     console.log('GOALIE %' + goalieSavePercentage);
+            //     console.log('SHOOTERRATINGFAC -' + shooterRatingFactor);
+            //     console.log('OFFVSDEF +'+offVsDef);
+            //     console.log('ASSIST -' + assistFactor);
+            //     console.log('OFFQUALVSQUAN +' + off.qualityVsQuantity);
+            //     console.log('offvsdefslider -' + offVsDefSliders);
+            //     console.log('defaggvscons -' + def.defenseAggresiveVsConservative);
+            //     console.log('defFreeze -' + def.freezeThePuckVsPlayThePuck);
+            //     console.log('offFreeze +' + off.freezeThePuckVsPlayThePuck);
+
+            // }
+            if (saveFactor > 96) {
+                saveFactor = 96;
+            }
+            // console.log(saveFactor);
+            let chance = Math.random() * 100;
+            // console.log(chance);
+            //shot
+            shooter.shots++;
+            off.seasonShots++;
+
+            if (saveFactor >= chance) {
+                //save
+                goalie.saves++;
+                def.seasonSaves++;
+                let reboundPercentage = Math.random()*10 + (off.qualityVsQuantity*2);
+                if(reboundPercentage > Math.random()*100){
+                    //rebound
+                    this.hockeyPossesion(off,def);
+
+                }
+
+
+                return;
+            } else {
+                //goal
+
+                goalie.goalsAllowed++;
+                def.seasonGoalsAllowed++;
+                shooter.goals++;
+                if (shooter != assister) {
+                    assister.assists++;
+                }
+                if (off === home) {
+                    this.homescore++;
+                } else {
+                    this.awayscore++;
+                }
+                let result = "Scores!"
+                if (shooter != assister) {
+                    result += " assisted by " + assister.positionString + ' #' + assister.number + ' ' + assister.name;
+                }
+
+                this.possResult.unshift({
+                    shooter: shooter,
+                    result: result,
+                    homeScore: this.homescore,
+                    awayScore: this.awayscore
+                })
+
+            }
+
+        } catch (err) {
+            console.log(err);
+        }
 
 
     }
@@ -1755,7 +1737,7 @@ export class Game {
             }
         }
 
-        let reboundFormula = scaleBetween(((offRebounder.reb - (off.reboundVsRunInTransition * 3)) - (rebounder.reb - (def.reboundVsRunInTransition * 3))), 0, reboundSlider, -59, 59);
+        let reboundFormula = scaleBetween(((offRebounder.reb - (off.freezeThePuckVsPlayThePuck * 3)) - (rebounder.reb - (def.freezeThePuckVsPlayThePuck * 3))), 0, reboundSlider, -59, 59);
 
         if ((Math.random() * 100 <= reboundFormula)) {
             //offensive rebound
@@ -1885,7 +1867,7 @@ export class Game {
 
         //SELECT shot two point or three point
         if ((Math.random() * 100) > 9) {
-            if ((Math.random() * 100) > (shooter.threePoint / 2) + (off.offTwoVsThree - def.defTwoVsThree)) {
+            if ((Math.random() * 100) > (shooter.threePoint / 2) + (off.qualityVsQuantity - def.defenseAggresiveVsConservative)) {
                 shotSelection = TWO;
                 shooter.twoPointersAtt++;
                 this.shotsAtt++;
@@ -2047,7 +2029,7 @@ export class Game {
 
         //fast break
         if (Math.random() * 100 <= 20) {
-            shotPercentage += ((off.reboundVsRunInTransition * 2) - (def.reboundVsRunInTransition * 2));
+            shotPercentage += ((off.freezeThePuckVsPlayThePuck * 2) - (def.freezeThePuckVsPlayThePuck * 2));
         }
 
 
@@ -2102,8 +2084,8 @@ export class Game {
             offensiveRebound = this.rebound(off, def);
             // possesion = def;
         }
-        //COACHING TEMPO
-        secondsRemoved = secondsOffClock + Math.round((Math.random() * secondsOffClockRandomFactor) - secondsOffClockRandomFactor / 2) - off.tempo;
+        //COACHING forwardsVsDefensemen
+        secondsRemoved = secondsOffClock + Math.round((Math.random() * secondsOffClockRandomFactor) - secondsOffClockRandomFactor / 2) - off.forwardsVsDefensemen;
         this.time -= secondsRemoved;
         //This Might Fix The Tie Bug
         if (this.time <= 0 && this.homescore === this.awayscore) {
@@ -2154,29 +2136,21 @@ export class Game {
 
         for (let i = 0; i < home.roster.length; i++) {
             //clear in game stats
-            home.roster[i].points = 0;
-            home.roster[i].twoPointersAtt = 0;
-            home.roster[i].twoPointersMade = 0;
-            home.roster[i].rebounds = 0;
-            home.roster[i].threePointersAtt = 0;
-            home.roster[i].threePointersMade = 0;
-            home.roster[i].freeThrowsAttempted = 0;
-            home.roster[i].freeThrowsMade = 0;
-            home.roster[i].offRebounds = 0;
+            home.roster[i].goals = 0;
+            home.roster[i].shots = 0;
+            home.roster[i].assists = 0;
+            home.roster[i].goalsAllowed = 0;
+            home.roster[i].saves = 0;
 
         }
 
         for (let i = 0; i < away.roster.length; i++) {
             //clear in game stats
-            away.roster[i].points = 0;
-            away.roster[i].twoPointersAtt = 0;
-            away.roster[i].twoPointersMade = 0;
-            away.roster[i].rebounds = 0;
-            away.roster[i].threePointersAtt = 0;
-            away.roster[i].threePointersMade = 0;
-            away.roster[i].freeThrowsAttempted = 0;
-            away.roster[i].freeThrowsMade = 0;
-            away.roster[i].offRebounds = 0;
+            away.roster[i].goals = 0;
+            away.roster[i].shots = 0;
+            away.roster[i].assists = 0;
+            away.roster[i].goalsAllowed = 0;
+            away.roster[i].saves = 0;
 
         }
 
@@ -2203,7 +2177,9 @@ export class Game {
                 this.hockeyPossesion(away, home);
                 if (this.time <= 0) {
                     if (this.homescore === this.awayscore) {
+                        this.overtime = true;
                         this.time = (5 * 60);
+
                     }
                 }
             }
@@ -2213,7 +2189,9 @@ export class Game {
                 this.hockeyPossesion(home, away);
                 if (this.time <= 0) {
                     if (this.homescore === this.awayscore) {
+                        this.overtime = true;
                         this.time = (5 * 60);
+
                     }
                 }
             }
@@ -2246,56 +2224,42 @@ export class Game {
         home.seasonPoints += this.homescore;
         home.seasonPointsAllowed += this.awayscore;
 
+        //reset starters
+        home.onIce = home.offLine1.concat(home.defLine1);
+        away.onIce = away.offLine1.concat(away.defLine1);
+
+
         away.seasonPoints += this.awayscore;
         away.seasonPointsAllowed += this.homescore;
 
 
         for (let i = 0; i < home.roster.length; i++) {
             home.roster[i].statsHistory.push({
-                points: home.roster[i].points,
-                twoPointersAtt: home.roster[i].twoPointersAtt,
-                twoPointersMade: home.roster[i].twoPointersMade,
-                rebounds: home.roster[i].rebounds,
-                offRebounds: home.roster[i].offRebounds,
-                threePointersAtt: home.roster[i].threePointersAtt,
-                threePointersMade: home.roster[i].threePointersMade,
-                freeThrowsAttempted: home.roster[i].freeThrowsAttempted,
-                freeThrowsMade: home.roster[i].freeThrowsMade
+                goals: home.roster[i].goals,
+                saves: home.roster[i].saves,
+                goalsAllowed: home.roster[i].goalsAllowed,
+                shots: home.roster[i].shots,
+                assists: home.roster[i].assists
             });
-            home.roster[i].seasonPoints += home.roster[i].points;
-            home.roster[i].seasonTwoPointersAtt += home.roster[i].twoPointersAtt;
-            home.roster[i].seasonTwoPointersMade += home.roster[i].twoPointersMade;
-            home.roster[i].seasonRebounds += home.roster[i].rebounds;
-            home.roster[i].seasonThreePointersAtt += home.roster[i].threePointersAtt;
-            home.roster[i].seasonThreePointersMade += home.roster[i].threePointersMade;
-            home.roster[i].seasonFreeThrowsMade += home.roster[i].freeThrowsMade;
-            home.roster[i].seasonFreeThrowsAttempted += home.roster[i].freeThrowsAttempted;
-            home.roster[i].seasonOffRebounds += home.roster[i].offRebounds;
-
-
+            home.roster[i].seasonGoals += home.roster[i].goals;
+            home.roster[i].seasonAssists += home.roster[i].assists;
+            home.roster[i].seasonSaves += home.roster[i].saves;
+            home.roster[i].seasonShots += home.roster[i].shots;
+            home.roster[i].seasonGoalsAllowed += home.roster[i].goalsAllowed;
         }
         for (let i = 0; i < away.roster.length; i++) {
             away.roster[i].statsHistory.push({
-                points: away.roster[i].points,
-                twoPointersAtt: away.roster[i].twoPointersAtt,
-                twoPointersMade: away.roster[i].twoPointersMade,
-                rebounds: away.roster[i].rebounds,
-                offRebounds: away.roster[i].offRebounds,
-                threePointersAtt: away.roster[i].threePointersAtt,
-                threePointersMade: away.roster[i].threePointersMade,
-                freeThrowsAttempted: away.roster[i].freeThrowsAttempted,
-                freeThrowsMade: away.roster[i].freeThrowsMade
+                goals: away.roster[i].goals,
+                saves: away.roster[i].saves,
+                goalsAllowed: away.roster[i].goalsAllowed,
+                shots: away.roster[i].shots,
+                assists: away.roster[i].assists
             });
-            away.roster[i].seasonPoints += away.roster[i].points;
-            away.roster[i].seasonTwoPointersAtt += away.roster[i].twoPointersAtt;
-            away.roster[i].seasonTwoPointersMade += away.roster[i].twoPointersMade;
-            away.roster[i].seasonRebounds += away.roster[i].rebounds;
-            away.roster[i].seasonThreePointersAtt += away.roster[i].threePointersAtt;
-            away.roster[i].seasonThreePointersMade += away.roster[i].threePointersMade;
-            away.roster[i].seasonFreeThrowsMade += away.roster[i].freeThrowsMade;
-            away.roster[i].seasonFreeThrowsAttempted += away.roster[i].freeThrowsAttempted;
-            away.roster[i].seasonOffRebounds += away.roster[i].offRebounds;
-
+            away.roster[i].seasonGoals += away.roster[i].goals;
+            away.roster[i].seasonAssists += away.roster[i].assists;
+            away.roster[i].seasonSaves += away.roster[i].saves;
+            away.roster[i].seasonShots += away.roster[i].shots;
+            away.roster[i].seasonGoalsAllowed += away.roster[i].goalsAllowed;
         }
     }
 
@@ -2313,66 +2277,48 @@ export class Season {
         for (let i = 0; i < teams.length; i++) {
             teams[i].wins = 0;
             teams[i].losses = 0;
+            teams[i].otLosses = 0;
             teams[i].schedule = [];
             teams[i].played = [];
             teams[i].seasonPoints = 0;
             teams[i].seasonPointsAllowed = 0;
-            teams[i].seasonRebounds = 0;
-            teams[i].seasonOffRebounds = 0;
-            teams[i].seasonFieldGoalsAttempted = 0;
-            teams[i].seasonFieldGoalsMade = 0;
-            teams[i].seasonThreesAttempted = 0;
-            teams[i].seasonThreesMade = 0;
+            teams[i].seasonSaves = 0;
+            teams[i].seasonGoalsAllowed = 0;
+            teams[i].seasonShots = 0;
+            teams[i].seasonAssists = 0;
 
             for (let j = 0; j < teams[i].roster.length; j++) {
 
                 teams[i].roster[j].statsHistory = [];
-                teams[i].roster[j].points = 0;
-                teams[i].roster[j].twoPointersAtt = 0;
-                teams[i].roster[j].twoPointersMade = 0;
-                teams[i].roster[j].rebounds = 0;
-                teams[i].roster[j].threePointersAtt = 0;
-                teams[i].roster[j].threePointersMade = 0;
-                teams[i].roster[j].freeThrowsAttempted = 0;
-                teams[i].roster[j].freeThrowsMade = 0;
+                teams[i].roster[j].goals = 0;
+                teams[i].roster[j].goalsAllowed = 0;
+                teams[i].roster[j].shots = 0;
+                teams[i].roster[j].assists = 0;
+                teams[i].roster[j].saves = 0;
 
-                teams[i].roster[j].minutesPlayed = 0;
+                teams[i].roster[j].seasonGoals = 0;
+                teams[i].roster[j].seasonSaves = 0;
+                teams[i].roster[j].seasonGoalsAllowed = 0;
+                teams[i].roster[j].seasonShots = 0;
+                teams[i].roster[j].seasonAssists = 0;
 
-
-                teams[i].roster[j].seasonPoints = 0;
-                teams[i].roster[j].seasonThreePointersAtt = 0;
-                teams[i].roster[j].seasonThreePointersMade = 0;
-                teams[i].roster[j].seasonRebounds = 0;
-                teams[i].roster[j].seasonOffRebounds = 0;
-                teams[i].roster[j].seasonTwoPointersAtt = 0;
-                teams[i].roster[j].seasonTwoPointersMade = 0;
-                teams[i].roster[j].seasonFreeThrowsAttempted = 0;
-                teams[i].roster[j].seasonFreeThrowsMade = 0;
             }
         }
         //for free agents
 
         for (let i = 0; i < availableFreeAgents.roster.length; i++) {
             availableFreeAgents.roster[i].statsHistory = [];
-            availableFreeAgents.roster[i].points = 0;
-            availableFreeAgents.roster[i].twoPointersAtt = 0;
-            availableFreeAgents.roster[i].twoPointersMade = 0;
-            availableFreeAgents.roster[i].rebounds = 0;
-            availableFreeAgents.roster[i].threePointersAtt = 0;
-            availableFreeAgents.roster[i].threePointersMade = 0;
-            availableFreeAgents.roster[i].freeThrowsAttempted = 0;
-            availableFreeAgents.roster[i].freeThrowsMade = 0;
-            availableFreeAgents.roster[i].seasonPoints = 0;
-            availableFreeAgents.roster[i].seasonThreePointersAtt = 0;
-            availableFreeAgents.roster[i].seasonThreePointersMade = 0;
-            availableFreeAgents.roster[i].seasonRebounds = 0;
-            availableFreeAgents.roster[i].seasonOffRebounds = 0;
-            availableFreeAgents.roster[i].seasonTwoPointersAtt = 0;
-            availableFreeAgents.roster[i].seasonTwoPointersMade = 0;
-            availableFreeAgents.roster[i].seasonFreeThrowsAttempted = 0;
-            availableFreeAgents.roster[i].seasonFreeThrowsMade = 0;
+            availableFreeAgents.roster[i].goals = 0;
+            availableFreeAgents.roster[i].goalsAllowed = 0;
+            availableFreeAgents.roster[i].shots = 0;
+            availableFreeAgents.roster[i].assists = 0;
+            availableFreeAgents.roster[i].saves = 0;
 
-            availableFreeAgents.roster[i].minutesPlayed = 0;
+            availableFreeAgents.roster[i].seasonGoals = 0;
+            availableFreeAgents.roster[i].seasonSaves = 0;
+            availableFreeAgents.roster[i].seasonGoalsAllowed = 0;
+            availableFreeAgents.roster[i].seasonShots = 0;
+            availableFreeAgents.roster[i].seasonAssists = 0;
 
         }
 
@@ -2382,9 +2328,12 @@ export class Season {
             shuffle(teams);
             for (let j = 0; j < teams.length; j++) {
                 if (teams[j].schedule[i] == null) {
-
-                    teams[j].schedule[i] = teams[(j + 1)]
-                    teams[(j + 1)].schedule[i] = teams[(j)];
+                    try {
+                        teams[j].schedule[i] = teams[(j + 1)]
+                        teams[(j + 1)].schedule[i] = teams[(j)];
+                    } catch{
+                        teams[j].schedule[i] = teams[j];
+                    }
 
                 }
             }
@@ -2417,34 +2366,58 @@ export class Season {
         for (let i = 0; i < teams.length; i++) {
             home = teams[i];
             away = home.schedule[this.day];
-
-            if (home.played[this.day] == null) {
-                let game = new Game();
-                game.playGame();
-                home.played[this.day] = new Results(game.homescore, game.awayscore);
-                away.played[this.day] = new Results(game.awayscore, game.homescore);
-                if (game.homescore > game.awayscore) {
-                    home.wins++;
-                    away.losses++;
-                } else {
-                    home.losses++;
-                    away.wins++;
+            if (home === away) {
+                //bye week
+                home.played[this.day] = new Results(1, 0);
+                home.wins++;
+                for (let i = 0; i < home.roster.length; i++) {
+                    home.roster[i].statsHistory.push({
+                        goals: 0,
+                        saves: 0,
+                        goalsAllowed: 0,
+                        shots: 0,
+                        assists: 0
+                    });
                 }
 
+            } else {
 
-                //WHY WAS THIS IN HERE????? UHH WHAT
-
-                // availableFreeAgents.roster[i].statsHistory.push({
-                //     points: 0,
-                //     twoPointersAtt: 0,
-                //     twoPointersMade: 0,
-                //     rebounds: 0,
-                //     threePointersAtt: 0,
-                //     threePointersMade: 0
-                // });
+                if (home.played[this.day] == null) {
+                    let game = new Game();
+                    game.playGame();
+                    home.played[this.day] = new Results(game.homescore, game.awayscore);
+                    away.played[this.day] = new Results(game.awayscore, game.homescore);
 
 
+                    if (game.homescore > game.awayscore) {
+                        home.wins++;
+                        if (game.overtime) {
+                            away.otLosses++;
+                        }
+                        away.losses++;
+                    } else {
+                        if (game.overtime) {
+                            home.otLosses++;
+                        }
+                        home.losses++;
+                        away.wins++;
+                    }
 
+
+                    //WHY WAS THIS IN HERE????? UHH WHAT
+
+                    // availableFreeAgents.roster[i].statsHistory.push({
+                    //     points: 0,
+                    //     twoPointersAtt: 0,
+                    //     twoPointersMade: 0,
+                    //     rebounds: 0,
+                    //     threePointersAtt: 0,
+                    //     threePointersMade: 0
+                    // });
+
+
+
+                }
             }
         }
 
@@ -2472,22 +2445,44 @@ export class Season {
             for (let i = 0; i < teams.length; i++) {
                 home = teams[i];
                 away = home.schedule[this.day];
-
-                if (home.played[this.day] == null) {
-                    let game = new Game();
-                    game.playGame();
-                    home.played[this.day] = new Results(game.homescore, game.awayscore);
-                    away.played[this.day] = new Results(game.awayscore, game.homescore);
-                    if (game.homescore > game.awayscore) {
-                        home.wins++;
-                        away.losses++;
-                    } else {
-                        home.losses++;
-                        away.wins++;
+                if (home === away) {
+                    //bye week
+                    home.played[this.day] = new Results(1, 0);
+                    home.wins++;
+                    for (let i = 0; i < home.roster.length; i++) {
+                        home.roster[i].statsHistory.push({
+                            goals: 0,
+                            saves: 0,
+                            goalsAllowed: 0,
+                            shots: 0,
+                            assists: 0
+                        });
                     }
 
+                } else {
+
+                    if (home.played[this.day] == null) {
+                        let game = new Game();
+                        game.playGame();
+                        home.played[this.day] = new Results(game.homescore, game.awayscore);
+                        away.played[this.day] = new Results(game.awayscore, game.homescore);
+                        if (game.homescore > game.awayscore) {
+                            home.wins++;
+                            if (game.overtime) {
+                                away.otLosses++;
+                            }
+                            away.losses++;
+                        } else {
+                            if (game.overtime) {
+                                home.otLosses++;
+                            }
+                            home.losses++;
+                            away.wins++;
+                        }
 
 
+
+                    }
                 }
             }
             this.day++;
@@ -2722,13 +2717,8 @@ export class Franchise {
 
                 let history = "";
                 //SAVE PREVIOUS SEASONS STATS
-                if (ply.seasonThreePointersAtt > 0) {
-                    history = "PTS: " + (Math.round((ply.seasonPoints / ply.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((((ply.seasonTwoPointersMade / ply.seasonTwoPointersAtt) + (ply.seasonThreePointersMade / ply.seasonThreePointersAtt)) / 2) * 100)
-                        + " 3P% " + Math.floor((ply.seasonThreePointersMade / ply.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((ply.seasonFreeThrowsMade / ply.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((ply.seasonRebounds / ply.statsHistory.length) * 10) / 10)
-                } else {
-                    history = "PTS: " + (Math.round((ply.seasonPoints / ply.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((ply.seasonTwoPointersMade / ply.seasonTwoPointersAtt) * 100)
-                        + " 3P% " + Math.floor((ply.seasonThreePointersMade / ply.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((ply.seasonFreeThrowsMade / ply.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((ply.seasonRebounds / ply.statsHistory.length) * 10) / 10)
-                }
+                history = "GOALS: " + ply.seasonGoals + " SHOTS: " + ply.seasonShots + " ASSISTS: " + ply.seasonAssists + " SAVE%: " + Math.round((ply.seasonSaves / (ply.seasonSaves + ply.seasonGoalsAllowed)) * 1000) / 10;
+
                 ply.previousSeasonsStats.push({
                     team: teams[i].logoSrc,
                     data: history
@@ -2737,57 +2727,80 @@ export class Franchise {
                 //to show growth
                 ply.offOld = ply.off;
                 ply.defOld = ply.def;
-                ply.threePointOld = ply.threePoint;
-                ply.rebOld = ply.reb;
-                ply.ftOld = ply.ft;
+                ply.passOld = ply.pass;
+                ply.faceOffOld = ply.faceOff;
+                ply.saveOld = ply.save;
 
 
-                //slight boost for really young players
-                if (ply.age <= 23) {
-                    ply.off += Math.round(Math.random() * 1);
-                    ply.def += Math.round(Math.random() * 1);
-                    ply.threePoint += Math.round(Math.random() * 1);
-                    ply.reb += Math.round(Math.random() * 1);
-                    ply.ft += Math.round(Math.random() * 1);
-                }
+                if (ply.position != 4) {
+                    //slight boost for really young players
+                    if (ply.age <= 23) {
+                        ply.off += Math.round(Math.random() * 1);
+                        ply.def += Math.round(Math.random() * 1);
+                        ply.pass += Math.round(Math.random() * 1);
+                        ply.faceOff += Math.round(Math.random() * 1);
+                    }
 
-                if (ply.age <= 26) {
-                    ply.off += Math.round(Math.random() * 4) - 1;
-                    ply.def += Math.round(Math.random() * 4) - 1;
-                    ply.threePoint += Math.round(Math.random() * 3) - 1;
-                    ply.reb += Math.round(Math.random() * 3) - 1;
-                    ply.ft += Math.round(Math.random() * 3) - 1;
-                }
-                else if (ply.age < 30) {
-                    ply.off += Math.floor(Math.random() * 2);
-                    ply.def += Math.floor(Math.random() * 2);
-                    ply.threePoint += Math.floor(Math.random() * 2);
-                    ply.reb += Math.floor(Math.random() * 2);
-                    ply.ft += Math.floor(Math.random() * 2);
-                } else if (ply.age < 35) {
-                    ply.off += Math.round(Math.random() * 3) - 3;
-                    ply.def += Math.round(Math.random() * 3) - 3;
-                    ply.threePoint += Math.round(Math.random() * 1);
-                    ply.reb += Math.round(Math.random() * 3) - 3;
-                    ply.ft += Math.round(Math.random() * 1);
+                    if (ply.age <= 26) {
+                        ply.off += Math.round(Math.random() * 4) - 1;
+                        ply.def += Math.round(Math.random() * 4) - 1;
+                        ply.pass += Math.round(Math.random() * 3) - 1;
+                        ply.faceOff += Math.round(Math.random() * 3) - 1;
+                    }
+                    else if (ply.age < 30) {
+                        ply.off += Math.floor(Math.random() * 2);
+                        ply.def += Math.floor(Math.random() * 2);
+                        ply.pass += Math.floor(Math.random() * 2);
+                        ply.faceOff += Math.floor(Math.random() * 2);
+                    } else if (ply.age < 35) {
+                        ply.off += Math.round(Math.random() * 3) - 3;
+                        ply.def += Math.round(Math.random() * 3) - 3;
+                        ply.pass += Math.round(Math.random() * 1);
+                        ply.faceOff += Math.round(Math.random() * 3) - 3;
+                    } else {
+                        ply.off -= Math.round(Math.random() * 5)
+                        ply.def -= Math.round(Math.random() * 5)
+                        ply.pass += Math.round(Math.random() * 1);
+                        ply.faceOff -= Math.round(Math.random() * 5)
+                    }
+
+                    if (Math.random() * 500 >= 499) {
+                        //BREAKOUT PLYER
+                        // console.log(ply.name);
+                        // console.log(ply.rating);
+                        // console.log(ply.teamName);
+                        ply.off += Math.round(Math.random() * 10)
+                        ply.def += Math.round(Math.random() * 10)
+                        ply.pass += Math.round(Math.random() * 10);
+                        ply.faceOff += Math.round(Math.random() * 10);
+                    }
+
                 } else {
-                    ply.off -= Math.round(Math.random() * 5)
-                    ply.def -= Math.round(Math.random() * 5)
-                    ply.threePoint += Math.round(Math.random() * 1);
-                    ply.reb -= Math.round(Math.random() * 5)
-                    ply.ft += Math.round(Math.random() * 1);
-                }
+                    if (ply.age <= 23) {
+                        ply.save += Math.round(Math.random() * 1);
+                    }
 
-                if (Math.random() * 500 >= 499) {
-                    //BREAKOUT PLYER
-                    // console.log(ply.name);
-                    // console.log(ply.rating);
-                    // console.log(ply.teamName);
-                    ply.off += Math.round(Math.random() * 10)
-                    ply.def += Math.round(Math.random() * 10)
-                    ply.threePoint += Math.round(Math.random() * 10);
-                    ply.reb += Math.round(Math.random() * 10);
-                    ply.ft += Math.round(Math.random() * 10);
+                    if (ply.age <= 26) {
+                        ply.save += Math.round(Math.random() * 4) - 1;
+
+                    }
+                    else if (ply.age < 30) {
+                        ply.save += Math.floor(Math.random() * 2);
+
+                    } else if (ply.age < 35) {
+                        ply.save += Math.round(Math.random() * 3) - 3;
+
+                    } else {
+                        ply.save -= Math.round(Math.random() * 5)
+                    }
+
+                    if (Math.random() * 500 >= 499) {
+                        //BREAKOUT PLYER
+                        // console.log(ply.name);
+                        // console.log(ply.rating);
+                        // console.log(ply.teamName);
+                        ply.save += Math.round(Math.random() * 10)
+                    }
                 }
 
 
@@ -2806,13 +2819,8 @@ export class Franchise {
             //fix for free agents having no history
             let history = "";
             //SAVE PREVIOUS SEASONS STATS
-            if (ply.seasonThreePointersAtt > 0) {
-                history = "PTS: " + (Math.round((ply.seasonPoints / ply.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((((ply.seasonTwoPointersMade / ply.seasonTwoPointersAtt) + (ply.seasonThreePointersMade / ply.seasonThreePointersAtt)) / 2) * 100)
-                    + " 3P% " + Math.floor((ply.seasonThreePointersMade / ply.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((ply.seasonFreeThrowsMade / ply.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((ply.seasonRebounds / ply.statsHistory.length) * 10) / 10)
-            } else {
-                history = "PTS: " + (Math.round((ply.seasonPoints / ply.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((ply.seasonTwoPointersMade / ply.seasonTwoPointersAtt) * 100)
-                    + " 3P% " + Math.floor((ply.seasonThreePointersMade / ply.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((ply.seasonFreeThrowsMade / ply.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((ply.seasonRebounds / ply.statsHistory.length) * 10) / 10)
-            }
+            history = "GOALS: " + ply.seasonGoals + " SHOTS: " + ply.seasonShots + " ASSISTS: " + ply.seasonAssists + " SAVE%: " + Math.round((ply.seasonSaves / (ply.seasonSaves + ply.seasonGoalsAllowed)) * 1000) / 10;
+
             ply.previousSeasonsStats.push({
                 team: availableFreeAgents.logoSrc,
                 data: history
@@ -2820,9 +2828,9 @@ export class Franchise {
 
             ply.off += Math.floor(Math.random() * 6) - 6;
             ply.def += Math.floor(Math.random() * 6) - 6;
-            ply.threePoint += Math.floor(Math.random() * 6) - 6;
-            ply.reb += Math.floor(Math.random() * 6) - 6;
-            ply.ft += Math.floor(Math.random() * 6) - 6;
+            ply.pass += Math.floor(Math.random() * 6) - 6;
+            ply.save += Math.floor(Math.random() * 6) - 6;
+            ply.faceOff += Math.floor(Math.random() * 6) - 6;
 
 
             ply.calculateRating();
@@ -2838,15 +2846,23 @@ export class Franchise {
             if (rand === 1) {
                 //bust
                 let diff = Math.round(scaleBetween(ply.rating, 0, 15, 60, 90));
-                ply.off -= diff;
-                ply.def -= diff;
+                if (ply.position === 4) {
+                    ply.save -= diff;
+                } else {
+                    ply.off -= diff;
+                    ply.def -= diff;
+                }
                 // console.log(ply.name + ' ' + ply.rating + ' ' + diff + ply.teamName + ' bust');
             }
             if (rand === 2) {
                 //breakout star
                 let diff = Math.round(scaleBetween(ply.rating, 15, 0, 60, 90));
-                ply.off += diff;
-                ply.def += diff;
+                if (ply.position === 4) {
+                    ply.save += diff;
+                } else {
+                    ply.off += diff;
+                    ply.def += diff;
+                }
                 // console.log(ply.name + ' ' + ply.rating + ' ' + diff + ply.teamName + ' star');
 
             }
@@ -2855,10 +2871,15 @@ export class Franchise {
             let randomFactor = Math.floor(Math.random() * 7) - 3;
 
 
-            ply.off += randomFactor
-            ply.off += randomFactor
-            ply.threePoint += randomFactor
-            ply.reb += randomFactor
+            if (ply.position === 4) {
+                ply.save += randomFactor;
+            } else {
+                ply.off += randomFactor
+                //nba bug found
+                ply.def += randomFactor
+                ply.faceOff += randomFactor
+                ply.pass += randomFactor
+            }
 
             ply.calculateRating();
 
@@ -2869,11 +2890,11 @@ export class Franchise {
     signing() {
         for (let i = 0; i < teams.length; i++) {
 
-            teams[i].pg = 0;
-            teams[i].sg = 0;
-            teams[i].sf = 0;
-            teams[i].pf = 0;
             teams[i].c = 0;
+            teams[i].lw = 0;
+            teams[i].rw = 0;
+            teams[i].d = 0;
+            teams[i].g = 0;
 
             teams[i].salary = 0;
 
@@ -2881,20 +2902,20 @@ export class Franchise {
                 let player = teams[i].roster[j];
                 teams[i].salary += player.salary;
 
-                if (teams[i].roster[j].position === POS_PG) {
-                    teams[i].pg++;
-                }
-                if (teams[i].roster[j].position === POS_SG) {
-                    teams[i].sg++;
-                }
-                if (teams[i].roster[j].position === POS_SF) {
-                    teams[i].sf++;
-                }
-                if (teams[i].roster[j].position === POS_PF) {
-                    teams[i].pf++;
-                }
                 if (teams[i].roster[j].position === POS_C) {
                     teams[i].c++;
+                }
+                if (teams[i].roster[j].position === POS_LW) {
+                    teams[i].lw++;
+                }
+                if (teams[i].roster[j].position === POS_RW) {
+                    teams[i].rw++;
+                }
+                if (teams[i].roster[j].position === POS_D) {
+                    teams[i].d++;
+                }
+                if (teams[i].roster[j].position === POS_G) {
+                    teams[i].g++;
                 }
             }
         }
@@ -2929,67 +2950,6 @@ export class Franchise {
 
                 for (let j = 0; j < availableFreeAgents.roster.length; j++) {
 
-                    if (teams[i].pg < POS_PG_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_PG) {
-
-                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-                            teams[i].pg++;
-                            availableFreeAgents.roster.splice(j, 1);
-                        }
-                    }
-
-                    if (teams[i].sg < POS_SG_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_SG) {
-
-                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-                            teams[i].sg++;
-                            availableFreeAgents.roster.splice(j, 1);
-                        }
-                    }
-
-                    if (teams[i].sf < POS_SF_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_SF) {
-
-                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-                            teams[i].sf++;
-                            availableFreeAgents.roster.splice(j, 1);
-                        }
-                    }
-
-                    if (teams[i].pf < POS_PF_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_PF) {
-
-
-                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-                            teams[i].pf++;
-                            availableFreeAgents.roster.splice(j, 1);
-                        }
-                    }
-
                     if (teams[i].c < POS_C_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_C) {
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
@@ -2997,10 +2957,71 @@ export class Franchise {
                             availableFreeAgents.roster[j].teamName = teams[i].name;
                             availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
                             availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
+
+                            teams[i].roster.push(availableFreeAgents.roster[j]);
+                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            teams[i].C++;
+                            availableFreeAgents.roster.splice(j, 1);
+                        }
+                    }
+
+                    if (teams[i].lw < POS_LW_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_LW) {
+
+                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
+
+                            availableFreeAgents.roster[j].teamName = teams[i].name;
+                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
+                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
+
+                            teams[i].roster.push(availableFreeAgents.roster[j]);
+                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            teams[i].lw++;
+                            availableFreeAgents.roster.splice(j, 1);
+                        }
+                    }
+
+                    if (teams[i].rw < POS_RW_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_RW) {
+
+                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
+
+                            availableFreeAgents.roster[j].teamName = teams[i].name;
+                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
+                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
+
+                            teams[i].roster.push(availableFreeAgents.roster[j]);
+                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            teams[i].rw++;
+                            availableFreeAgents.roster.splice(j, 1);
+                        }
+                    }
+
+                    if (teams[i].d < POS_D_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_D) {
+
+
+                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
+
+                            availableFreeAgents.roster[j].teamName = teams[i].name;
+                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
+                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
+
+                            teams[i].roster.push(availableFreeAgents.roster[j]);
+                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            teams[i].d++;
+                            availableFreeAgents.roster.splice(j, 1);
+                        }
+                    }
+
+                    if (teams[i].g < POS_G_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_G) {
+
+                        if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
+
+                            availableFreeAgents.roster[j].teamName = teams[i].name;
+                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
+                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
                             teams[i].roster.push(availableFreeAgents.roster[j]);
                             teams[i].salary += availableFreeAgents.roster[j].salary;
 
-                            teams[i].c++;
+                            teams[i].g++;
                             availableFreeAgents.roster.splice(j, 1);
                         }
                     }
@@ -3008,7 +3029,7 @@ export class Franchise {
 
                 }
 
-                while (teams[i].roster.length < 14) {
+                while (teams[i].roster.length < 24) {
                     if (teams[i] != selectedTeam) {
                         let index = Math.floor(Math.random() * 20);
                         if (index >= availableFreeAgents.roster.length) {
@@ -3145,6 +3166,8 @@ export class Franchise {
                     return 0;
                 });
                 while (teams[i].roster.length > rosterSize) {
+                    
+
                     availableFreeAgents.roster.push(teams[i].roster[0]);
                     teams[i].roster.splice(0, 1);
                 }
@@ -3191,8 +3214,53 @@ export class Franchise {
                 isPick: true,
                 projectedPick: null,
                 currentTeam: null
+            },
+            {
+                round: 3,
+                originalTeam: teams[i].name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 4,
+                originalTeam: teams[i].name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 5,
+                originalTeam: teams[i].name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 6,
+                originalTeam: teams[i].name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 7,
+                originalTeam: teams[i].name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
             }
-            ];
+            ]
 
 
 
@@ -3206,7 +3274,7 @@ export class Franchise {
 
         generateDraftClass();
 
-        while (availableFreeAgents.roster.length > 250) {
+        while (availableFreeAgents.roster.length > 500) {
             availableFreeAgents.roster.pop();
         }
 
@@ -3258,7 +3326,7 @@ export class Franchise {
             for (let i = 0; i < teams.length; i++) {
                 for (let j = 0; j < teams[i].roster.length; j++) {
                     let player = teams[i].roster[j];
-                    if (player.age >= 35 && player.rating < 83) {
+                    if (player.age >= 37 && player.rating < 83) {
                         let rand = Math.random() * 2;
                         if (rand <= 1) {
                             this.retirements.roster.push(player);
@@ -3465,7 +3533,7 @@ export class Franchise {
 var shuffle = function (array) {
 
     var currentIndex = array.length;
-    var temporaryValue, randomIndex;
+    var forwardsVsDefensemenraryValue, randomIndex;
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
@@ -3474,9 +3542,9 @@ var shuffle = function (array) {
         currentIndex -= 1;
 
         // And swap it with the current element.
-        temporaryValue = array[currentIndex];
+        forwardsVsDefensemenraryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        array[randomIndex] = forwardsVsDefensemenraryValue;
     }
 
     return array;
@@ -3578,11 +3646,12 @@ export function sortedRoster(team, sortAttribute) {
             }
             return 0;
         }
+        //goals
         if (sortAttribute === 'ppg') {
-            if ((a.seasonPoints / a.statsHistory.length) > (b.seasonPoints / b.statsHistory.length)) {
+            if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists) {
                 return -1
             }
-            if ((a.seasonPoints / a.statsHistory.length) < (b.seasonPoints / b.statsHistory.length)) {
+            if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists) {
                 return 1;
             }
             return 0;
@@ -3599,9 +3668,9 @@ export function leaugeLeaders() {
 
     for (let i = 0; i < teams.length; i++) {
         teams[i].roster.sort(function (a, b) {
-            if ((a.seasonPoints / a.statsHistory.length) > (b.seasonPoints / b.statsHistory.length))
+            if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists)
                 return -1;
-            if ((a.seasonPoints / a.statsHistory.length) < (b.seasonPoints / b.statsHistory.length))
+            if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists)
                 return 1;
             return 0;
         })
@@ -3611,9 +3680,9 @@ export function leaugeLeaders() {
     }
 
     leaugeLeaders.roster.sort(function (a, b) {
-        if (a.seasonPoints > b.seasonPoints)
+        if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists)
             return -1;
-        if (a.seasonPoints < b.seasonPoints)
+        if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists)
             return 1;
         return 0;
     })
@@ -3739,24 +3808,24 @@ function setSalaryExpectations(rosterpool) {
 
         if (collegeMode) {
             if (rosterpool.roster[i].rating >= 65) {
-                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 50000000, 65, 99));
+                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 15000000, 65, 99));
                 //VARIATION
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
             }
             else {
-                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 600000, VETERANSMINIMUM, 40, 64));
+                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 300000, VETERANSMINIMUM, 40, 64));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
 
             }
         } else {
 
             if (rosterpool.roster[i].rating >= 74) {
-                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 50000000, 74, 99));
+                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 15000000, 74, 99));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
 
             }
             else {
-                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 600000, VETERANSMINIMUM, 40, 74));
+                rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 300000, VETERANSMINIMUM, 40, 74));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
             }
         }
@@ -4311,9 +4380,9 @@ export function createPlayer(name, number, position, age, salary, faceSrc, heigh
         salary: salary,
         off: 75,
         def: 75,
-        reb: 75,
-        threePoint: 75,
-        ft: 75,
+        pass: 75,
+        faceOff: 75,
+        save: 75,
         rating: 75,
         faceSrc: faceSrc
     })
@@ -4418,9 +4487,9 @@ export function exportRosterJson() {
                 height: teams[i].roster[j].height,
                 off: teams[i].roster[j].off,
                 def: teams[i].roster[j].def,
-                threePoint: teams[i].roster[j].threePoint,
-                reb: teams[i].roster[j].reb,
-                ft: teams[i].roster[j].ft,
+                pass: teams[i].roster[j].pass,
+                faceOff: teams[i].roster[j].faceOff,
+                save: teams[i].roster[j].save,
                 years: teams[i].roster[j].years,
                 salary: teams[i].roster[j].salary,
                 age: teams[i].roster[j].age
@@ -4449,9 +4518,9 @@ export function exportRosterJson() {
             height: availableFreeAgents.roster[i].height,
             off: availableFreeAgents.roster[i].off,
             def: availableFreeAgents.roster[i].def,
-            threePoint: availableFreeAgents.roster[i].threePoint,
-            reb: availableFreeAgents.roster[i].reb,
-            ft: availableFreeAgents.roster[i].ft,
+            pass: availableFreeAgents.roster[i].pass,
+            faceOff: availableFreeAgents.roster[i].faceOff,
+            save: availableFreeAgents.roster[i].save,
             years: availableFreeAgents.roster[i].years,
             salary: availableFreeAgents.roster[i].salary,
             age: availableFreeAgents.roster[i].age
@@ -4497,7 +4566,7 @@ export async function getDataFromLink(link, type, sliderType) {
 
 
 export let communityRosters = [];
-communityRosters = getDataFromLink('https://raw.githubusercontent.com/cbanfiel/On-Paper-Sports-Basketball-2020-Rosters/master/AndroidRosters.json', 'communityroster');
+// communityRosters = getDataFromLink('https://raw.githubusercontent.com/cbanfiel/On-Paper-Sports-Basketball-2020-Rosters/master/AndroidRosters.json', 'communityroster');
 
 
 export function loadRosterJson(loadedDataIn) {
@@ -4692,9 +4761,9 @@ export function exportDraftClassJson() {
             height: draftClass.roster[i].height,
             off: draftClass.roster[i].off,
             def: draftClass.roster[i].def,
-            threePoint: draftClass.roster[i].threePoint,
-            reb: draftClass.roster[i].reb,
-            ft: draftClass.roster[i].ft,
+            pass: draftClass.roster[i].pass,
+            faceOff: draftClass.roster[i].faceOff,
+            save: draftClass.roster[i].save,
             years: draftClass.roster[i].years,
             salary: draftClass.roster[i].salary,
             age: draftClass.roster[i].age
@@ -4907,15 +4976,14 @@ export function manageSaveName(value) {
 
 export function returnStatsView(player) {
     let str;
-    if (player.seasonThreePointersAtt > 0) {
-        return "MIN: " + (Math.round(player.minutesPlayed / player.statsHistory.length * 10) / 10) + "\nPTS: " + (Math.round((player.seasonPoints / player.statsHistory.length) * 10) / 10) + "\nFG%: " + Math.floor((((player.seasonTwoPointersMade / player.seasonTwoPointersAtt) + (player.seasonThreePointersMade / player.seasonThreePointersAtt)) / 2) * 100)
-            + "\n3P%: " + Math.floor((player.seasonThreePointersMade / player.seasonThreePointersAtt) * 100) + "\nFT%: " + Math.floor((player.seasonFreeThrowsMade / player.seasonFreeThrowsAttempted) * 100) + '\nREB: ' + (Math.round((player.seasonRebounds / player.statsHistory.length) * 10) / 10) + '\nOREB: ' + (Math.round((player.seasonOffRebounds / player.statsHistory.length) * 10) / 10)
-    } else {
-        return "MIN: " + (Math.round(player.minutesPlayed / player.statsHistory.length * 10) / 10) + "\nPTS: " + (Math.round((player.seasonPoints / player.statsHistory.length) * 10) / 10) + "\nFG%: " + Math.floor((player.seasonTwoPointersMade / player.seasonTwoPointersAtt) * 100)
-            + "\n3P%: " + Math.floor((player.seasonThreePointersMade / player.seasonThreePointersAtt) * 100) + "\nFT%: " + Math.floor((player.seasonFreeThrowsMade / player.seasonFreeThrowsAttempted) * 100) + '\nREB: ' + (Math.round((player.seasonRebounds / player.statsHistory.length) * 10) / 10) + '\nOREB: ' + (Math.round((player.seasonOffRebounds / player.statsHistory.length) * 10) / 10)
-    }
+    str = "GOALS: " + player.goals + "\nSHOTS: " + player.seasonShots + "\nASSISTS: " + player.seasonAssists + "\nSAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10;
+    return str;
+}
 
-
+export function returnStatsListView(player) {
+    let str;
+    str = "GOALS: " + player.goals + " SHOTS: " + player.shots + " ASSISTS: " + player.assists + " SAVE%: " + Math.round((player.saves / (player.saves + player.goalsAllowed)) * 1000) / 10;
+    return str;
 }
 
 
@@ -4943,12 +5011,12 @@ export function saveFranchise(slot) {
             roster: teams[i].roster,
             history: teams[i].history,
             offVsDefFocus: teams[i].offVsDefFocus,
-            offTwoVsThree: teams[i].offTwoVsThree,
-            defTwoVsThree: teams[i].defTwoVsThree,
-            tempo: teams[i].tempo,
+            qualityVsQuantity: teams[i].qualityVsQuantity,
+            defenseAggresiveVsConservative: teams[i].defenseAggresiveVsConservative,
+            forwardsVsDefensemen: teams[i].forwardsVsDefensemen,
             rotationSize: teams[i].rotationSize,
             frontCourtVsBackCourt: teams[i].frontCourtVsBackCourt,
-            reboundVsRunInTransition: teams[i].reboundVsRunInTransition,
+            freezeThePuckVsPlayThePuck: teams[i].freezeThePuckVsPlayThePuck,
             scheduleString: scheduleString,
             wins: teams[i].wins,
             losses: teams[i].losses,
@@ -5000,9 +5068,9 @@ export function saveFranchise(slot) {
             height: draftClass.roster[i].height,
             off: draftClass.roster[i].off,
             def: draftClass.roster[i].def,
-            threePoint: draftClass.roster[i].threePoint,
-            reb: draftClass.roster[i].reb,
-            ft: draftClass.roster[i].ft,
+            pass: draftClass.roster[i].pass,
+            faceOff: draftClass.roster[i].faceOff,
+            save: draftClass.roster[i].save,
             years: draftClass.roster[i].years,
             salary: draftClass.roster[i].salary,
             age: draftClass.roster[i].age
@@ -5039,12 +5107,12 @@ export const loadFranchise = (data) => {
             teams[i].roster = [];
             //coach sliders
             teams[i].offVsDefFocus = loadedData.teams[i].offVsDefFocus;
-            teams[i].offTwoVsThree = loadedData.teams[i].offTwoVsThree;
-            teams[i].defTwoVsThree = loadedData.teams[i].defTwoVsThree;
-            teams[i].tempo = loadedData.teams[i].tempo;
+            teams[i].qualityVsQuantity = loadedData.teams[i].qualityVsQuantity;
+            teams[i].defenseAggresiveVsConservative = loadedData.teams[i].defenseAggresiveVsConservative;
+            teams[i].forwardsVsDefensemen = loadedData.teams[i].forwardsVsDefensemen;
             teams[i].rotationSize = loadedData.teams[i].rotationSize;
             teams[i].frontCourtVsBackCourt = loadedData.teams[i].frontCourtVsBackCourt;
-            teams[i].reboundVsRunInTransition = loadedData.teams[i].reboundVsRunInTransition;
+            teams[i].freezeThePuckVsPlayThePuck = loadedData.teams[i].freezeThePuckVsPlayThePuck;
             //stats
             teams[i].seasonPoints = loadedData.teams[i].seasonPoints;
             teams[i].seasonPointsAllowed = loadedData.teams[i].seasonPointsAllowed;

@@ -60,8 +60,8 @@ export default class Standings extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -77,14 +77,14 @@ export default class Standings extends React.Component {
                     ) : null
                 }
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
           {this.state.standings.map((team,i) => (
             <ListItem
              title={i+1 + '. ' + team.name} 
              key={team.name} 
              leftAvatar={team.logoSrc }
-             subtitle={'Record: ' + team.wins + '-' + team.losses}
+             subtitle={'Record: ' + team.wins + '-' + (team.losses-team.otLosses) + '-' + team.otLosses}
             onLongPress={() => this.setModalVisible(true, team)}
             ></ListItem>
           ))}

@@ -52,7 +52,7 @@ export default class RecentUpdates extends React.Component {
         return (
 
             <Background>
-                <ScrollView style={{backgroundColor:'rgba(255,255,255,0.75)'}}>
+                <ScrollView style={{backgroundColor:'rgba(255,255,255,0)'}}>
                     {updateLog.map((update, i) => (
                        <View style={{borderBottomWidth:0.5, padding:10}}>
                            <Text style={{fontSize: 20, color: 'black', fontFamily: 'advent-pro'}} >{update.date}</Text>

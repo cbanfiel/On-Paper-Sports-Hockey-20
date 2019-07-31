@@ -58,7 +58,7 @@ export default class PlayoffMenu extends React.Component {
     return (
 
       <Background>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
           {
             !franchise.playoffs.completed ? (
@@ -69,12 +69,12 @@ export default class PlayoffMenu extends React.Component {
 
                     <Card
                       containerStyle={{
-                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                        borderRadius: 25,
+                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                        borderColor: 'black',
                         alignSelf:'center'
                       }}
                     >
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Sim Game</Text>
+                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim Game</Text>
                     </Card>
                   </TouchableOpacity>
 
@@ -82,12 +82,12 @@ export default class PlayoffMenu extends React.Component {
 
                     <Card
                       containerStyle={{
-                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                        borderRadius: 25,
+                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                        borderColor: 'black',
                         alignSelf:'center'
                       }}
                     >
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Sim Round</Text>
+                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim Round</Text>
                     </Card>
                   </TouchableOpacity>
                 </View>
@@ -98,12 +98,12 @@ export default class PlayoffMenu extends React.Component {
 
                   <Card
                     containerStyle={{
-                      width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                      borderRadius: 25,
+                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                      borderColor: 'black',
                       alignSelf:'center'
                     }}
                   >
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Advance To Next Round</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Advance To Next Round</Text>
                   </Card>
                 </TouchableOpacity>
 
@@ -116,21 +116,21 @@ export default class PlayoffMenu extends React.Component {
 
               <Card
                 containerStyle={{
-                  width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                  borderRadius: 25,
+                  width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                  borderColor: 'black',
                   alignSelf:'center'
                 }}
                 
               >
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? 'Game : ' + (matchup.game - 1) : null}</Text>
+                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? 'Game : ' + (matchup.game - 1) : null}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team1Score : null}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team1Score : null}</Text>
                   <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} uri = {matchup.team1.logoSrc } />
                   <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} uri = {matchup.team2.logoSrc } />
-                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'white', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team2Score : null}</Text>
+                  <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team2Score : null}</Text>
                 </View>
 
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.team1Wins > matchup.team2Wins ? matchup.team1.name + ' Leads ' + matchup.team1Wins + '-' + matchup.team2Wins : matchup.team2Wins > matchup.team1Wins ? matchup.team2.name + ' Leads ' + matchup.team2Wins + '-' + matchup.team1Wins : 'Series Tied ' + matchup.team2Wins + '-' + matchup.team1Wins : null}</Text>
+                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.team1Wins > matchup.team2Wins ? matchup.team1.name + ' Leads ' + matchup.team1Wins + '-' + matchup.team2Wins : matchup.team2Wins > matchup.team1Wins ? matchup.team2.name + ' Leads ' + matchup.team2Wins + '-' + matchup.team1Wins : 'Series Tied ' + matchup.team2Wins + '-' + matchup.team1Wins : null}</Text>
               </Card>
             </TouchableOpacity>
           ))}
@@ -139,8 +139,8 @@ export default class PlayoffMenu extends React.Component {
               <TouchableOpacity style={{ width: '100%' }} onPress={() => {this.advanceToRetirements()}}>
               <Card
                 containerStyle={{
-                  width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                  borderRadius: 25,
+                  width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                  borderColor: 'black',
                   alignSelf:'center'
                 }}
                 >
@@ -148,8 +148,8 @@ export default class PlayoffMenu extends React.Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri = {selectedTeam.logoSrc }/>
                 </View>
-                <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Advance To Offseason'}</Text>
+                <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Advance To Offseason'}</Text>
               </Card>
             </TouchableOpacity>
             ) : null

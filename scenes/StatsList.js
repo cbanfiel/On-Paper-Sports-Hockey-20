@@ -17,19 +17,10 @@ export default class StatsList extends React.Component {
   statsView(player) {
     let str;
     if (this.props.season) {
-      if(player.seasonThreePointersAtt>0){
-        return "MIN: " + (Math.round(player.minutesPlayed/player.statsHistory.length*10)/10) + " PTS: " + (Math.round((player.seasonPoints / player.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((((player.seasonTwoPointersMade / player.seasonTwoPointersAtt) + (player.seasonThreePointersMade/player.seasonThreePointersAtt))/2) * 100)
-         + " 3P% " + Math.floor((player.seasonThreePointersMade / player.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((player.seasonFreeThrowsMade / player.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((player.seasonRebounds / player.statsHistory.length) * 10) / 10) + ' OREB: ' + (Math.round((player.seasonOffRebounds / player.statsHistory.length) * 10) / 10) 
-      }else{
-        return "MIN: " + (Math.round(player.minutesPlayed/player.statsHistory.length*10)/10) + " PTS: " + (Math.round((player.seasonPoints / player.statsHistory.length) * 10) / 10) + " FG% " + Math.floor((player.seasonTwoPointersMade / player.seasonTwoPointersAtt) * 100)
-         + " 3P% " + Math.floor((player.seasonThreePointersMade / player.seasonThreePointersAtt) * 100) + " FT% " + Math.floor((player.seasonFreeThrowsMade / player.seasonFreeThrowsAttempted) * 100) + ' REB: ' + (Math.round((player.seasonRebounds / player.statsHistory.length) * 10) / 10) + ' OREB: ' + (Math.round((player.seasonOffRebounds / player.statsHistory.length) * 10) / 10) 
-      }
-
-
+        return "GOALS: " + player.seasonGoals + " SHOTS: " + player.seasonShots + " ASSISTS: " + player.seasonAssists + " SAVE%: " + Math.round((player.seasonSaves/ (player.seasonSaves + player.seasonGoalsAllowed))*1000)/10;  
     }
     else {
-      return "PTS: " + player.points + " FG% " + Math.floor((player.twoPointersMade / player.twoPointersAtt) * 100)
-         + " 3P% " + Math.floor((player.threePointersMade / player.threePointersAtt) * 100) + " FT% " + Math.floor((player.freeThrowsMade / player.freeThrowsAttempted) * 100) + ' REB: ' + player.rebounds;
+      return "GOALS: " + player.goals + " SHOTS: " + player.shots + " ASSISTS: " + player.assists + " SAVE%: " + Math.round((player.saves/ (player.saves + player.goalsAllowed))*1000)/10;  
     }
   }
 
@@ -111,8 +102,8 @@ export default class StatsList extends React.Component {
                                 alignItems: 'center'
                             }}>
                                 <View style={{
-                                    width: '90%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                                    width: '95%',
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {

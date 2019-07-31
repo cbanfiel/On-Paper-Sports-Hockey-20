@@ -13,13 +13,29 @@ export default class FreeAgencyStage extends React.Component{
 
 
   turnOffAutoSigning= () =>{
-    if(selectedTeam.roster.length < 14){
-      let remaining = 14 - selectedTeam.roster.length;
-      Alert.alert('You must sign at least ' + remaining + ' more players before turning off auto fill');
-      this.setState({autoSign: true});
-    }else{
-      this.setState({autoSign: !this.state.autoSign});
+    selectedTeam.reorderLineup();
+
+    let forwardCount = selectedTeam.offLine1.length + selectedTeam.offLine2.length + selectedTeam.offLine3.length + selectedTeam.offLine4.length;
+    let defenseCount = selectedTeam.defLine1.length + selectedTeam.defLine2.length + selectedTeam.defLine3.length;
+    let goalieCount = selectedTeam.goalies.length;
+
+    if(forwardCount<12){
+      let diff = 12 - forwardCount;
+      Alert.alert('You must sign ' + diff + ' more forwards before turning off auto fill');
+      return;
     }
+    if(defenseCount<6){
+      let diff = 6 - defenseCount;
+      Alert.alert('You must sign ' + diff + ' more defensemen before turning off auto fill');
+      return;
+    }
+    if(goalieCount<2){
+      let diff = 2 - goalieCount;
+      Alert.alert('You must sign ' + diff + ' more goalies before turning off auto fill');
+      return;
+    }
+
+      this.setState({autoSign: !this.state.autoSign});
   }
 
   state = {
@@ -30,18 +46,18 @@ export default class FreeAgencyStage extends React.Component{
 
         return (
             <Background>
-              <ScrollView>
+              <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
               <TouchableOpacity style={{ width: '100%' }} onPress={() => {this.turnOffAutoSigning()}}>
 
 <Card
   containerStyle={{
-    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-    borderRadius: 25,
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
     alignSelf:'center'
   }}
 >
-  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.autoSign? 'Auto Fill Roster: ON' : 'Auto Fill Roster: OFF'}</Text>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.autoSign? 'Auto Fill Roster: ON' : 'Auto Fill Roster: OFF'}</Text>
 </Card>
 </TouchableOpacity>
   
@@ -49,8 +65,8 @@ export default class FreeAgencyStage extends React.Component{
                 <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.signplayermenu({ back: Actions.currentScene, forced:false }) }}>
                 <Card
                   containerStyle={{
-                    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                    borderRadius: 25,
+                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'black',
                     alignSelf:'center'
                   }}
                   >
@@ -58,8 +74,8 @@ export default class FreeAgencyStage extends React.Component{
                   <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{uri: selectedTeam.logoSrc }} />
                   </View>
-                  <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{collegeMode ? 'Recruiting' : 'Free Agency'}</Text>
+                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{collegeMode ? 'Recruiting' : 'Free Agency'}</Text>
                 </Card>
               </TouchableOpacity>
   
@@ -67,8 +83,8 @@ export default class FreeAgencyStage extends React.Component{
   
                 <Card
                   containerStyle={{
-                    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                    borderRadius: 25,
+                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'black',
                     alignSelf:'center'
                   }}
                   >
@@ -76,8 +92,8 @@ export default class FreeAgencyStage extends React.Component{
                   <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{ uri: selectedTeam.logoSrc }}/>
                   </View>
-                  <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
+                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
                 </Card>
               </TouchableOpacity>
   {
@@ -85,8 +101,8 @@ export default class FreeAgencyStage extends React.Component{
               <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.teamlist({ home: 3, back: 'season', isForced: false, requirementsOff: true })}>
                           <Card
                               containerStyle={{
-                                  width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                                  borderRadius: 25,
+                                  width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                                  borderColor: 'black',
                                   alignSelf:'center'
                               }}
                               >
@@ -94,8 +110,8 @@ export default class FreeAgencyStage extends React.Component{
                               <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                   <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
                               </View>
-                              <Divider style={{ backgroundColor: 'white', height: 1, margin: 5 }} ></Divider>
-                              <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
+                              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+                              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
                           </Card>
                       </TouchableOpacity>
                       : null
@@ -106,8 +122,8 @@ export default class FreeAgencyStage extends React.Component{
   
                 <Card
                   containerStyle={{
-                    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                    borderRadius: 25,
+                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'black',
                     alignSelf:'center'
                   }}
                   >
@@ -115,8 +131,8 @@ export default class FreeAgencyStage extends React.Component{
                   <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{ uri: selectedTeam.logoSrc }} />
                   </View>
-                  <Divider style={{backgroundColor:'white' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{'Advance To Training'}</Text>
+                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Advance To Training'}</Text>
                 </Card>
               </TouchableOpacity>
   

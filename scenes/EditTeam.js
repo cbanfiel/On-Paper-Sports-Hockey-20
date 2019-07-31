@@ -58,25 +58,25 @@ export default class EditTeam extends React.Component {
     render() {
         return (
             <Background>
-                <ScrollView >
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     <Card
                         containerStyle={{
-                            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                            borderRadius: 25,
+                            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                            borderColor: 'black',
                             alignSelf:'center'
                         }} >
 
                         <CachedImage rounded style={{ height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} uri={this.state.logoSrc!= '' ? this.state.logoSrc : null} />
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.state.name + ' OVR: ' + this.state.rating}</Text>
-                        <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.name + ' OVR: ' + this.state.rating}</Text>
+                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"NAME: "}</Text>
-                        <Input onChangeText={value => this.setState({ name: value })} placeholder={'Enter Team Name'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"NAME: "}</Text>
+                        <Input onChangeText={value => this.setState({ name: value })} placeholder={'Enter Team Name'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"LOGO LINK: "}</Text>
-                        <Input onChangeText={value => this.setLogoSrc(value)} placeholder={'Paste Link To Logo'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"Rating: " + this.state.rating}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"LOGO LINK: "}</Text>
+                        <Input onChangeText={value => this.setLogoSrc(value)} placeholder={'Paste Link To Logo'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Rating: " + this.state.rating}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -87,10 +87,10 @@ export default class EditTeam extends React.Component {
                             onValueChange={value => this.setState({ rating: value })}
                         />
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25, marginVertical:10 }} title="Generate New Roster" onPress={() => { this.generateNewRoster() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Generate New Roster" onPress={() => { this.generateNewRoster() }}></Button>
                         
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"Conference: " + this.state.conferenceName}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Conference: " + this.state.conferenceName}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -102,17 +102,17 @@ export default class EditTeam extends React.Component {
                         />
 
 <View>
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro', margin:5 }}>{conferences[0].name + ' Teams: ' + conferences[0].teams.length}</Text>
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro', margin:5 }}>{conferences[1].name + ' Teams: ' + conferences[1].teams.length}</Text>
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro', margin:5 }}>{'Total Teams: ' + teams.length}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', margin:5 }}>{conferences[0].name + ' Teams: ' + conferences[0].teams.length}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', margin:5 }}>{conferences[1].name + ' Teams: ' + conferences[1].teams.length}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', margin:5 }}>{'Total Teams: ' + teams.length}</Text>
 
                         </View>
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25, marginVertical:10 }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
 
                 
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25, marginVertical:10 }} title="Delete Team" onPress={() => { this.deleteTeam() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Delete Team" onPress={() => { this.deleteTeam() }}></Button>
                         
                     </Card>
 

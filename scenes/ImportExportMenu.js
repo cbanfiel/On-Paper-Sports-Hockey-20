@@ -26,7 +26,7 @@ export default class ImportExportMenu extends React.Component {
     return (
 
       <Background>
-        <ScrollView >
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
         
 
@@ -34,15 +34,15 @@ export default class ImportExportMenu extends React.Component {
 
 <Card
   containerStyle={{
-    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-    borderRadius: 25,
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
     alignSelf:'center'
   }}
 >
 
-<Input onChangeText={value => this.setState({ loadedRosterJsonData: value })} placeholder={'Paste Link Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+<Input onChangeText={value => this.setState({ loadedRosterJsonData: value })} placeholder={'Paste Link Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Import Link To Raw Roster JSON File</Text>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Import Link To Raw Roster JSON File</Text>
 </Card>
 </TouchableOpacity>
 
@@ -50,28 +50,28 @@ export default class ImportExportMenu extends React.Component {
 
             <Card
               containerStyle={{
-                width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                borderRadius: 25,
+                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'black',
                 alignSelf:'center'
               }}
             >
             
-              <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Export Roster JSON Data To Clipboard</Text>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Export Roster JSON Data To Clipboard</Text>
             </Card>
           </TouchableOpacity>
 
           <TouchableOpacity style={{ width: '100%' }} onPress={() => {getDataFromLink(this.state.loadedTeamJsonData, 'team'), Actions.popTo('mainmenu')}}>
 <Card
   containerStyle={{
-    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-    borderRadius: 25,
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
     alignSelf:'center'
   }}
 >
 
-<Input onChangeText={value => this.setState({ loadedTeamJsonData : value })} placeholder={'Paste Team Data Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+<Input onChangeText={value => this.setState({ loadedTeamJsonData : value })} placeholder={'Paste Team Data Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Import Link To Raw Team JSON File</Text>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Import Link To Raw Team JSON File</Text>
 </Card>
 </TouchableOpacity>
 
@@ -79,15 +79,15 @@ export default class ImportExportMenu extends React.Component {
 
 <Card
   containerStyle={{
-    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-    borderRadius: 25,
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
     alignSelf:'center'
   }}
 >
 
-<Input onChangeText={value => this.setState({ loadedDraftClassJson: value })} placeholder={'Paste Roster Data Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'white', fontFamily: 'advent-pro' }} ></Input>
+<Input onChangeText={value => this.setState({ loadedDraftClassJson: value })} placeholder={'Paste Roster Data Here'} placeholderTextColor={'rgb(180,180,180)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro' }} ></Input>
 
-  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Import Link To Raw Draft Class JSON File</Text>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Import Link To Raw Draft Class JSON File</Text>
 </Card>
 </TouchableOpacity>
 
@@ -95,13 +95,13 @@ export default class ImportExportMenu extends React.Component {
 
 <Card
   containerStyle={{
-    width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-    borderRadius: 25,
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
     alignSelf:'center'
   }}
 >
 
-  <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>Export Draft Class JSON Data To Clipboard</Text>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Export Draft Class JSON Data To Clipboard</Text>
 </Card>
 </TouchableOpacity>
 

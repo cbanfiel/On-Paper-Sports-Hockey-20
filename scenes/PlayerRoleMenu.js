@@ -174,8 +174,8 @@ export default class PlayerRoleMenu extends React.Component {
                         alignItems: 'center'
                     }}>
                         <View style={{
-                            width: '90%',
-                            height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                            width: '95%',
+                            height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
@@ -194,12 +194,12 @@ export default class PlayerRoleMenu extends React.Component {
                 <TeamHeader selectedTeam={selectedTeam}></TeamHeader>
                 {
                     this.state.ready?
-                    <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Commit Changes" onPress={() => { this.commitChanges() }}></Button>
+                    <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Commit Changes" onPress={() => { this.commitChanges() }}></Button>
                     :
-                    <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Requirements Not Met" disabled disabledStyle={{backgroundColor:'rgba(255,0,0,0.75)'}} disabledTitleStyle={{color:"black"}} onPress={() => { this.commitChanges() }}></Button>
+                    <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Requirements Not Met" disabled disabledStyle={{backgroundColor:'rgba(255,0,0,0.75)'}} disabledTitleStyle={{color:"black"}} onPress={() => { this.commitChanges() }}></Button>
                 }
 
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
                     {
                     selectedTeam.roster.map((player, i) => (
                             <ListItem 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, TouchableOpacity, Modal } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import { sortedRoster, draftClass, saveDraftClass, manageSaveName } from '../data/script';
 import Background from '../components/background';
@@ -7,6 +7,8 @@ import TeamHeader from '../components/TeamHeader';
 import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
+import { LayoutProvider, DataProvider, RecyclerListView } from 'recyclerlistview';
+var {height, width} = Dimensions.get('window');
 
 export default class DraftClassMenu extends React.Component {
 
@@ -33,6 +35,53 @@ export default class DraftClassMenu extends React.Component {
         this.setState({class:draftClass});
     }
 
+    constructor(props){
+        super(props);
+    
+        const data = [];
+    
+        for(let i=0; i<this.state.class.roster.length; i++){
+          data.push({
+            type:'NORMAL',
+            item: sortedRoster(this.state.class,'rating')[i]
+          })
+        }
+    
+        this.state={
+          list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+          modalPlayer: null,
+          modalVisible:false
+        };
+      
+        this.layoutProvider = new LayoutProvider((i) => {
+          return this.state.list.getDataForIndex(i).type
+        }, (type, dim) => {
+          switch(type){
+            case 'NORMAL':
+              dim.width = width;
+              dim.height = 70;
+              break;
+            default :
+              dim.width=0;
+              dim.height=0;
+              break
+          }
+        })
+      }
+    
+      rowRenderer = (type,data) => {
+            let player = data.item;
+                return(
+                    <ListItem
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={player.faceSrc }
+                    subtitle={'Rating: ' + player.rating}
+                    onPress={() => Actions.playerprofile({selectedPlayer : player, update:this.update})}
+                    onLongPress={() => this.setModalVisible(true, player)}
+                />
+                )
+      }
+
     render() {
 
         
@@ -56,8 +105,8 @@ export default class DraftClassMenu extends React.Component {
                         alignItems: 'center'
                     }}>
                         <View style={{
-                            width: '90%',
-                            height: '75%', backgroundColor: 'rgba(255,255,255,.97)', alignSelf: 'center', borderRadius: 25
+                            width: '95%',
+                            height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
                         }}>
                             <TouchableOpacity
                                 onPress={() => {
@@ -74,23 +123,11 @@ export default class DraftClassMenu extends React.Component {
         }
                 <TeamHeader selectedTeam={draftClass} ></TeamHeader>
                 <View>
-                <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0.75)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
-                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Save Draft Class" onPress={() => {this.checkDraftClassName()}}></Button>
+                <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
+                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Save Draft Class" onPress={() => {this.checkDraftClassName()}}></Button>
                 </View>
-                <ScrollView>
-
-                    {sortedRoster(this.state.class,'rating').map((player, i) => (
-                        <ListItem
-                            title={player.positionString + ' #' + player.number + ' ' + player.name}
-                            key={i} leftAvatar={player.faceSrc }
-                            subtitle={'Rating: ' + player.rating}
-                            onPress={() => Actions.playerprofile({selectedPlayer : player, update:this.update})}
-                            onLongPress={() => this.setModalVisible(true, player)}
-
-                        />
-
-                    ))}
-                </ScrollView>
+<RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>
+                
 
             </Background>
         )

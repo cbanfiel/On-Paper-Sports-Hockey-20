@@ -243,9 +243,9 @@ export default class SavesMenu extends React.Component {
       <Background>
 
 
-  <View style={{flexDirection:'column', backgroundColor:'rgba(0,0,0,0.75)', padding:10}}>
-  <Text style={{ textAlign: "center", fontSize: 14, color: 'white', fontFamily: 'advent-pro', margin:5 }}>{'Note: Sliders are saved and loaded with rosters'}</Text>
-  <Text style={{ textAlign: "center", fontSize: 14, color: 'white', fontFamily: 'advent-pro', margin: 5 }}>{'To delete a save press and hold the desired save file until the delete prompt appears...'}</Text>
+  <View style={{flexDirection:'column', backgroundColor:'rgba(255,255,255,0)', padding:10}}>
+  <Text style={{ textAlign: "center", fontSize: 14, color: 'black', fontFamily: 'advent-pro', margin:5 }}>{'Note: Sliders are saved and loaded with rosters'}</Text>
+  <Text style={{ textAlign: "center", fontSize: 14, color: 'black', fontFamily: 'advent-pro', margin: 5 }}>{'To delete a save press and hold the desired save file until the delete prompt appears...'}</Text>
   </View>
 {
 
@@ -256,17 +256,17 @@ this.props.loadOnly != null ?(
 {
 this.state.saved?
 null :
-<Input containerStyle = {{backgroundColor:'rgba(255,255,255,0.75)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
+<Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
 }
-  <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, borderTopWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title= {!this.state.saved? "Save Current " + this.props.saveType : this.props.saveType + " Saved Successfully"} disabled={this.state.saved} disabledStyle={{ backgroundColor:'rgba(10,200,60,0.75)',  padding: 15 , borderRadius:0, borderBottomWidth:1, borderColor: 'rgba(0,0,0,0.75)'}} disabledTitleStyle={{fontFamily: 'advent-pro', color:'black'}} onPress={() => { this.saveToFileSystem() }}></Button>
+  <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, borderTopWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title= {!this.state.saved? "Save Current " + this.props.saveType : this.props.saveType + " Saved Successfully"} disabled={this.state.saved} disabledStyle={{ backgroundColor:'rgba(10,200,60,0.75)',  padding: 15 , borderRadius:0, borderBottomWidth:1, borderColor: 'rgba(255,255,255,0)'}} disabledTitleStyle={{fontFamily: 'advent-pro', color:'black'}} onPress={() => { this.saveToFileSystem() }}></Button>
 
 </View>
 }
 
 
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
         {this.state.keys.map((item, i) => (
-                        <ListItem titleStyle={{ fontFamily: 'advent-pro' }} subtitleStyle={{ fontFamily: 'advent-pro' }} containerStyle={{ backgroundColor: 'rgba(255,255,255,0.75)' }} 
+                        <ListItem titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} subtitleStyle={{ fontFamily: 'advent-pro' }} containerStyle={{ backgroundColor: 'rgba(255,255,255,0)' }} 
                         onPress={() => {this.load(item)}} 
                         onLongPress={() => {this.delete(item)}}
                         title={item.substring(0, item.indexOf('.'))} 
@@ -278,7 +278,7 @@ null :
         </ScrollView>
 
 
-        {/* <Button titleStyle={{ fontFamily: 'advent-pro', color:'white' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title= {"Delete All Saves"} onPress={() => { this.deleteAllSaves() }}></Button> */}
+        {/* <Button titleStyle={{ fontFamily: 'advent-pro', color:'white' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0)'}} title= {"Delete All Saves"} onPress={() => { this.deleteAllSaves() }}></Button> */}
 
 
         

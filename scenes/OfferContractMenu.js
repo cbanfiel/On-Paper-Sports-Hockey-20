@@ -44,24 +44,24 @@ export default class OfferContractMenu extends React.Component {
             <Background>
                 <Card
                     containerStyle={{
-                        width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                        borderRadius: 25,
+                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                        borderColor: 'black',
                         alignSelf:'center'
                     }} >
 
                     <CachedImage style={{ width: 100, height:100, resizeMode:'contain',flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} uri= {selectedTeam.logoSrc } />
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{selectedTeam.name}</Text>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{collegeMode? 'Recruiting Points Available: ' + displaySalary(calculateCapRoom(selectedTeam)) : 'CAP SPACE: $' + displaySalary(calculateCapRoom(selectedTeam)) }</Text>
-                    <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.name}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{collegeMode? 'Recruiting Points Available: ' + displaySalary(calculateCapRoom(selectedTeam)) : 'CAP SPACE: $' + displaySalary(calculateCapRoom(selectedTeam)) }</Text>
+                    <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
                     <CachedImage style={{ height: 125, width:125, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} uri= {this.props.selectedPlayer.faceSrc }/>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.props.selectedPlayer.positionString + ' #' + this.props.selectedPlayer.number + ' ' + this.props.selectedPlayer.name}</Text>
-                    <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.props.selectedPlayer.positionString + ' #' + this.props.selectedPlayer.number + ' ' + this.props.selectedPlayer.name}</Text>
+                    <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
 {
         !collegeMode?
         <View>
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"CONTRACT YEARS: " + this.state.years}</Text>
+                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"CONTRACT YEARS: " + this.state.years}</Text>
                 <Slider
                     thumbTintColor={'rgb(180,180,180)'}
                     maximumTrackTintColor={'rgb(180,180,180)'}
@@ -75,7 +75,7 @@ export default class OfferContractMenu extends React.Component {
     : null
 }
 
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{collegeMode? "Recruiting Points: " + displaySalary(this.state.salary) : "SALARY: $" + displaySalary(this.state.salary)}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{collegeMode? "Recruiting Points: " + displaySalary(this.state.salary) : "SALARY: $" + displaySalary(this.state.salary)}</Text>
                     <Slider
                         thumbTintColor={'rgb(180,180,180)'}
                         maximumTrackTintColor={'rgb(180,180,180)'}
@@ -89,19 +89,19 @@ export default class OfferContractMenu extends React.Component {
 
     this.state.declined ? 
 
-    <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ borderRadius:25, backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={"Offer Declined"} onPress={() => {}}></Button>
+    <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ borderColor: 'black', backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={"Offer Declined"} onPress={() => {}}></Button>
 
 
     :
 
     this.props.forced === false ? ( canSign(selectedTeam, this.state.salary) ? (
 
-        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ borderRadius:25, backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Offer Scholarship": "Sign Player"} onPress={() => { this.sendContract(false); }}></Button>
+        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ borderColor: 'black', backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Offer Scholarship": "Sign Player"} onPress={() => { this.sendContract(false); }}></Button>
     ) :
-        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ borderRadius:25, backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Not Enough Recruiting Points" : "Not Enough Cap Space"} disabled ></Button>
+        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ borderColor: 'black', backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Not Enough Recruiting Points" : "Not Enough Cap Space"} disabled ></Button>
 
         ) :
-        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ borderRadius:25, backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Offer Scholarship": "Sign Player"} onPress={() => { this.sendContract(true); }}></Button>
+        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ borderColor: 'black', backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, marginBottom:10 }} title={collegeMode? "Offer Scholarship": "Sign Player"} onPress={() => { this.sendContract(true); }}></Button>
     
     }
 

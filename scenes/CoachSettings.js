@@ -9,23 +9,23 @@ import CachedImage from '../components/CachedImage';
 export default class CoachSettings extends React.Component {
     state = {
         offVsDefFocus: selectedTeam.offVsDefFocus,
-        offTwoVsThree: selectedTeam.offTwoVsThree,
-        defTwoVsThree: selectedTeam.defTwoVsThree,
-        tempo: selectedTeam.tempo,
+        qualityVsQuantity: selectedTeam.qualityVsQuantity,
+        defenseAggresiveVsConservative: selectedTeam.defenseAggresiveVsConservative,
+        forwardsVsDefensemen: selectedTeam.forwardsVsDefensemen,
         rotationSize: selectedTeam.rotationSize,
         frontCourtVsBackCourt: selectedTeam.frontCourtVsBackCourt,
-        reboundVsRunInTransition: selectedTeam.reboundVsRunInTransition
+        freezeThePuckVsPlayThePuck: selectedTeam.freezeThePuckVsPlayThePuck
     }
 
 
 
     saveChanges() {
         selectedTeam.offVsDefFocus = this.state.offVsDefFocus;
-        selectedTeam.offTwoVsThree = this.state.offTwoVsThree;
-        selectedTeam.defTwoVsThree = this.state.defTwoVsThree;
-        selectedTeam.tempo = this.state.tempo;
+        selectedTeam.qualityVsQuantity = this.state.qualityVsQuantity;
+        selectedTeam.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
+        selectedTeam.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
         selectedTeam.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
-        selectedTeam.reboundVsRunInTransition =  this.state.reboundVsRunInTransition;
+        selectedTeam.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
         if(this.props.inGame!=true){
             if(this.state.rotationSize != selectedTeam.rotationSize){
                 selectedTeam.rotationSize = this.state.rotationSize;
@@ -46,33 +46,33 @@ export default class CoachSettings extends React.Component {
         }
     }
 
-    getOffTwoVsThreeString() {
-        if (this.state.offTwoVsThree === 0) {
-            return "Offensive Focus: Balanced"
-        } else if (this.state.offTwoVsThree > 0) {
-            return "Offensive Focus: Three Point"
+    getqualityVsQuantityString() {
+        if (this.state.qualityVsQuantity === 0) {
+            return "Shot Focus: Balanced"
+        } else if (this.state.qualityVsQuantity > 0) {
+            return "Shot Focus: Quantity"
         } else {
-            return "Offensive Focus: Two Point"
+            return "Shot Focus: Quality"
         }
     }
 
-    getDefTwoVsThree() {
-        if (this.state.defTwoVsThree === 0) {
+    getdefenseAggresiveVsConservative() {
+        if (this.state.defenseAggresiveVsConservative === 0) {
             return "Defensive Focus: Balanced"
-        } else if (this.state.defTwoVsThree > 0) {
-            return "Defensive Focus: Limit Three Pointers"
+        } else if (this.state.defenseAggresiveVsConservative > 0) {
+            return "Defensive Focus: Aggresive"
         } else {
-            return "Defensive Focus: Protect The Paint"
+            return "Defensive Focus: Conservative"
         }
     }
 
-    getTempo() {
-        if (this.state.tempo === 0) {
-            return "Tempo: Balanced"
-        } else if (this.state.tempo > 0) {
-            return "Tempo: Fast Tempo"
+    getforwardsVsDefensemen() {
+        if (this.state.forwardsVsDefensemen === 0) {
+            return "Scoring Focus: Balanced"
+        } else if (this.state.forwardsVsDefensemen > 0) {
+            return "Scoring Focus: Forwards"
         } else {
-            return "Tempo: Slow Tempo"
+            return "Scoring Focus: Defenseman"
         }
     }
 
@@ -86,13 +86,13 @@ export default class CoachSettings extends React.Component {
         }
     }
 
-    getReboundVsRunInTransition() {
-        if (this.state.reboundVsRunInTransition === 0) {
-            return "Rebounding Focus: Balanced"
-        } else if (this.state.reboundVsRunInTransition > 0) {
-            return "Rebounding Focus: Run In Transition"
+    getfreezeThePuckVsPlayThePuck() {
+        if (this.state.freezeThePuckVsPlayThePuck === 0) {
+            return "Goalie Focus: Balanced"
+        } else if (this.state.freezeThePuckVsPlayThePuck > 0) {
+            return "Goalie Focus: Play The Puck"
         } else {
-            return "Rebounding Focus: Crash The Boards"
+            return "Goalie Focus: Freeze The Puck"
         }
     }
 
@@ -101,30 +101,30 @@ export default class CoachSettings extends React.Component {
     render() {
         return (
             <Background>
-                <ScrollView >
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     <Card
                         containerStyle={{
-                            width: '90%', backgroundColor: 'rgba(0,0,0,0.75)',
-                            borderRadius: 25,
+                            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                            borderColor: 'black',
                             alignSelf:'center'
                         }} >
 {
                 this.props.inGame ===  true? (
 
                         <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-                            <Text style={{ textAlign: "center", fontSize: 15, color: 'white', fontFamily: 'advent-pro' }}>{'Note: These changes only affect the current game, to make them permanent make sure to set them in your teams Coach Settings'}</Text>
+                            <Text style={{ textAlign: "center", fontSize: 15, color: 'black', fontFamily: 'advent-pro' }}>{'Note: These changes only affect the current game, to make them permanent make sure to set them in your teams Coach Settings'}</Text>
                         </View>    
                 ): null
 }
 
                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <CachedImage uri={selectedTeam.logoSrc} style={{ height: 30, width: 30, maxHeight: 30, resizeMode: 'contain', marginRight: 5 }} />
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{selectedTeam.name}</Text>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.name}</Text>
                         </View>
-                        <Divider style={{ backgroundColor: 'white', margin: 10 }}></Divider>
+                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getOffVsDefFocusString()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getOffVsDefFocusString()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -137,83 +137,52 @@ export default class CoachSettings extends React.Component {
 
 
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getOffTwoVsThreeString()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getqualityVsQuantityString()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
                             minimumValue={-3}
                             maximumValue={3}
-                            value={this.state.offTwoVsThree}
-                            onValueChange={value => { this.setState({ offTwoVsThree: value }) }}
+                            value={this.state.qualityVsQuantity}
+                            onValueChange={value => { this.setState({ qualityVsQuantity: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getDefTwoVsThree()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getdefenseAggresiveVsConservative()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
                             minimumValue={-3}
                             maximumValue={3}
-                            value={this.state.defTwoVsThree}
-                            onValueChange={value => { this.setState({ defTwoVsThree: value }) }}
+                            value={this.state.defenseAggresiveVsConservative}
+                            onValueChange={value => { this.setState({ defenseAggresiveVsConservative: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getTempo()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getforwardsVsDefensemen()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
                             minimumValue={-3}
                             maximumValue={3}
-                            value={this.state.tempo}
-                            onValueChange={value => { this.setState({ tempo: value }) }}
+                            value={this.state.forwardsVsDefensemen}
+                            onValueChange={value => { this.setState({ forwardsVsDefensemen: value }) }}
                         />
 
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getFrontCourtVsBackCourt()}</Text>
+                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getfreezeThePuckVsPlayThePuck()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
                             minimumValue={-3}
                             maximumValue={3}
-                            value={this.state.frontCourtVsBackCourt}
-                            onValueChange={value => { this.setState({ frontCourtVsBackCourt: value }) }}
-                        />   
-
-                         <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{this.getReboundVsRunInTransition()}</Text>
-                        <Slider
-                            thumbTintColor={'rgb(180,180,180)'}
-                            maximumTrackTintColor={'rgb(180,180,180)'}
-                            step={1}
-                            minimumValue={-3}
-                            maximumValue={3}
-                            value={this.state.reboundVsRunInTransition}
-                            onValueChange={value => { this.setState({ reboundVsRunInTransition: value }) }}
+                            value={this.state.freezeThePuckVsPlayThePuck}
+                            onValueChange={value => { this.setState({ freezeThePuckVsPlayThePuck: value }) }}
                         />            
 
-                    {
-                        this.props.inGame === true ? (null):
-                        <View>
 
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'white', fontFamily: 'advent-pro' }}>{"Rotation Size: " + this.state.rotationSize}</Text>
-                            <Slider
-                                thumbTintColor={'rgb(180,180,180)'}
-                                maximumTrackTintColor={'rgb(180,180,180)'}
-                                step={1}
-                                minimumValue={8}
-                                maximumValue={12}
-                                value={this.state.rotationSize}
-                                onValueChange={value => { this.setState({ rotationSize: value }) }}
-                            />
-
-                        </View>
-
-
-                    }
-
-
-                        <Button titleStyle={{ fontFamily: 'advent-pro' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderRadius: 25 }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black' }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
 
 
                     </Card>

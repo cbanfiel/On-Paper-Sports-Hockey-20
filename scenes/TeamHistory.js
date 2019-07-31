@@ -14,7 +14,7 @@ export default class TeamHistory extends React.Component {
 {
 
     this.props.view === 'pastchampions' ? (
-        <ScrollView>
+        <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {franchise.pastChampions.map((history, i) => (
                         <ListItem
@@ -32,7 +32,7 @@ export default class TeamHistory extends React.Component {
 
     ) : 
 
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {selectedTeam.history.map((history, i) => (
                         <ListItem 

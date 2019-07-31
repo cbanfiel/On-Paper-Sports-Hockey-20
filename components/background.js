@@ -20,10 +20,10 @@ export default class Background extends React.Component {
   }
   render() {
     return (
-      <View styles={{ flex: 1, backgroundColor: 'rgba(60,60,60,1)'}} >
+      <View styles={{ flex: 1, backgroundColor: 'rgba(255,255,255,1)'}} >
         {
           this.state.fontLoaded ? (
-            <ImageBackground style={{ height: '100%', backgroundColor:'rgb(0,0,0)'}} resizeMode="cover" source={require('../assets/img/background.jpg')}  >
+            <ImageBackground style={{ height: '100%', backgroundColor:'rgb(255,255,255)'}} resizeMode="cover" source={require('../assets/img/background.jpg')}  >
               <NavigationHeader></NavigationHeader>
               {this.props.children}
             </ImageBackground>

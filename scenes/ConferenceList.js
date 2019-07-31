@@ -11,7 +11,7 @@ export default class TeamList extends React.Component {
         return (
             <Background>
 
-                <ScrollView>
+                <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
                     {conferences.map((conference, i) => (
                         <ListItem 
