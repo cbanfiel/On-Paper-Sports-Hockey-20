@@ -3,18 +3,11 @@ import { Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Button, Card, Slider, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import { setSliders, setFranchiseSliders, twoPointPercentageLow, twoPointPercentageHigh, threePointPercentageHigh, defenseHigh, defenseLow, secondsOffClock, threePointPercentageLow, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, reboundSlider, trainingPointsAvailable } from '../data/script';
+import { setSliders, setFranchiseSliders, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, trainingPointsAvailable, defenseSlider, offenseSlider, passSkillFactorSlider, shotSkillFactorSlider, goalieAdjustmentSlider } from '../data/script';
 
 export default class SlidersMenu extends React.Component {
 
     state = {
-        twopl: twoPointPercentageLow,
-        twoph: twoPointPercentageHigh,
-        threepl: threePointPercentageLow,
-        threeph: threePointPercentageHigh,
-        defh: defenseHigh,
-        defl: defenseLow,
-        soc: secondsOffClock,
         games: gamesPerSeason,
         seeds: playoffSeeds,
         gamesToWin: seriesWinCount,
@@ -24,37 +17,29 @@ export default class SlidersMenu extends React.Component {
         collegeMode: collegeMode,
         difficulty: difficulty,
         tradeDifficulty : tradeThreshold,
-        reboundSlider: reboundSlider,
-        trainingPointsAvailable: trainingPointsAvailable
+        trainingPointsAvailable: trainingPointsAvailable,
+        defenseSlider : defenseSlider,
+        offenseSlider : offenseSlider,
+        passSkillFactorSlider: passSkillFactorSlider,
+        shotSkillFactorSlider: shotSkillFactorSlider,
+        goalieAdjustmentSlider : goalieAdjustmentSlider
     }
 
 
     checkGameSliders() {
-        if (this.state.twopl != twoPointPercentageLow) {
+        if (this.state.defenseSlider != defenseSlider) {
             this.setState({ gameSlidersChanged: true });
             return;
         }
-        if (this.state.twoph != twoPointPercentageHigh) {
+        if (this.state.passSkillFactorSlider != passSkillFactorSlider) {
             this.setState({ gameSlidersChanged: true });
             return;
         }
-        if (this.state.threepl != threePointPercentageLow) {
+        if (this.state.shotSkillFactorSlider != shotSkillFactorSlider) {
             this.setState({ gameSlidersChanged: true });
             return;
         }
-        if (this.state.threeph != threePointPercentageHigh) {
-            this.setState({ gameSlidersChanged: true });
-            return;
-        }
-        if (this.state.defl != defenseLow) {
-            this.setState({ gameSlidersChanged: true });
-            return;
-        }
-        if (this.state.defh != defenseHigh) {
-            this.setState({ gameSlidersChanged: true });
-            return;
-        }
-        if (this.state.soc != secondsOffClock) {
+        if (this.state.goalieAdjustmentSlider != goalieAdjustmentSlider) {
             this.setState({ gameSlidersChanged: true });
             return;
         }
@@ -62,7 +47,7 @@ export default class SlidersMenu extends React.Component {
             this.setState({ gameSlidersChanged: true });
             return;
         }
-        if (this.state.reboundSlider != reboundSlider) {
+        if (this.state.offenseSlider != offenseSlider) {
             this.setState({ gameSlidersChanged: true });
             return;
         }
@@ -227,7 +212,7 @@ export default class SlidersMenu extends React.Component {
 
 
     saveChanges() {
-        setSliders(this.state.twopl, this.state.twoph, this.state.threepl, this.state.threeph, this.state.defl, this.state.defh, this.state.soc, this.state.difficulty, this.state.tradeDifficulty, this.state.reboundSlider, this.state.trainingPointsAvailable);
+        setSliders(this.state.defenseSlider, this.state.offenseSlider, this.state.passSkillFactorSlider, this.state.shotSkillFactorSlider, this.state.goalieAdjustmentSlider, this.state.difficulty, this.state.tradeDifficulty, this.state.trainingPointsAvailable);
         this.setState({ gameSlidersChanged: false });
     }
 
@@ -259,13 +244,29 @@ export default class SlidersMenu extends React.Component {
     resetSliders(){
         resetSliders();
         this.setState({
-            twopl: twoPointPercentageLow,
-            twoph: twoPointPercentageHigh,
-            threepl: threePointPercentageLow,
-            threeph: threePointPercentageHigh,
-            defh: defenseHigh,
-            defl: defenseLow,
-            soc: secondsOffClock,
+                games: gamesPerSeason,
+                seeds: playoffSeeds,
+                gamesToWin: seriesWinCount,
+                conferencesOn: conferencesOn,
+                maxSeeds: this.getMaxSeeds(),
+                seedSelection: this.getMaxSeeds(),
+                collegeMode: collegeMode,
+                difficulty: difficulty,
+                tradeDifficulty : tradeThreshold,
+                trainingPointsAvailable: trainingPointsAvailable,
+                defenseSlider : defenseSlider,
+                offenseSlider : offenseSlider,
+                passSkillFactorSlider: passSkillFactorSlider,
+                shotSkillFactorSlider: shotSkillFactorSlider,
+                goalieAdjustmentSlider : goalieAdjustmentSlider,
+            franchiseSlidersChanged: false,
+            gameSlidersChanged: false
+        });
+    }
+
+    collegeSliders(){
+        collegeSliderPreset();
+        this.setState({
             games: gamesPerSeason,
             seeds: playoffSeeds,
             gamesToWin: seriesWinCount,
@@ -275,37 +276,15 @@ export default class SlidersMenu extends React.Component {
             collegeMode: collegeMode,
             difficulty: difficulty,
             tradeDifficulty : tradeThreshold,
-            reboundSlider: reboundSlider,
             trainingPointsAvailable: trainingPointsAvailable,
-            franchiseSlidersChanged: false,
-            gameSlidersChanged: false
-        });
-    }
-
-    collegeSliders(){
-        collegeSliderPreset();
-        this.setState({
-            twopl: twoPointPercentageLow,
-            twoph: twoPointPercentageHigh,
-            threepl: threePointPercentageLow,
-            threeph: threePointPercentageHigh,
-            defh: defenseHigh,
-            defl: defenseLow,
-            soc: secondsOffClock,
-            games: gamesPerSeason,
-            seeds: playoffSeeds,
-            gamesToWin: seriesWinCount,
-            conferencesOn: conferencesOn,
-            maxSeeds: this.getMaxSeeds(),
-            seedSelection: this.getMaxSeeds(),
-            collegeMode: collegeMode,
-            difficulty: difficulty,
-            tradeDifficulty : tradeThreshold, 
-            reboundSlider: reboundSlider,
-            trainingPointsAvailable: trainingPointsAvailable,
-            franchiseSlidersChanged: false,
-            gameSlidersChanged: false
-        });
+            defenseSlider : defenseSlider,
+            offenseSlider : offenseSlider,
+            passSkillFactorSlider: passSkillFactorSlider,
+            shotSkillFactorSlider: shotSkillFactorSlider,
+            goalieAdjustmentSlider : goalieAdjustmentSlider,
+        franchiseSlidersChanged: false,
+        gameSlidersChanged: false
+    });
     }
 
     render() {
@@ -385,84 +364,62 @@ export default class SlidersMenu extends React.Component {
                             onValueChange={value => { this.checkGameSliders(), this.setState({ tradeDifficulty: value }) }}
                         />
 
-                        {/* <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Two Point Percentage Low: " + this.state.twopl}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Offense Skill Factor: " + this.state.offenseSlider}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.twopl}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ twopl: value }) }}
+                            minimumValue={0}
+                            maximumValue={20}
+                            value={this.state.offenseSlider}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ offenseSlider: value }) }}
                         />
 
 
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Two Point Percentage High: " + this.state.twoph}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Defense Skill Factor: " + this.state.defenseSlider}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.twoph}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ twoph: value }) }}
+                            minimumValue={0}
+                            maximumValue={20}
+                            value={this.state.defenseSlider}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ defenseSlider: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Three Point Percentage Low: " + this.state.threepl}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Passing Skill Factor: " + this.state.passSkillFactorSlider}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.threepl}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ threepl: value }) }}
+                            minimumValue={0}
+                            maximumValue={20}
+                            value={this.state.passSkillFactorSlider}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ passSkillFactorSlider: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Three Point Percentage High: " + this.state.threeph}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Shooting Skill Factor: " + this.state.shotSkillFactorSlider}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.threeph}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ threeph: value }) }}
+                            minimumValue={0}
+                            maximumValue={20}
+                            value={this.state.shotSkillFactorSlider}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ shotSkillFactorSlider: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Defense Low: " + this.state.defl}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Goalie Adjustment: " + this.state.goalieAdjustmentSlider}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.defl}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ defl: value }) }}
+                            minimumValue={-10}
+                            maximumValue={10}
+                            value={this.state.goalieAdjustmentSlider}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ goalieAdjustmentSlider: value }) }}
                         />
-
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Defense High: " + this.state.defh}</Text>
-                        <Slider
-                            thumbTintColor={'rgb(180,180,180)'}
-                            maximumTrackTintColor={'rgb(180,180,180)'}
-                            step={1}
-                            minimumValue={-20}
-                            maximumValue={80}
-                            value={this.state.defh}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ defh: value }) }}
-                        />
-
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Rebounding: " + this.state.reboundSlider}</Text>
-                        <Slider
-                            thumbTintColor={'rgb(180,180,180)'}
-                            maximumTrackTintColor={'rgb(180,180,180)'}
-                            step={1}
-                            minimumValue={1}
-                            maximumValue={100}
-                            value={this.state.reboundSlider}
-                            onValueChange={value => { this.checkGameSliders(), this.setState({ reboundSlider: value }) }}
-                        /> */}
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Training Points Available: " + this.state.trainingPointsAvailable}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
@@ -473,10 +430,6 @@ export default class SlidersMenu extends React.Component {
                             value={this.state.trainingPointsAvailable}
                             onValueChange={value => { this.checkGameSliders(), this.setState({ trainingPointsAvailable: value }) }}
                         />
-
-
-
-
 
 
                         <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0)', borderWidth: 1, borderColor: 'black' }} title={this.state.gameSlidersChanged ? "Commit Game Slider Changes" : "Current"} disabled={this.state.gameSlidersChanged ? false : true} disabledStyle={{ backgroundColor: 'rgba(10,200,60,0.75)' }} disabledTitleStyle={{ color: 'black' }} onPress={() => { this.saveChanges() }}></Button>

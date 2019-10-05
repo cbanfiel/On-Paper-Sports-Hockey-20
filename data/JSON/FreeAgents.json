@@ -9,7 +9,8 @@
     "def": 47,
     "pass": 44,
     "faceOff": 64,
-    "save": 74,
+    "positioning": 74,
+    "reflexes": 74,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -24,7 +25,8 @@
     "def": 59,
     "pass": 81,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -39,7 +41,8 @@
     "def": 60,
     "pass": 78,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -54,7 +57,8 @@
     "def": 79,
     "pass": 52,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 33
@@ -69,7 +73,8 @@
     "def": 61,
     "pass": 77,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -84,7 +89,8 @@
     "def": 73,
     "pass": 64,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -99,7 +105,8 @@
     "def": 52,
     "pass": 66,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -114,7 +121,8 @@
     "def": 62,
     "pass": 68,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -129,7 +137,8 @@
     "def": 77,
     "pass": 48,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -144,7 +153,8 @@
     "def": 79,
     "pass": 47,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -159,7 +169,8 @@
     "def": 51,
     "pass": 68,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -174,7 +185,8 @@
     "def": 80,
     "pass": 42,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -189,7 +201,8 @@
     "def": 48,
     "pass": 71,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -204,7 +217,8 @@
     "def": 49,
     "pass": 72,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -219,7 +233,8 @@
     "def": 46,
     "pass": 44,
     "faceOff": 61,
-    "save": 63,
+    "positioning": 63,
+    "reflexes": 63,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -234,7 +249,8 @@
     "def": 52,
     "pass": 63,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -249,7 +265,8 @@
     "def": 60,
     "pass": 60,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -264,7 +281,8 @@
     "def": 63,
     "pass": 56,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -279,7 +297,8 @@
     "def": 59,
     "pass": 65,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 33
@@ -294,7 +313,8 @@
     "def": 45,
     "pass": 72,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -309,7 +329,8 @@
     "def": 54,
     "pass": 67,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -324,7 +345,8 @@
     "def": 67,
     "pass": 51,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -339,7 +361,8 @@
     "def": 64,
     "pass": 54,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -354,7 +377,8 @@
     "def": 70,
     "pass": 42,
     "faceOff": 64,
-    "save": 61,
+    "positioning": 61,
+    "reflexes": 61,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -369,7 +393,8 @@
     "def": 45,
     "pass": 70,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -384,7 +409,8 @@
     "def": 64,
     "pass": 52,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -399,7 +425,8 @@
     "def": 65,
     "pass": 51,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -414,7 +441,8 @@
     "def": 50,
     "pass": 69,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -429,7 +457,8 @@
     "def": 71,
     "pass": 43,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -444,7 +473,8 @@
     "def": 63,
     "pass": 53,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -459,7 +489,8 @@
     "def": 54,
     "pass": 53,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -474,7 +505,8 @@
     "def": 51,
     "pass": 66,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -489,7 +521,8 @@
     "def": 69,
     "pass": 45,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -504,7 +537,8 @@
     "def": 45,
     "pass": 44,
     "faceOff": 60,
-    "save": 59,
+    "positioning": 59,
+    "reflexes": 59,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -519,7 +553,8 @@
     "def": 53,
     "pass": 61,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -534,7 +569,8 @@
     "def": 62,
     "pass": 51,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -549,7 +585,8 @@
     "def": 60,
     "pass": 51,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -564,7 +601,8 @@
     "def": 47,
     "pass": 65,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -579,7 +617,8 @@
     "def": 66,
     "pass": 49,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -594,7 +633,8 @@
     "def": 49,
     "pass": 58,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -609,7 +649,8 @@
     "def": 47,
     "pass": 55,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -624,7 +665,8 @@
     "def": 52,
     "pass": 60,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -639,7 +681,8 @@
     "def": 65,
     "pass": 49,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -654,7 +697,8 @@
     "def": 52,
     "pass": 60,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -669,7 +713,8 @@
     "def": 57,
     "pass": 56,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -684,7 +729,8 @@
     "def": 50,
     "pass": 64,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -699,7 +745,8 @@
     "def": 47,
     "pass": 57,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -714,7 +761,8 @@
     "def": 51,
     "pass": 61,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -729,7 +777,8 @@
     "def": 69,
     "pass": 44,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -744,7 +793,8 @@
     "def": 60,
     "pass": 49,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -759,7 +809,8 @@
     "def": 66,
     "pass": 42,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -774,7 +825,8 @@
     "def": 61,
     "pass": 47,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -789,7 +841,8 @@
     "def": 62,
     "pass": 47,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 33
@@ -804,7 +857,8 @@
     "def": 53,
     "pass": 58,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -819,7 +873,8 @@
     "def": 63,
     "pass": 46,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -834,7 +889,8 @@
     "def": 63,
     "pass": 45,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -849,7 +905,8 @@
     "def": 58,
     "pass": 52,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -864,7 +921,8 @@
     "def": 56,
     "pass": 47,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -879,7 +937,8 @@
     "def": 48,
     "pass": 44,
     "faceOff": 64,
-    "save": 56,
+    "positioning": 56,
+    "reflexes": 56,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -894,7 +953,8 @@
     "def": 60,
     "pass": 43,
     "faceOff": 60,
-    "save": 56,
+    "positioning": 56,
+    "reflexes": 56,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -909,7 +969,8 @@
     "def": 60,
     "pass": 42,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -924,7 +985,8 @@
     "def": 64,
     "pass": 45,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -939,7 +1001,8 @@
     "def": 50,
     "pass": 55,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -954,7 +1017,8 @@
     "def": 60,
     "pass": 43,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -969,7 +1033,8 @@
     "def": 48,
     "pass": 58,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -984,7 +1049,8 @@
     "def": 52,
     "pass": 54,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -999,7 +1065,8 @@
     "def": 45,
     "pass": 54,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1014,7 +1081,8 @@
     "def": 64,
     "pass": 44,
     "faceOff": 62,
-    "save": 56,
+    "positioning": 56,
+    "reflexes": 56,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1029,7 +1097,8 @@
     "def": 61,
     "pass": 45,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1044,7 +1113,8 @@
     "def": 63,
     "pass": 45,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -1059,7 +1129,8 @@
     "def": 50,
     "pass": 51,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -1074,7 +1145,8 @@
     "def": 57,
     "pass": 45,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -1089,7 +1161,8 @@
     "def": 60,
     "pass": 46,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1104,7 +1177,8 @@
     "def": 54,
     "pass": 44,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -1119,7 +1193,8 @@
     "def": 56,
     "pass": 49,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 33
@@ -1134,7 +1209,8 @@
     "def": 64,
     "pass": 42,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1149,7 +1225,8 @@
     "def": 56,
     "pass": 45,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -1164,7 +1241,8 @@
     "def": 59,
     "pass": 41,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -1179,7 +1257,8 @@
     "def": 48,
     "pass": 55,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -1194,7 +1273,8 @@
     "def": 51,
     "pass": 55,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -1209,7 +1289,8 @@
     "def": 51,
     "pass": 52,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1224,7 +1305,8 @@
     "def": 44,
     "pass": 60,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1239,7 +1321,8 @@
     "def": 61,
     "pass": 42,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1254,7 +1337,8 @@
     "def": 48,
     "pass": 54,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -1269,7 +1353,8 @@
     "def": 47,
     "pass": 52,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1284,7 +1369,8 @@
     "def": 63,
     "pass": 40,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1299,7 +1385,8 @@
     "def": 45,
     "pass": 51,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -1314,7 +1401,8 @@
     "def": 49,
     "pass": 46,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1329,7 +1417,8 @@
     "def": 46,
     "pass": 54,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1344,7 +1433,8 @@
     "def": 60,
     "pass": 44,
     "faceOff": 60,
-    "save": 54,
+    "positioning": 54,
+    "reflexes": 54,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1359,7 +1449,8 @@
     "def": 55,
     "pass": 46,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1374,7 +1465,8 @@
     "def": 45,
     "pass": 55,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -1389,7 +1481,8 @@
     "def": 56,
     "pass": 42,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -1404,7 +1497,8 @@
     "def": 56,
     "pass": 43,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -1419,7 +1513,8 @@
     "def": 45,
     "pass": 52,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1434,7 +1529,8 @@
     "def": 45,
     "pass": 48,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1449,7 +1545,8 @@
     "def": 52,
     "pass": 47,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1464,7 +1561,8 @@
     "def": 54,
     "pass": 43,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -1479,7 +1577,8 @@
     "def": 53,
     "pass": 43,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1494,7 +1593,8 @@
     "def": 45,
     "pass": 43,
     "faceOff": 62,
-    "save": 53,
+    "positioning": 53,
+    "reflexes": 53,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1509,7 +1609,8 @@
     "def": 50,
     "pass": 46,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1524,7 +1625,8 @@
     "def": 49,
     "pass": 51,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 33
@@ -1539,7 +1641,8 @@
     "def": 52,
     "pass": 46,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -1554,7 +1657,8 @@
     "def": 49,
     "pass": 45,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -1569,7 +1673,8 @@
     "def": 51,
     "pass": 42,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1584,7 +1689,8 @@
     "def": 50,
     "pass": 42,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1599,7 +1705,8 @@
     "def": 48,
     "pass": 47,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 28
@@ -1614,7 +1721,8 @@
     "def": 45,
     "pass": 51,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1629,7 +1737,8 @@
     "def": 45,
     "pass": 55,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1644,7 +1753,8 @@
     "def": 53,
     "pass": 46,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 25
@@ -1659,7 +1769,8 @@
     "def": 47,
     "pass": 48,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -1674,7 +1785,8 @@
     "def": 46,
     "pass": 45,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1689,7 +1801,8 @@
     "def": 53,
     "pass": 44,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1704,7 +1817,8 @@
     "def": 48,
     "pass": 43,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1719,7 +1833,8 @@
     "def": 47,
     "pass": 45,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1734,7 +1849,8 @@
     "def": 51,
     "pass": 41,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -1749,7 +1865,8 @@
     "def": 51,
     "pass": 41,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1764,7 +1881,8 @@
     "def": 50,
     "pass": 43,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1779,7 +1897,8 @@
     "def": 52,
     "pass": 45,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -1794,7 +1913,8 @@
     "def": 47,
     "pass": 44,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -1809,7 +1929,8 @@
     "def": 47,
     "pass": 44,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -1824,7 +1945,8 @@
     "def": 47,
     "pass": 42,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -1839,7 +1961,8 @@
     "def": 51,
     "pass": 45,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -1854,7 +1977,8 @@
     "def": 46,
     "pass": 48,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -1869,7 +1993,8 @@
     "def": 50,
     "pass": 41,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -1884,7 +2009,8 @@
     "def": 43,
     "pass": 45,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -1899,7 +2025,8 @@
     "def": 46,
     "pass": 46,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -1914,7 +2041,8 @@
     "def": 48,
     "pass": 41,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -1929,7 +2057,8 @@
     "def": 47,
     "pass": 48,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -1944,7 +2073,8 @@
     "def": 45,
     "pass": 42,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1959,7 +2089,8 @@
     "def": 50,
     "pass": 41,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -1974,7 +2105,8 @@
     "def": 49,
     "pass": 44,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -1989,7 +2121,8 @@
     "def": 47,
     "pass": 41,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 23
@@ -2004,7 +2137,8 @@
     "def": 45,
     "pass": 43,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -2019,7 +2153,8 @@
     "def": 43,
     "pass": 45,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -2034,7 +2169,8 @@
     "def": 51,
     "pass": 44,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 30
@@ -2049,7 +2185,8 @@
     "def": 48,
     "pass": 42,
     "faceOff": 64,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -2064,7 +2201,8 @@
     "def": 52,
     "pass": 40,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -2079,7 +2217,8 @@
     "def": 46,
     "pass": 42,
     "faceOff": 63,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 32
@@ -2094,7 +2233,8 @@
     "def": 48,
     "pass": 45,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 27
@@ -2109,7 +2249,8 @@
     "def": 46,
     "pass": 46,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 34
@@ -2124,7 +2265,8 @@
     "def": 47,
     "pass": 41,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -2139,7 +2281,8 @@
     "def": 47,
     "pass": 41,
     "faceOff": 62,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 26
@@ -2154,7 +2297,8 @@
     "def": 43,
     "pass": 47,
     "faceOff": 61,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 22
@@ -2169,7 +2313,8 @@
     "def": 44,
     "pass": 42,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 31
@@ -2184,7 +2329,8 @@
     "def": 46,
     "pass": 43,
     "faceOff": 60,
-    "save": 40,
+    "positioning": 40,
+    "reflexes": 40,
     "years": 2,
     "salary": 1000000,
     "age": 21
@@ -2199,7 +2345,8 @@
     "def": 47,
     "pass": 41,
     "faceOff": 63,
-    "save": 47,
+    "positioning": 47,
+    "reflexes": 47,
     "years": 2,
     "salary": 1000000,
     "age": 20
@@ -2214,7 +2361,8 @@
     "def": 55,
     "pass": 42,
     "faceOff": 64,
-    "save": 47,
+    "positioning": 47,
+    "reflexes": 47,
     "years": 2,
     "salary": 1000000,
     "age": 29
@@ -2229,7 +2377,8 @@
     "def": 48,
     "pass": 41,
     "faceOff": 64,
-    "save": 42,
+    "positioning": 42,
+    "reflexes": 42,
     "years": 2,
     "salary": 1000000,
     "age": 24
@@ -2244,7 +2393,8 @@
     "def": 46,
     "pass": 44,
     "faceOff": 61,
-    "save": 42,
+    "positioning": 42,
+    "reflexes": 42,
     "years": 2,
     "salary": 1000000,
     "age": 20

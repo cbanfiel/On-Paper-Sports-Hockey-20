@@ -7,14 +7,27 @@ import Background from '../components/background';
 import TeamHeader from '../components/TeamHeader';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
+let reserves=[];
 
 export default class EditLineupMenu extends React.Component {
+
 
     componentWillUnmount(){
         //updates a previous scenes state
         if(this.props.updateState != null){
             this.props.updateState();
         }
+    }
+
+    reserves(){
+        reserves = [];
+        for(let i=0; i<selectedTeam.roster.length; i++){
+            let ply = selectedTeam.roster[i];
+            if(!selectedTeam.offLine1.includes(ply) && !selectedTeam.offLine2.includes(ply) && !selectedTeam.offLine3.includes(ply) && !selectedTeam.offLine4.includes(ply) && !selectedTeam.defLine1.includes(ply) && !selectedTeam.defLine2.includes(ply) && !selectedTeam.defLine3.includes(ply) && !selectedTeam.goalies.includes(ply)){
+                reserves.push(ply);
+            }
+        }
+        return reserves;
     }
 
     setModalVisible(visible, player) {
@@ -153,7 +166,7 @@ export default class EditLineupMenu extends React.Component {
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={ player.faceSrc }
                                 subtitle={'Rating: ' + player.rating}
-                                rightSubtitle={'OFF Line: 1'}
+                                rightSubtitle={'Off Line: 1'}
                                 rightTitle={this.getPositionString(i)}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.offLine1, i)}
@@ -168,7 +181,7 @@ export default class EditLineupMenu extends React.Component {
                                 key={i} leftAvatar={ player.faceSrc } 
                                 subtitle={'Rating: ' + player.rating}
                                 rightTitle={'D'}
-                                rightSubtitle={'DEF Line 1'}
+                                rightSubtitle={'Def Line 1'}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.defLine1 , i)}
                                 onLongPress={() => this.setModalVisible(true, player)}
@@ -181,7 +194,7 @@ export default class EditLineupMenu extends React.Component {
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={ player.faceSrc }
                                 subtitle={'Rating: ' + player.rating}
-                                rightSubtitle={'Line: 2'}
+                                rightSubtitle={'Off Line: 2'}
                                 rightTitle={this.getPositionString(i)}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.offLine2, i)}
@@ -196,7 +209,7 @@ export default class EditLineupMenu extends React.Component {
                                 key={i} leftAvatar={ player.faceSrc } 
                                 subtitle={'Rating: ' + player.rating}
                                 rightTitle={'D'}
-                                rightSubtitle={'Line 2'}
+                                rightSubtitle={'Def Line 2'}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.defLine2 , i)}
                                 onLongPress={() => this.setModalVisible(true, player)}
@@ -209,7 +222,7 @@ export default class EditLineupMenu extends React.Component {
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={ player.faceSrc }
                                 subtitle={'Rating: ' + player.rating}
-                                rightSubtitle={'Line: 3'}
+                                rightSubtitle={'Off Line: 3'}
                                 rightTitle={this.getPositionString(i)}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.offLine3, i)}
@@ -224,7 +237,7 @@ export default class EditLineupMenu extends React.Component {
                                 key={i} leftAvatar={ player.faceSrc } 
                                 subtitle={'Rating: ' + player.rating}
                                 rightTitle={'D'}
-                                rightSubtitle={'Line 3'}
+                                rightSubtitle={'Def Line 3'}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.defLine3 , i)}
                                 onLongPress={() => this.setModalVisible(true, player)}
@@ -237,7 +250,7 @@ export default class EditLineupMenu extends React.Component {
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={ player.faceSrc }
                                 subtitle={'Rating: ' + player.rating}
-                                rightSubtitle={'Line: 4'}
+                                rightSubtitle={'Off Line: 4'}
                                 rightTitle={this.getPositionString(i)}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.offLine4, i)}
@@ -255,6 +268,19 @@ export default class EditLineupMenu extends React.Component {
                                 rightSubtitle={i===0? 'STARTER' : 'BACKUP'}
                                 color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
                                 onPress={() => this.selectPlayer(player, selectedTeam.goalies , i)}
+                                onLongPress={() => this.setModalVisible(true, player)}
+
+                                ></ListItem>
+                    ))}
+                    {
+                    this.reserves().map((player, i) => (
+                            <ListItem 
+                                title={player.positionString + ' #' + player.number + ' ' + player.name}
+                                key={i} leftAvatar={ player.faceSrc } 
+                                subtitle={'Rating: ' + player.rating}
+                                rightTitle={'RESERVES'}
+                                color={this.state.selectedPlayer === player? 'rgba(180,180,180,0.75)': this.state.selectedPlayer2 === player? 'rgba(180,180,180,0.75)': null}
+                                onPress={() => this.selectPlayer(player, reserves , i)}
                                 onLongPress={() => this.setModalVisible(true, player)}
 
                                 ></ListItem>

@@ -6,8 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import Background from '../components/background';
 import {saveData, loadData, loadFromFileSystem, manageSaveName, saveFranchise } from '../data/script';
 import ListItem from '../components/ListItem';
-import { FileSystem} from 'expo';
-
+import * as FileSystem from 'expo-file-system';
 
 
 

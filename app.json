@@ -3,12 +3,12 @@
     "name": "On Paper Sports Hockey '20",
     "slug": "OPS-Hockey-20",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "34.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,7 +25,7 @@
     "ios": {
       "bundleIdentifier": "com.chadbanfield.onpapersportshockey20",
       "supportsTablet": true,
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "com.chadbanfield.onpapersportshockey20",

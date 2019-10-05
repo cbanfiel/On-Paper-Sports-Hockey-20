@@ -16,9 +16,9 @@ export default class MainMenu extends React.Component {
 
   static async onEnter(){
     try {
-      const update = await Expo.Updates.checkForUpdateAsync();
+      const update = await Updates.checkForUpdateAsync();
       if (update.isAvailable) {
-        await Expo.Updates.fetchUpdateAsync();
+        await Updates.fetchUpdateAsync();
         Alert.alert('New Update Available Restart Now?', '', [
           {
             text: 'Cancel',
@@ -27,13 +27,12 @@ export default class MainMenu extends React.Component {
           },
           {
             text: 'Restart',
-            onPress: () => {Expo.Updates.reloadFromCache();},
+            onPress: () => {Updates.reloadFromCache();},
           },
         ]);
         
       }
     } catch (e) {
-
     }
   }
 
@@ -69,6 +68,7 @@ export default class MainMenu extends React.Component {
   }
 
   update = () =>{
+    menuDisplayTeams();
     this.setState({team: selectedTeam});
   }
 

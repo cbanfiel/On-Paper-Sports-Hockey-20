@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity, Modal } from 'react-native';
 import {Icon} from 'react-native-elements';
-import { selectedTeam } from '../data/script';
+import { selectedTeam, collegeMode } from '../data/script';
 import Background from '../components/background';
 import TeamHeader from '../components/TeamHeader';
 import ListItem from '../components/ListItem';
@@ -24,6 +24,15 @@ export default class ScheduleView extends React.Component {
   componentWillUnmount(){
     if(this.props.linkTimer != null){
       this.props.linkTimer(null);
+    }
+  }
+
+  getTitle(team){
+    if(collegeMode && team.seed<=25){
+      return  ` #${team.seed} ${team.name}`
+    }
+    else{
+      return ` ${team.name}`
     }
   }
 
@@ -83,7 +92,7 @@ export default class ScheduleView extends React.Component {
             this.state.team === team? (
               null
             ):
-            <ListItem title={"Game: " + (i + 1) + " " + team.name} key={i} leftAvatar={team.logoSrc } 
+            <ListItem title={"Game " + (i + 1) + ":" + this.getTitle(team)} key={i} leftAvatar={team.logoSrc } 
             subtitle={this.state.team.played[i] != null ? this.state.team.played[i].userScore + '-' + this.state.team.played[i].oppScore : null} 
             rightTitleStyle={this.state.team.played[i] != null ? this.state.team.played[i].won ? {color:'green', fontFamily: 'advent-pro', fontSize:25, textAlign:'center'} : {color:'red', fontFamily: 'advent-pro', fontSize:25, textAlign:'center'} : null}
             rightTitle={this.state.team.played[i] != null ? this.state.team.played[i].won ? 'W' : 'L' : null}

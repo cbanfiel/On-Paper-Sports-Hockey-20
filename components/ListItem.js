@@ -29,7 +29,7 @@ export default class ListItem extends React.Component {
             {
                 this.props.rightAvatar!= null ?
                 (
-                <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 50, width: 1}} uri={this.props.rightAvatar} />
+                <CachedImage style={this.props.rightAvatarStyle!=null? this.props.rightAvatarStyle:{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 50, width: 1}} uri={this.props.rightAvatar} />
                 ):null
             }
             </View>

@@ -7,10 +7,13 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^32.0.0",
+    "expo": "^34.0.3",
+    "expo-asset": "^6.0.0",
+    "expo-file-system": "^6.0.2",
+    "expo-font": "^6.0.1",
     "picache": "^1.0.13",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react": "16.8.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-native-elements": "^1.1.0",
     "react-native-fetch-blob": "^0.10.8",
     "react-native-global-props": "^1.1.5",

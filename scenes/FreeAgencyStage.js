@@ -62,7 +62,7 @@ export default class FreeAgencyStage extends React.Component{
 </TouchableOpacity>
   
   
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.signplayermenu({ back: Actions.currentScene, forced:false }) }}>
+                <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.signplayermenu({ back: Actions.currentScene, forced:false, collegeMode: collegeMode }) }}>
                 <Card
                   containerStyle={{
                     width: '95%', backgroundColor: 'rgba(0,0,0,0)',

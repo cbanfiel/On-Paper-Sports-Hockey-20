@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { Card, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { franchise, selectedTeam } from '../data/script';
+import { franchise, selectedTeam, collegeMode } from '../data/script';
 import Background from '../components/background';
 import CachedImage from '../components/CachedImage';
 
@@ -125,8 +125,19 @@ export default class PlayoffMenu extends React.Component {
                 <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? 'Game : ' + (matchup.game - 1) : null}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team1Score : null}</Text>
+                {
+                  collegeMode?
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{matchup.team1.seed <= 25 ? `#${matchup.team1.seed}` : '  '}</Text>
+                  :null
+                }
+
                   <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} uri = {matchup.team1.logoSrc } />
                   <CachedImage style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} uri = {matchup.team2.logoSrc } />
+                  {
+                  collegeMode?
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{matchup.team2.seed <= 25 ? `#${matchup.team2.seed}` : '  '}</Text>
+                  :null
+                } 
                   <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team2Score : null}</Text>
                 </View>
 

@@ -137,18 +137,18 @@ export default class SeasonMenu extends React.Component {
 
 
             {
-              // <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.sim20(), Actions.refresh() }}>
+              <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.sim20(), Actions.refresh() }}>
 
-              //   <Card
-              //     containerStyle={{
-              //       width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-              //       borderColor: 'black',
-              //       alignSelf:'center'
-              //     }}
-              //   >
-              //     <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim 20 Years</Text>
-              //   </Card>
-              // </TouchableOpacity>
+                <Card
+                  containerStyle={{
+                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'black',
+                    alignSelf:'center'
+                  }}
+                >
+                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim 20 Years</Text>
+                </Card>
+              </TouchableOpacity>
 
             }
 
@@ -213,10 +213,22 @@ export default class SeasonMenu extends React.Component {
                       alignSelf: 'center'
                     }} >
                       <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team.wins + '-' + (this.state.team.losses-this.state.team.otLosses) + "-" + this.state.team.otLosses}</Text>
+                        <Text style={{ flex:1, textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team.wins + '-' + (this.state.team.losses-this.state.team.otLosses) + "-" + this.state.team.otLosses}</Text>
+                        {
+                                collegeMode? (
+                                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{this.state.team.seed <= 25? `#${this.state.team.seed}` : '  '}</Text>
+                                ):null
+                              }
+                        
                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} source={{ uri: this.state.team.logoSrc }} />
                         <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} source={{ uri: this.state.team.schedule[franchise.season.day].logoSrc }} />
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team.schedule[franchise.season.day].wins + '-' + (this.state.team.schedule[franchise.season.day].losses-this.state.team.schedule[franchise.season.day].otLosses) + "-" + this.state.team.schedule[franchise.season.day].otLosses}</Text>
+                        {
+                              collegeMode? (
+                                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginLeft:5 }}>{this.state.team.schedule[franchise.season.day].seed <= 25? (`#${this.state.team.schedule[franchise.season.day].seed}`) : '  '}</Text>
+                              ):null
+                            }
+                       
+                        <Text style={{ flex:1, textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team.schedule[franchise.season.day].wins + '-' + (this.state.team.schedule[franchise.season.day].losses-this.state.team.schedule[franchise.season.day].otLosses) + "-" + this.state.team.schedule[franchise.season.day].otLosses}</Text>
                       </View>
                       <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
                       <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Play Next Game'}</Text>
@@ -283,11 +295,23 @@ export default class SeasonMenu extends React.Component {
 
                   >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].userScore}</Text>
+                      <Text style={{ flex:1 ,textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].userScore}</Text>
+                      {
+                                collegeMode? (
+                                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{this.state.team.seed <= 25? `#${this.state.team.seed}` : '  '}</Text>
+                                ):null
+                              }
+                      
                       <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} source={{ uri: selectedTeam.logoSrc }} />
                       <Text style={{ textAlign: "center", fontSize: 35, color: selectedTeam.played[franchise.season.day - 1].userScore > selectedTeam.played[franchise.season.day - 1].oppScore ? 'green' : 'red', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].userScore > selectedTeam.played[franchise.season.day - 1].oppScore ? 'W' : 'L'}</Text>
                       <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} source={{ uri: selectedTeam.schedule[franchise.season.day - 1].logoSrc }} />
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].oppScore}</Text>
+                      {
+                              collegeMode? (
+                                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginLeft:5 }}>{this.state.team.schedule[franchise.season.day-1].seed <= 25? (`#${this.state.team.schedule[franchise.season.day-1].seed}`) : '  '}</Text>
+                              ):null
+                            }
+                     
+                      <Text style={{ flex:1 , textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].oppScore}</Text>
 
                     </View>
                     <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>

@@ -33,7 +33,8 @@ export default class PlayerCardModal extends Component {
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"DEF: " + this.props.modalPlayer.def}</Text>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"PASS: " + this.props.modalPlayer.pass}</Text>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"FACEOFF: " + this.props.modalPlayer.faceOff}</Text>
-                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"SAVE: " + this.props.modalPlayer.save}</Text>
+                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"POSITIONING: " + this.props.modalPlayer.positioning}</Text>
+                    <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{"REFLEXES: " + this.props.modalPlayer.reflexes}</Text>
                     <Divider style={{ height: 1, margin: 10, backgroundColor: 'black', width: '90%', alignSelf: 'center' }}></Divider>
                     <Text style={{ color: 'black', fontSize: 18, fontFamily: 'advent-pro' }}>{returnStatsView(this.props.modalPlayer)}</Text>
                 </View>

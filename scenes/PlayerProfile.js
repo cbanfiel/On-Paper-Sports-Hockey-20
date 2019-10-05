@@ -84,7 +84,9 @@ export default class PlayerProfile extends React.Component {
                             <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"DEF: " + this.state.player.def}</Text>
                             <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"PASS: " + this.state.player.pass}</Text>
                             <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"FACEOFF: " + this.state.player.faceOff}</Text>
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"SAVE: " + this.state.player.save}</Text>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"POSITIONING: " + this.state.player.positioning}</Text>
+                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"REFLEXES: " + this.state.player.reflexes}</Text>
+
                         </Card>
                     </TouchableOpacity>
 

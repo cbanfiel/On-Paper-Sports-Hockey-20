@@ -1,188 +1,206 @@
 [
   {
-    "name": "Arizona Coyotes",
+    "name": "USA",
     "id": 0,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/ari.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-500.png"
   },
   {
-    "name": "Anaheim Ducks",
+    "name": "Norway",
     "id": 1,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/ana.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/norway/flag-round-500.png"
   },
   {
-    "name": "Boston Bruins",
+    "name": "Switzerland",
     "id": 2,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/bos.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/switzerland/flag-round-500.png"
   },
   {
-    "name": "Buffalo Sabres",
+    "name": "Germany",
     "id": 3,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/buf.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/germany/flag-round-500.png"
   },
   {
-    "name": "Carolina Hurricanes",
+    "name": "Canada",
     "id": 4,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/car.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/canada/flag-round-500.png"
   },
   {
-    "name": "Columbus Blue Jackets",
+    "name": "Brazil",
     "id": 5,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/cbj.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/brazil/flag-round-500.png"
   },
   {
-    "name": "Calgary Flames",
+    "name": "Belgium",
     "id": 6,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/cgy.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/belgium/flag-round-500.png"
   },
   {
-    "name": "Chicago Blackhawks",
+    "name": "Australia",
     "id": 7,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/chi.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/australia/flag-round-500.png"
   },
   {
-    "name": "Colorado Avalanche",
+    "name": "China",
     "id": 8,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/col.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/china/flag-round-500.png"
   },
   {
-    "name": "Dallas Stars",
+    "name": "Columbia",
     "id": 9,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/dal.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/colombia/flag-round-500.png"
   },
   {
-    "name": "Detroit Red Wings",
+    "name": "Costa Rica",
     "id": 10,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/det.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/costa-rica/flag-round-500.png"
   },
   {
-    "name": "Edmonton Oilers",
+    "name": "Denmark",
     "id": 11,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/edm.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/denmark/flag-round-500.png"
   },
   {
-    "name": "Florida Panthers",
+    "name": "Egypt",
     "id": 12,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/fla.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/egypt/flag-round-500.png"
   },
   {
-    "name": "Los Angeles Kings",
+    "name": "Ethiopia",
     "id": 13,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/la.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/ethiopia/flag-round-500.png"
   },
   {
-    "name": "Minnesota Wild",
+    "name": "Finland",
     "id": 14,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/min.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/finland/flag-round-500.png"
   },
   {
-    "name": "Montreal Canadiens",
+    "name": "France",
     "id": 15,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/mtl.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/france/flag-round-500.png"
   },
   {
-    "name": "Nashville Predators",
+    "name": "Greece",
     "id": 16,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/nsh.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/greece/flag-round-500.png"
   },
   {
-    "name": "New Jersey Devils",
+    "name": "India",
     "id": 17,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/njd.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/india/flag-round-500.png"
   },
   {
-    "name": "New York Islanders",
+    "name": "Ireland",
     "id": 18,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/nyi.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/ireland/flag-round-500.png"
   },
   {
-    "name": "New York Rangers",
+    "name": "Italy",
     "id": 19,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/nyr.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/italy/flag-round-500.png"
   },
   {
-    "name": "Ottawa Senators",
+    "name": "Jamaica",
     "id": 20,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/ott.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/jamaica/flag-round-500.png"
   },
   {
-    "name": "Philadelphia Flyers",
+    "name": "Japan",
     "id": 21,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/phi.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/japan/flag-round-500.png"
   },
   {
-    "name": "Pittsburgh Penguins",
+    "name": "Mexico",
     "id": 22,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/pit.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/mexico/flag-round-500.png"
   },
   {
-    "name": "San Jose Sharks",
+    "name": "Russia",
     "id": 23,
-    "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/sj.png"
+    "conferenceId": 1,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/russia/flag-round-500.png"
   },
   {
-    "name": "St. Louis Blues",
+    "name": "South Korea",
     "id": 24,
-    "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/stl.png"
+    "conferenceId": 0,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/south-korea/flag-round-500.png"
   },
   {
-    "name": "Tampa Bay Lightning",
+    "name": "Spain",
     "id": 25,
-    "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/tb.png"
+    "conferenceId": 1,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/spain/flag-round-500.png"
   },
   {
-    "name": "Toronto Maple Leafs",
+    "name": "Argentina",
     "id": 26,
-    "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/tor.png"
+    "conferenceId": 0,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/argentina/flag-round-500.png"
   },
   {
-    "name": "Vegas Golden Knights",
+    "name": "Kazakhstan",
     "id": 27,
-    "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/vgs.png"
+    "conferenceId": 1,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/kazakhstan/flag-round-500.png"
   },
   {
-    "name": "Vancouver Canucks",
+    "name": "Algeria",
     "id": 28,
-    "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/van.png"
-  },
-  {
-    "name": "Winnipeg Jets",
-    "id": 29,
     "conferenceId": 0,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/wpg.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/algeria/flag-round-500.png"
   },
   {
-    "name": "Washington Capitals",
-    "id": 30,
+    "name": "Turkey",
+    "id": 29,
     "conferenceId": 1,
-    "logoSrc": "https://a.espncdn.com/i/teamlogos/nhl/500/wsh.png"
+    "logoSrc": "https://cdn.countryflags.com/thumbs/turkey/flag-round-500.png"
+  },
+  {
+    "name": "Nigeria",
+    "id": 30,
+    "conferenceId": 0,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/nigeria/flag-round-500.png"
+  },
+  {
+    "name": "Iran",
+    "id": 31,
+    "conferenceId": 1,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/iran/flag-round-500.png"
+  },
+  {
+    "name": "Pakistan",
+    "id": 32,
+    "conferenceId": 0,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/pakistan/flag-round-500.png"
+  },
+  {
+    "name": "South Africa",
+    "id": 33,
+    "conferenceId": 1,
+    "logoSrc": "https://cdn.countryflags.com/thumbs/south-africa/flag-round-500.png"
   }
 ]

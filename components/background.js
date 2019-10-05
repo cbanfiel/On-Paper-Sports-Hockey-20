@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ImageBackground, Image, Dimensions} from 'react-native';
 import NavigationHeader from '../components/NavigationHeader';
-import { Font } from 'expo';
+import * as Font from 'expo-font';
 
 var {height, width} = Dimensions.get('window');
 

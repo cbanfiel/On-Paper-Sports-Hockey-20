@@ -21,7 +21,7 @@ export default class TeamHistory extends React.Component {
                          title={'Year: ' + (i+1) + ' ' + history.name} 
                          key={i} 
                          leftAvatar={history.logoSrc } 
-                         subtitle={'Record: ' + history.history.wins + '-' + history.history.losses }
+                         subtitle={'Record: ' + history.history.wins + '-' + (history.history.losses-history.history.otLosses)+ '-' + history.history.otLosses}
                         rightTitle={'CHAMPS'}
                         >
                         
@@ -39,7 +39,7 @@ export default class TeamHistory extends React.Component {
                         title={'Year: ' + (i+1) + ' ' + selectedTeam.name} 
                         key={i} 
                         leftAvatar={selectedTeam.logoSrc }
-                         subtitle={'Record: ' + history.wins + '-' + history.losses }
+                        subtitle={'Record: ' + history.wins + '-' + (history.losses-history.otLosses)+ '-' + history.otLosses}
                         rightTitle={ history.champions ?  'CHAMPS' : null} ></ListItem>
                     ))}
                 </ScrollView>

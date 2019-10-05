@@ -25,12 +25,14 @@ export default class TrainingScreen extends React.Component {
         defGrowth: (this.props.player.def - this.props.player.defOld),
         passGrowth: (this.props.player.pass - this.props.player.passOld),
         faceOffGrowth: (this.props.player.faceOff - this.props.player.faceOffOld),
-        saveGrowth: (this.props.player.save - this.props.player.saveOld),
+        positioningGrowth: (this.props.player.positioning - this.props.player.positioningOld),
+        reflexesGrowth: (this.props.player.reflexes - this.props.player.reflexesOld),
         off: this.props.player.off,
         def: this.props.player.def,
         pass: this.props.player.pass,
         faceOff: this.props.player.faceOff,
-        save: this.props.player.save,
+        reflexes: this.props.player.reflexes,
+        positioning: this.props.player.positioning,
         disabled: this.props.points<=0,
     }
 
@@ -81,13 +83,20 @@ export default class TrainingScreen extends React.Component {
                         this.setState({faceOff: this.state.faceOff+1, faceOffGrowth: this.state.faceOffGrowth+1});
                     }
                 }
-                if (attr === 'save') {
-                    if(this.state.save>=99){
+                if (attr === 'positioning') {
+                    if(this.state.positioning>=99){
                         //nothing
                     }else{
-                    this.setState({save: this.state.save+1, saveGrowth: this.state.saveGrowth+1});
+                    this.setState({positioning: this.state.positioning+1, positioningGrowth: this.state.positioningGrowth+1});
                 }
             }
+            if (attr === 'reflexes') {
+                if(this.state.reflexes>=99){
+                    //nothing
+                }else{
+                this.setState({reflexes: this.state.reflexes+1, reflexesGrowth: this.state.reflexesGrowth+1});
+            }
+        }
 
                 pts--;
 
@@ -97,7 +106,8 @@ export default class TrainingScreen extends React.Component {
                     this.props.player.def = this.state.def;
                     this.props.player.pass = this.state.pass;
                     this.props.player.faceOff = this.state.faceOff;
-                    this.props.player.save = this.state.save;
+                    this.props.player.positioning = this.state.positioning;
+                    this.props.player.reflexes = this.state.reflexes;
                     this.props.player.calculateRating();
                     selectedTeam.trainingPoints= this.state.points;
                     this.props.player.trained = true;
@@ -157,11 +167,19 @@ export default class TrainingScreen extends React.Component {
 
                     ></ListItem>
                     <ListItem
-                        title={'Save: ' + this.state.save}
-                        rightTitle={this.state.saveGrowth >= 0 ? 'Growth: +' + this.state.saveGrowth : 'Growth: ' + this.state.saveGrowth}
-                        rightTitleStyle={this.state.saveGrowth >= 0 ? { color: 'rgb(22,154,68)', fontFamily: 'advent-pro', fontSize: 18 } : { color: 'rgba(255,0,0,1)', fontFamily: 'advent-pro', fontSize: 18 }}
-                        onPress={() => { this.train('save') }}
-                        subtitle={'SAVE TRAINING'}
+                        title={'Positioning: ' + this.state.positioning}
+                        rightTitle={this.state.positioningGrowth >= 0 ? 'Growth: +' + this.state.positioningGrowth : 'Growth: ' + this.state.positioningGrowth}
+                        rightTitleStyle={this.state.positioningGrowth >= 0 ? { color: 'rgb(22,154,68)', fontFamily: 'advent-pro', fontSize: 18 } : { color: 'rgba(255,0,0,1)', fontFamily: 'advent-pro', fontSize: 18 }}
+                        onPress={() => { this.train('positioning') }}
+                        subtitle={'POSITIONING TRAINING'}
+
+                    ></ListItem>
+                    <ListItem
+                        title={'Reflexes: ' + this.state.reflexes}
+                        rightTitle={this.state.reflexesGrowth >= 0 ? 'Growth: +' + this.state.reflexesGrowth : 'Growth: ' + this.state.reflexesGrowth}
+                        rightTitleStyle={this.state.reflexesGrowth >= 0 ? { color: 'rgb(22,154,68)', fontFamily: 'advent-pro', fontSize: 18 } : { color: 'rgba(255,0,0,1)', fontFamily: 'advent-pro', fontSize: 18 }}
+                        onPress={() => { this.train('reflexes') }}
+                        subtitle={'REFLEX TRAINING'}
 
                     ></ListItem>
 

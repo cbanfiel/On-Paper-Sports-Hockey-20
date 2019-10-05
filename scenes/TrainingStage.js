@@ -34,6 +34,30 @@ return (
         </Card>
       </TouchableOpacity>
 
+      {
+    collegeMode?(
+      <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({view: 'redshirt', selectedTeam: selectedTeam})}}>
+         <Card
+          containerStyle={{
+            width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+            borderColor: 'black',
+            alignSelf:'center'
+          }}
+          >
+
+          <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{uri: selectedTeam.logoSrc }} />
+          </View>
+          <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
+          <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Redshirt Players'}</Text>
+        </Card>
+      </TouchableOpacity>):null
+
+
+
+
+}
+
 
         <TouchableOpacity style={{ width: '100%' }} onPress={() => {franchise.stage = "advance", franchise.simStage(), this.props.teamListStage(franchise.stage), Actions.replace('seasonmenu', {teamListStage: this.props.teamListStage})}}>
         <Card

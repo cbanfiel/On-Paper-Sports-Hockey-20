@@ -8,9 +8,27 @@ import { Actions } from 'react-native-router-flux';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
 import { LayoutProvider, DataProvider, RecyclerListView } from 'recyclerlistview';
+import PositionFilter from '../components/PositionFilter';
+
 var {height, width} = Dimensions.get('window');
 
 export default class DraftClassMenu extends React.Component {
+
+    setPositionFilter(arr){
+        const data = [];
+        const empty = [];
+    
+        for(let i=0; i<arr.length; i++){
+          data.push({
+            type:'NORMAL',
+            item: arr[i]
+          })
+        }
+    
+        this.setState({
+          list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data)
+        });
+      }
 
     state = {
         saveName : '',
@@ -39,6 +57,9 @@ export default class DraftClassMenu extends React.Component {
         super(props);
     
         const data = [];
+        let arrayForFilter = [];
+        this.setPositionFilter = this.setPositionFilter.bind(this);
+
     
         for(let i=0; i<this.state.class.roster.length; i++){
           data.push({
@@ -46,11 +67,13 @@ export default class DraftClassMenu extends React.Component {
             item: sortedRoster(this.state.class,'rating')[i]
           })
         }
+        arrayForFilter = this.state.class.roster;
     
         this.state={
           list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
           modalPlayer: null,
-          modalVisible:false
+          modalVisible:false,
+          arrayForFilter: arrayForFilter
         };
       
         this.layoutProvider = new LayoutProvider((i) => {
@@ -126,6 +149,9 @@ export default class DraftClassMenu extends React.Component {
                 <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
                 <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title="Save Draft Class" onPress={() => {this.checkDraftClassName()}}></Button>
                 </View>
+
+<PositionFilter roster={this.state.arrayForFilter} setPositionFilter={this.setPositionFilter}></PositionFilter>
+
 <RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>
                 
 

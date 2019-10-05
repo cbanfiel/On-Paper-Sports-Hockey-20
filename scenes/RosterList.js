@@ -2,12 +2,13 @@ import React from 'react';
 import { View, ScrollView, Alert, TouchableOpacity, Modal, Text, Dimensions } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { sortedRoster, collegeMode, releasePlayer, saveAsDraftClass, manageSaveName, selectedTeam } from '../data/script';
+import { sortedRoster, collegeMode, releasePlayer, saveAsDraftClass, manageSaveName, selectedTeam, REDSHIRT_LOGO, checkRequirementsWithoutPlayer } from '../data/script';
 import Background from '../components/background';
 import TeamHeader from '../components/TeamHeader';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
 import { LayoutProvider, DataProvider, RecyclerListView } from 'recyclerlistview';
+import PositionFilter from '../components/PositionFilter';
 var {height, width} = Dimensions.get('window');
 
 
@@ -17,19 +18,27 @@ export default class RosterList extends React.Component {
     updateState = () =>{
         let data = [];
 
+        if(this.state.filteredList != null){
+            for(let i=0; i<this.state.filteredList.length; i++){
+                data.push({
+                  type:'NORMAL',
+                  item: this.state.filteredList[i]
+                })
+              }
+        }else{
         for(let i=0; i<this.props.selectedTeam.roster.length; i++){
             data.push({
               type:'NORMAL',
               item: sortedRoster(this.props.selectedTeam,'rating')[i]
             })
           }
+        }
         this.setState({
           list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
           modalPlayer: null,
           modalVisible:false
         });
     }
-
     state={
         forUpdating: ''
     }
@@ -37,6 +46,64 @@ export default class RosterList extends React.Component {
 
     setModalVisible(visible, player) {
         this.setState({ modalVisible: visible, modalPlayer: player });
+    }
+
+    setPositionFilter(arr){
+        const data = [];
+        const empty = [];
+    
+        for(let i=0; i<arr.length; i++){
+          data.push({
+            type:'NORMAL',
+            item: arr[i]
+          })
+        }
+    
+        this.setState({
+          list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+            filteredList: arr
+        });
+      }
+
+    redshirtPlayer = (ply) => {
+
+        if(!ply.redshirt){
+            //check requirements 
+            let requirementsMet = true;
+            if(ply.redshirted === false){
+                requirementsMet = checkRequirementsWithoutPlayer(ply,selectedTeam);
+            }
+                if(!requirementsMet){
+                    Alert.alert('Position requirements not met!');
+                    return;
+                }
+
+                ply.redshirted = !ply.redshirted;
+                selectedTeam.reorderLineup();
+                let data = [];
+        
+                if(this.state.filteredList != null){
+                    for(let i=0; i<this.state.filteredList.length; i++){
+                        data.push({
+                          type:'NORMAL',
+                          item: this.state.filteredList[i]
+                        })
+                      }  
+                }else{
+                    for(let i=0; i<this.props.selectedTeam.roster.length; i++){
+                        data.push({
+                          type:'NORMAL',
+                          item: sortedRoster(this.props.selectedTeam,'rating')[i]
+                        })
+                      }
+                }
+                this.setState({
+                  list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data)
+                });
+        }else{
+            Alert.alert(`${ply.name} was already redshirted before`);
+        }
+
     }
 
     componentWillUnmount(){
@@ -64,8 +131,12 @@ export default class RosterList extends React.Component {
         super(props);
     
         const data = [];
+        let arrayForFilter = [];
+        this.setPositionFilter = this.setPositionFilter.bind(this);
+
 
         if(this.props.view === 'resigning'){
+            arrayForFilter = this.props.selectedTeam.expiring.roster;
 
             for(let i=0; i<this.props.selectedTeam.expiring.roster.length; i++){
                 data.push({
@@ -74,6 +145,7 @@ export default class RosterList extends React.Component {
                 })
               }
         }else{
+            arrayForFilter = this.props.selectedTeam.roster;
 
             for(let i=0; i<this.props.selectedTeam.roster.length; i++){
               data.push({
@@ -87,7 +159,8 @@ export default class RosterList extends React.Component {
         this.state={
           list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
           modalPlayer: null,
-          modalVisible:false
+          modalVisible:false,
+          arrayForFilter: arrayForFilter
         };
       
         this.layoutProvider = new LayoutProvider((i) => {
@@ -116,6 +189,18 @@ export default class RosterList extends React.Component {
                     subtitle={'Rating: ' + player.rating}
                     rightAvatar = {player.teamLogoSrc}
                     onPress={this.props.selectable === true ? () => Actions.playerprofile({selectedPlayer: player, view: 'draft', franchise: this.props.franchise, update: this.props.update}) : null }
+                    onLongPress={() => this.setModalVisible(true, player)}
+                    ></ListItem>
+                )
+            } 
+            if(this.props.view === 'fantasydraft'){
+                return(
+                <ListItem
+                    title={player.positionString + ' #' + player.number + ' ' + player.name}
+                     leftAvatar={player.faceSrc} 
+                    subtitle={'Rating: ' + player.rating}
+                    rightAvatar = {player.teamLogoSrc}
+                    onPress={this.props.selectable === true ? () => {this.props.draft(player), Actions.pop()} : null }
                     onLongPress={() => this.setModalVisible(true, player)}
                     ></ListItem>
                 )
@@ -161,19 +246,33 @@ export default class RosterList extends React.Component {
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                  leftAvatar={ player.faceSrc } 
                                 subtitle={'Rating: ' + player.rating}
-                                rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
+                                rightTitle={collegeMode?( player.getCollegeYearString() ) : null }
                                 onPress={() => {Actions.trainingscreen({player: player, points: this.props.selectedTeam.trainingPoints, update:this.updateState})}}
                                 onLongPress={() => this.setModalVisible(true, player)}
 
                                 ></ListItem>
                 )
             } 
+            if(this.props.view === 'redshirt'){
+                return(
+                    <ListItem
+                                title={player.positionString + ' #' + player.number + ' ' + player.name}
+                                 leftAvatar={ player.faceSrc } 
+                                subtitle={'Rating: ' + player.rating}
+                                rightTitle={collegeMode?(player.getCollegeYearString()) : null }
+                                rightAvatar={player.redshirted? REDSHIRT_LOGO: null}
+                                rightAvatarStyle={ {flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 15, width: 1}}
+                                onPress={() => {this.redshirtPlayer(player)}}
+                                onLongPress={() => this.setModalVisible(true, player)}
+                                ></ListItem>
+                )
+            }
                 return(
                     <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={ player.faceSrc } 
                     subtitle={'Rating: ' + player.rating}
-                    rightTitle={collegeMode?( player.age >= 21? 'SR' : player.age === 20? 'JR' : player.age===19? 'SO' : player.age===18? 'FR' : null ) : null }
+                    rightTitle={collegeMode?( player.getCollegeYearString() ) : null}
                     onPress={() => {Actions.playerprofile({selectedPlayer : player, update:this.updateState})}}
                     onLongPress={() => this.setModalVisible(true, player)}
 
@@ -224,8 +323,8 @@ export default class RosterList extends React.Component {
             {
                 this.props.view === 'retirements' && collegeMode === true ? (
                     <View>
-                <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0.75)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
-                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0.75)', borderColor: 'rgba(0,0,0,0.75)'}} title="Save As Draft Class" onPress={() => {this.checkDraftClassName()}}></Button>
+                <Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
+                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0)'}} title="Save As Draft Class" onPress={() => {this.checkDraftClassName()}}></Button>
                     </View>
                 
                 ): null
@@ -235,7 +334,7 @@ export default class RosterList extends React.Component {
 
             {
                 this.props.view === 'resigning' ? 
-                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0.75)'}} title="Release All" onPress={() => { this.props.selectedTeam.releaseExpiring(), Actions.pop() }}></Button>
+                <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0)'}} title="Release All" onPress={() => { this.props.selectedTeam.releaseExpiring(), Actions.pop() }}></Button>
                 : null
             }
 
@@ -250,6 +349,9 @@ export default class RosterList extends React.Component {
                 </View>
             ):null
 }
+
+<PositionFilter roster={this.state.arrayForFilter} setPositionFilter={this.setPositionFilter}></PositionFilter>
+
 
 <RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>
 

@@ -8,7 +8,7 @@ import {createTeam, conferences, teams, saveData} from '../data/script';
 export default class CreateTeamMenu extends React.Component {
     state = {
         name: '',
-        logoSrc: 'https://i.ibb.co/51fFLv2/GENERIC.png',
+        logoSrc: 'https://i.ibb.co/5h2T9Kq/test.png',
         rating : 75,
         conference: this.initialConference(),
         conferenceName : this.initialConferenceName(this.initialConference()),

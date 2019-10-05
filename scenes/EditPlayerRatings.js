@@ -13,26 +13,34 @@ export default class EditPlayerRatings extends React.Component {
         def: this.props.selectedPlayer.def,
         pass: this.props.selectedPlayer.pass,
         faceOff: this.props.selectedPlayer.faceOff,
-        save: this.props.selectedPlayer.save,
+        positioning: this.props.selectedPlayer.positioning,
+        reflexes: this.props.selectedPlayer.reflexes,
     }
 
     ratingFormula(){
-            let bestrating = [this.state.off, this.state.def, this.state.pass, this.state.save];
-            bestrating.sort(function (a, b) {
-                if (a < b) {
-                    return 1;
-                }
-                if (a > b) {
-                    return -1;
-                }
-                return 0;
-            });
-    
-    
-    
-             let ovr = Math.round(((this.state.off * 2) + (this.state.def * 2) + (this.state.save / 2) + (this.state.pass / 2) + (bestrating[0] * 2)) / 7);
+        let bestrating = [this.state.off, this.state.def, this.state.pass, this.state.faceOff];
+        bestrating.sort(function (a, b) {
+            if (a < b) {
+                return 1;
+            }
+            if (a > b) {
+                return -1;
+            }
+            return 0;
+        });
 
-             this.setState({rating : ovr});
+        let rat = 0;
+
+        if (this.props.selectedPlayer.position != 4) {
+            rat = Math.round(((this.state.off * 2) + (this.state.def * 2) + (this.state.faceOff / 2) + (this.state.pass / 2) + (bestrating[0] * 2)) / 7);
+            if (rat >= 99) {
+                rat = 99;
+            }
+        } else {
+            rat = Math.round((this.state.positioning + this.state.reflexes)/2);
+        }
+
+        this.setState({rating: rat});
     }
 
     saveChanges(){
@@ -41,7 +49,8 @@ export default class EditPlayerRatings extends React.Component {
         this.props.selectedPlayer.def=this.state.def;
         this.props.selectedPlayer.pass=this.state.pass;
         this.props.selectedPlayer.faceOff=this.state.faceOff;
-        this.props.selectedPlayer.save=this.state.save;
+        this.props.selectedPlayer.positioning=this.state.positioning;
+        this.props.selectedPlayer.reflexes=this.state.reflexes;
         selectedTeam.reorderLineup();
         this.props.updateState();
         Actions.pop();
@@ -56,7 +65,9 @@ export default class EditPlayerRatings extends React.Component {
             def: (this.state.def - change>99 ? 99 : this.state.def-change<40 ? 40 : this.state.def-change ),
             pass: (this.state.pass - change>99 ? 99 : this.state.pass-change<40 ? 40 : this.state.pass-change ),
             faceOff: (this.state.faceOff - change>99 ? 99 : this.state.faceOff-change<40 ? 40 : this.state.faceOff-change ),
-            save: (this.state.save - change>99 ? 99 : this.state.save-change<40 ? 40 : this.state.save-change )
+            positioning: (this.state.positioning - change>99 ? 99 : this.state.positioning-change<40 ? 40 : this.state.positioning-change),
+            reflexes: (this.state.reflexes - change>99 ? 99 : this.state.reflexes-change<40 ? 40 : this.state.reflexes-change)
+
         })
 
     }
@@ -129,16 +140,7 @@ export default class EditPlayerRatings extends React.Component {
                             onValueChange={value =>{ this.setState({ pass: value }), this.ratingFormula()}}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"SAVE: " + this.state.save}</Text>
-                        <Slider
-                            thumbTintColor={'rgb(180,180,180)'}
-                            maximumTrackTintColor={'rgb(180,180,180)'}
-                            step={1}
-                            minimumValue={40}
-                            maximumValue={99}
-                            value={this.state.save}
-                            onValueChange={value => {this.setState({ save: value }), this.ratingFormula()}}
-                        />
+                        
 
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"FACEOFF: " + this.state.faceOff}</Text>
                         <Slider
@@ -149,6 +151,28 @@ export default class EditPlayerRatings extends React.Component {
                             maximumValue={99}
                             value={this.state.faceOff}
                             onValueChange={value => this.setState({ faceOff: value })}
+                        />
+
+<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"POSITIONING: " + this.state.positioning}</Text>
+                        <Slider
+                            thumbTintColor={'rgb(180,180,180)'}
+                            maximumTrackTintColor={'rgb(180,180,180)'}
+                            step={1}
+                            minimumValue={40}
+                            maximumValue={99}
+                            value={this.state.positioning}
+                            onValueChange={value => {this.setState({ positioning: value }), this.ratingFormula()}}
+                        />
+
+<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"REFLEXES: " + this.state.reflexes}</Text>
+                        <Slider
+                            thumbTintColor={'rgb(180,180,180)'}
+                            maximumTrackTintColor={'rgb(180,180,180)'}
+                            step={1}
+                            minimumValue={40}
+                            maximumValue={99}
+                            value={this.state.reflexes}
+                            onValueChange={value => {this.setState({ reflexes: value }), this.ratingFormula()}}
                         />
                 <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black'}} title="Commit Changes" onPress={() => {this.saveChanges()}}></Button>
 

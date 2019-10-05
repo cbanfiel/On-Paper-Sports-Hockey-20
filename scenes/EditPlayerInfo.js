@@ -30,6 +30,9 @@ export default class EditPlayerInfo extends React.Component {
         this.props.selectedPlayer.salary = this.state.salary;
         this.props.selectedPlayer.faceSrc = this.state.faceSrc;
         this.props.selectedPlayer.height = this.state.height;
+        
+        this.props.selectedPlayer.calculateRating();
+
         try{
             selectedTeam.reorderLineup();
         }catch(err){
@@ -223,19 +226,19 @@ export default class EditPlayerInfo extends React.Component {
     position(value) {
         var str = '';
         if (value === 0) {
-            str = "PG"
+            str = "C"
         }
         if (value === 1) {
-            str = "SG"
+            str = "LW"
         }
         if (value === 2) {
-            str = "SF"
+            str = "RW"
         }
         if (value === 3) {
-            str = "PF"
+            str = "D"
         }
         if (value === 4) {
-            str = "C"
+            str = "G"
         }
 
         this.setState({ position: value, positionString: str })
