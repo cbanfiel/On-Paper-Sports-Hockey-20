@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, Modal, TouchableOpacity } from 'react-native';
-import { selectedTeam, selectedTeam2, trade, sortedRoster } from '../data/script';
+import { selectedTeam, selectedTeam2, trade, sortedRoster, returnStatsListView, played } from '../data/script';
 import {Icon} from 'react-native-elements';
 import Background from '../components/background';
 import CachedImage from '../components/CachedImage';
@@ -67,13 +67,13 @@ export default class GameStats extends React.Component {
 
                     {
 
-                            sortedRoster(selectedTeam, 'position').map((player, i) => (
+                            played(selectedTeam.roster).map((player, i) => (
                             <ListItem titleStyle={{ fontFamily: 'advent-pro', color: 'black' }}
                                 subtitleStyle={{ fontFamily: 'advent-pro' }}
                                 containerStyle={{ backgroundColor: 'rgba(255,255,255,0)', }}
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                 key={i} leftAvatar={player.faceSrc } 
-                                subtitle={"GOALS: " + player.statsHistory[this.props.currentGame].goals + " SHOTS: " + player.statsHistory[this.props.currentGame].shots + " ASSISTS: " + player.statsHistory[this.props.currentGame].assists + " SAVE%: " + Math.round((player.statsHistory[this.props.currentGame].saves/ (player.statsHistory[this.props.currentGame].saves + player.statsHistory[this.props.currentGame].goalsAllowed))*1000)/10}
+                                subtitle={returnStatsListView(player)}
                                 onLongPress={() => this.setModalVisible(true, player)}
     
                             ></ListItem>
@@ -90,13 +90,13 @@ export default class GameStats extends React.Component {
                 </View>
                 <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
-                    {sortedRoster(selectedTeam2, 'position').map((player, i) => (
+                    {played(selectedTeam2.roster).map((player, i) => (
                         <ListItem
                             titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} subtitleStyle={{ fontFamily: 'advent-pro' }}
                             containerStyle={{ backgroundColor: 'rgba(255,255,255,0)' }}
                             title={player.positionString + ' #' + player.number + ' ' + player.name}
                             key={i} leftAvatar={player.faceSrc }
-                            subtitle={"GOALS: " + player.statsHistory[this.props.currentGame].goals + " SHOTS: " + player.statsHistory[this.props.currentGame].shots + " ASSISTS: " + player.statsHistory[this.props.currentGame].assists + " SAVE%: " + Math.round((player.statsHistory[this.props.currentGame].saves/ (player.statsHistory[this.props.currentGame].saves + player.statsHistory[this.props.currentGame].goalsAllowed))*1000)/10}
+                            subtitle={returnStatsListView(player)}
                             onLongPress={() => this.setModalVisible(true, player)}
 
                         />

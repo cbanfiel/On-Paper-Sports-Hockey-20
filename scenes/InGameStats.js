@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, ScrollView, Modal, TouchableOpacity } from 'react-native';
 import {Icon} from 'react-native-elements';
-import { home, away, sortedRoster, gamesPerSeason, returnStatsView, returnStatsListView } from '../data/script';
+import { home, away, sortedRoster, gamesPerSeason, returnStatsView, returnStatsListView, played } from '../data/script';
 import Background from '../components/background';
 import CachedImage from '../components/CachedImage';
 import ListItem from '../components/ListItem';
@@ -65,7 +65,7 @@ export default class InGameStats extends React.Component {
                 </View>
                 <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
-                    {sortedRoster(home, 'position').map((player, i) => (
+                    {played(home.roster).map((player, i) => (
                         <ListItem 
                             title={player.positionString + ' #' + player.number + ' ' + player.name}
                             key={i} leftAvatar={player.faceSrc } 
@@ -85,7 +85,7 @@ export default class InGameStats extends React.Component {
                 </View>
                 <ScrollView contentContainerStyle={{paddingBottom: 20}}>
 
-                    {sortedRoster(away, 'position').map((player, i) => (
+                    {played(away.roster).map((player, i) => (
                         <ListItem
                             title={player.positionString + ' #' + player.number + ' ' + player.name}
                             key={i} leftAvatar={player.faceSrc }

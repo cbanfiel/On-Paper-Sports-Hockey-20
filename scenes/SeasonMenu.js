@@ -137,18 +137,18 @@ export default class SeasonMenu extends React.Component {
 
 
             {
-              <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.sim20(), Actions.refresh() }}>
+              // <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.sim20(), Actions.refresh() }}>
 
-                <Card
-                  containerStyle={{
-                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'black',
-                    alignSelf:'center'
-                  }}
-                >
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim 20 Years</Text>
-                </Card>
-              </TouchableOpacity>
+              //   <Card
+              //     containerStyle={{
+              //       width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+              //       borderColor: 'black',
+              //       alignSelf:'center'
+              //     }}
+              //   >
+              //     <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim 20 Years</Text>
+              //   </Card>
+              // </TouchableOpacity>
 
             }
 

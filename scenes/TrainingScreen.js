@@ -47,7 +47,10 @@ export default class TrainingScreen extends React.Component {
 
 
         this.setState({ points: this.state.points - 1, disabled:true });
-        let growth = Math.round(Math.random() * 3);
+        let growth = Math.round(Math.random() * 3)+1;
+        if(growth<2){
+            growth = 2;
+        }
         this.growthAnimation(growth, attr);
     }
 

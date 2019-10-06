@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, ScrollView, View, Image} from 'react-native';
 import { Card, Divider, ListItem, Slider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { home, away, Results, seriesWinCount, setHome, setAway, selectedTeam } from '../data/script';
+import { home, away, Results, seriesWinCount, setHome, setAway, selectedTeam, collegeMode } from '../data/script';
 import Background from '../components/background';
 import Picache from 'picache';
 import CachedImage from '../components/CachedImage';
@@ -256,8 +256,19 @@ leavePage(){
                     >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                   <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{this.state.homescore}</Text>
+                  {
+                                collegeMode? (
+                                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{home.seed <= 25? `#${home.seed}` : '  '}</Text>
+                                ):null
+                              }
                       <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} source={{uri: home.logoSrc }} />
                       <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} source= {{uri: away.logoSrc }} />
+                      {
+                                collegeMode? (
+                                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{away.seed <= 25? `#${away.seed}` : '  '}</Text>
+                                ):null
+                              }
+                 
                   <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{this.state.awayscore}</Text>
 
                     </View>

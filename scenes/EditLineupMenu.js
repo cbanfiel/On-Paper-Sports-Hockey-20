@@ -24,7 +24,9 @@ export default class EditLineupMenu extends React.Component {
         for(let i=0; i<selectedTeam.roster.length; i++){
             let ply = selectedTeam.roster[i];
             if(!selectedTeam.offLine1.includes(ply) && !selectedTeam.offLine2.includes(ply) && !selectedTeam.offLine3.includes(ply) && !selectedTeam.offLine4.includes(ply) && !selectedTeam.defLine1.includes(ply) && !selectedTeam.defLine2.includes(ply) && !selectedTeam.defLine3.includes(ply) && !selectedTeam.goalies.includes(ply)){
-                reserves.push(ply);
+                if(!ply.redshirted){
+                    reserves.push(ply);
+                }
             }
         }
         return reserves;
