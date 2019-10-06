@@ -15,6 +15,25 @@ export default class StatFilter extends React.Component {
 
     setFilter(filter){
         let filteredArray = [];
+
+        if(filter === 'points'){
+            for(let i=0; i<this.props.selectedTeam.roster.length; i++){
+                let ply = this.props.selectedTeam.roster[i]
+                if(ply.seasonGoals >0 || ply.seasonAssists >0 ){
+                    filteredArray.push(ply);
+                }
+            }
+
+            filteredArray.sort(function(a,b){
+                if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists)
+                return -1;
+            if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists)
+                return 1;
+            return 0;
+            })
+        }
+
+
         if(filter === 'goals'){
             for(let i=0; i<this.props.selectedTeam.roster.length; i++){
                 let ply = this.props.selectedTeam.roster[i]
@@ -22,6 +41,16 @@ export default class StatFilter extends React.Component {
                     filteredArray.push(ply);
                 }
             }
+
+            filteredArray.sort(function(a,b){
+                if(a.seasonGoals < b.seasonGoals){
+                    return 1;
+                }
+                if(a.seasonGoals > b.seasonGoals){
+                    return -1;
+                }
+                return 0;
+            })
         }
 
         if(filter === 'assists'){
@@ -95,6 +124,12 @@ export default class StatFilter extends React.Component {
     render() {
         return (
                 <View style={{ backgroundColor: 'rgba(255,255,255,0)', height:50, width:width, flexDirection:'row', justifyContent:'center', alignItems:'center', display:'flex'}}>
+
+<TouchableOpacity  onPress={() => this.setFilter('points')} style={{flex:1}}>
+                        <View style={{backgroundColor:'rgb(30,30,30)', height:'100%', justifyContent:'center'}}>
+                        <Text style={{ fontFamily: 'advent-pro' , fontSize:16, color:'white', textAlign: 'center' }}>Points</Text>
+                        </View>
+                    </TouchableOpacity>
                     <TouchableOpacity  onPress={() => this.setFilter('goals')} style={{flex:1}}>
                         <View style={{backgroundColor:'rgb(30,30,30)', height:'100%', justifyContent:'center'}}>
                         <Text style={{ fontFamily: 'advent-pro' , fontSize:16, color:'white', textAlign: 'center' }}>Goals</Text>
