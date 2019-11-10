@@ -1,18 +1,48 @@
 import React from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Button, Card, Slider, Divider, Input } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import {createTeam, conferences, teams, saveData} from '../data/script';
+import {createTeam, conferences, teams, saveData, teamsData} from '../data/script';
+import CachedImage from '../components/CachedImage';
+
 
 export default class CreateTeamMenu extends React.Component {
     state = {
         name: '',
-        logoSrc: 'https://i.ibb.co/5h2T9Kq/test.png',
+        logoSrc: teamsData[Math.floor(Math.random()*teamsData.length)].logoSrc,
         rating : 75,
         conference: this.initialConference(),
         conferenceName : this.initialConferenceName(this.initialConference()),
     }
+
+    previousPortrait(){
+        let index = 1;
+        for(let i=0; i<teamsData.length; i++){
+            if(this.state.logoSrc === teamsData[i].logoSrc){
+                index = i;
+            }
+        }
+        index--;
+        if(index<0){
+          index = teamsData.length-1;
+        }
+        this.setState({logoSrc: teamsData[index].logoSrc});
+       }
+   
+       nextPortrait(){
+        let index = 1;
+        for(let i=0; i<teamsData.length; i++){
+            if(this.state.logoSrc === teamsData[i].logoSrc){
+                index = i;
+            }
+        }
+         index++;
+         if(index>teamsData.length-1){
+           index = 0;
+         }
+         this.setState({logoSrc: teamsData[index].logoSrc});
+        }
 
     saveChanges() {
         if(this.state.name != ''){
@@ -62,7 +92,17 @@ export default class CreateTeamMenu extends React.Component {
                             alignSelf:'center'
                         }} >
 
-                        <Image rounded style={{ height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} source={this.state.logoSrc!= '' ? { uri: this.state.logoSrc} : null} />
+<View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.previousPortrait()}>
+                          <Text style={{ textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'<-'}</Text>
+
+                          </TouchableOpacity>
+                        <CachedImage uri={this.state.logoSrc} style={{flex:1, height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }}/>
+                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.nextPortrait()}>
+                          <Text style={{textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'->'}</Text>
+                          </TouchableOpacity>
+                        </View>
+
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.name + ' OVR:' + this.state.rating }</Text>
                         <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
@@ -102,7 +142,7 @@ export default class CreateTeamMenu extends React.Component {
 
                         </View>
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginTop:15 }} title="Create Team" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black', borderWidth: 1, borderColor: 'black', marginTop:15 }} title="Create Team" onPress={() => { this.saveChanges() }}></Button>
 
 
                     </Card>

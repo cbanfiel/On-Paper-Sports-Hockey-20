@@ -3,7 +3,7 @@ import { Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Button, Card, Slider, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import { setSliders, setFranchiseSliders, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, trainingPointsAvailable, defenseSlider, offenseSlider, passSkillFactorSlider, shotSkillFactorSlider, goalieAdjustmentSlider } from '../data/script';
+import { setSliders, setFranchiseSliders, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, trainingPointsAvailable, defenseSlider, offenseSlider, passSkillFactorSlider, shotSkillFactorSlider, goalieAdjustmentSlider, playerSigningDifficulty } from '../data/script';
 
 export default class SlidersMenu extends React.Component {
 
@@ -22,7 +22,9 @@ export default class SlidersMenu extends React.Component {
         offenseSlider : offenseSlider,
         passSkillFactorSlider: passSkillFactorSlider,
         shotSkillFactorSlider: shotSkillFactorSlider,
-        goalieAdjustmentSlider : goalieAdjustmentSlider
+        goalieAdjustmentSlider : goalieAdjustmentSlider,
+        playerSigningDifficulty: playerSigningDifficulty
+
     }
 
 
@@ -56,6 +58,10 @@ export default class SlidersMenu extends React.Component {
             return;
         }
         if (Math.round(this.state.tradeDifficulty*100) != Math.round(tradeThreshold*100)) {
+            this.setState({ gameSlidersChanged: true });
+            return;
+        }
+        if(this.state.playerSigningDifficulty != playerSigningDifficulty){
             this.setState({ gameSlidersChanged: true });
             return;
         }
@@ -212,7 +218,7 @@ export default class SlidersMenu extends React.Component {
 
 
     saveChanges() {
-        setSliders(this.state.defenseSlider, this.state.offenseSlider, this.state.passSkillFactorSlider, this.state.shotSkillFactorSlider, this.state.goalieAdjustmentSlider, this.state.difficulty, this.state.tradeDifficulty, this.state.trainingPointsAvailable);
+        setSliders(this.state.defenseSlider, this.state.offenseSlider, this.state.passSkillFactorSlider, this.state.shotSkillFactorSlider, this.state.goalieAdjustmentSlider, this.state.difficulty, this.state.tradeDifficulty, this.state.trainingPointsAvailable, this.state.playerSigningDifficulty);
         this.setState({ gameSlidersChanged: false });
     }
 
@@ -429,6 +435,17 @@ export default class SlidersMenu extends React.Component {
                             maximumValue={5}
                             value={this.state.trainingPointsAvailable}
                             onValueChange={value => { this.checkGameSliders(), this.setState({ trainingPointsAvailable: value }) }}
+                        />
+
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"User Signing Difficulty: " + this.state.playerSigningDifficulty}</Text>
+                        <Slider
+                            thumbTintColor={'rgb(180,180,180)'}
+                            maximumTrackTintColor={'rgb(180,180,180)'}
+                            step={5}
+                            minimumValue={20}
+                            maximumValue={150}
+                            value={this.state.playerSigningDifficulty}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ playerSigningDifficulty: value }) }}
                         />
 
 

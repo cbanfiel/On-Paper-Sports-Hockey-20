@@ -67,9 +67,13 @@ export default class MainMenu extends React.Component {
     team: selectedTeam
   }
 
-  update = () =>{
+  update = (_callback) =>{
     menuDisplayTeams();
-    this.setState({team: selectedTeam});
+    this.setState({team: selectedTeam}, () =>{
+      if(_callback != null){
+        _callback();
+      }
+    })
   }
 
   render() {

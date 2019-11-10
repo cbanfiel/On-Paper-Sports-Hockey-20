@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View, ScrollView, Image } from 'react-native';
+import { Text, View, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Button, Card, Slider, Divider, Input } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import {createPlayer, saveData} from '../data/script';
+import {createPlayer, saveData, portraits} from '../data/script';
 import CachedImage from '../components/CachedImage';
 
 
@@ -16,10 +16,29 @@ export default class CreateAPlayerMenu extends React.Component {
         position: 0,
         age: 21,
         salary: 1200000,
-        faceSrc: 'https://www.2kratings.com/wp-content/uploads/NBA-Player.png',
+        faceSrc: portraits[Math.floor(Math.random()*portraits.length)],
         height:"6\"0'",
         team : null
     }
+
+    
+    previousPortrait(){
+        let index=portraits.indexOf(this.state.faceSrc);
+        index--;
+        if(index<0){
+          index = portraits.length-1;
+        }
+        this.setState({faceSrc: portraits[index]});
+       }
+   
+       nextPortrait(){
+         let index=portraits.indexOf(this.state.faceSrc);
+         index++;
+         if(index>portraits.length-1){
+           index = 0;
+         }
+         this.setState({faceSrc: portraits[index]});
+        }
 
     setFaceSource(value){
         //check to see if it is link
@@ -171,9 +190,20 @@ export default class CreateAPlayerMenu extends React.Component {
 
                             <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.team == null? 'Free Agents' : this.state.team.name}</Text>
                         </View>
-                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>   
+                        <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider> 
 
-                        <Image rounded style={{ height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} source={{ uri: this.state.faceSrc }} />
+                        
+                        <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.previousPortrait()}>
+                          <Text style={{ textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'<-'}</Text>
+
+                          </TouchableOpacity>
+                        <CachedImage uri={this.state.faceSrc  } style={{flex:1, height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }}/>
+                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.nextPortrait()}>
+                          <Text style={{textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'->'}</Text>
+                          </TouchableOpacity>
+                        </View>  
+
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.positionString + ' #' + this.state.number + ' ' + this.state.name}</Text>
                         <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
 
@@ -240,10 +270,10 @@ export default class CreateAPlayerMenu extends React.Component {
                             onValueChange={value => this.setState({ salary: value })}
                         />
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginBottom:10 }} title="Select Team" onPress={() => { Actions.push('teamlist', {updateTeam : this.updateTeam, home:6}) }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black', borderWidth: 1, borderColor: 'black', marginBottom:10 }} title="Select Team" onPress={() => { Actions.push('teamlist', {updateTeam : this.updateTeam, home:6}) }}></Button>
                         
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black' }} title="Create Player" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black', borderWidth: 1, borderColor: 'black' }} title="Create Player" onPress={() => { this.saveChanges() }}></Button>
 
 
                     </Card>

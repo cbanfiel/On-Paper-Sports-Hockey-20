@@ -9,6 +9,18 @@ import ListItem from '../components/ListItem';
 
 const updateLog = [
     {
+        date: '11/9/2019',
+        updates: "-Added generic player faces\n-Added generic team logos\n-You can now use the generic player portraits in the create a player menu\n-You can now use the generic team logos in the create a team menu"
+    },
+    {
+        date: '10/24/2019',
+        updates: "-Simplified offer contract menu\n-Added player signing difficulty slider"
+    },
+    {
+        date: '10/6/2019',
+        updates: "-College mode overhaul (redshirting, recruiting, rankings in ui and schedule view, etc) \n-updated the look of the ui \n-in game and previous game stat menus updated \n-various bug fixes"
+    },
+    {
         date: '7/23/2019',
         updates: "-New offseason training screen \n-New slider presets (college, pro) \n-Community rosters can now be binded to a slider preset (college rosters automatically use college sliders) \n-New rebounding slider \n-Various bug fixes"
     },

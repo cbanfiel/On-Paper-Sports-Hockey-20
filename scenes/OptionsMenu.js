@@ -7,11 +7,7 @@ import Background from '../components/background';
 import { loadRosters, resetFranchise, resetSliders, removeTeams, generateFreeAgents} from '../data/script';
 
 export default class OptionsMenu extends React.Component {
-  componentWillUnmount(){
-    if(this.props.update!=null){
-      this.props.update();
-    }
-  }
+
 
 
   render() {
@@ -48,7 +44,7 @@ export default class OptionsMenu extends React.Component {
 
           
 
-          <TouchableOpacity style={{ width: '100%' }} onPress={() => {Actions.savesmenu({saveType: 'Roster'})}}>
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => {Actions.savesmenu({saveType: 'Roster', updateState: this.props.update})}}>
 
             <Card
               containerStyle={{

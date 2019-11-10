@@ -87,7 +87,7 @@ export default class EditTeam extends React.Component {
                             onValueChange={value => this.setState({ rating: value })}
                         />
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Generate New Roster" onPress={() => { this.generateNewRoster() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Generate New Roster" onPress={() => { this.generateNewRoster() }}></Button>
                         
 
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"Conference: " + this.state.conferenceName}</Text>
@@ -108,11 +108,11 @@ export default class EditTeam extends React.Component {
 
                         </View>
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Commit Changes" onPress={() => { this.saveChanges() }}></Button>
 
                 
 
-                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Delete Team" onPress={() => { this.deleteTeam() }}></Button>
+                        <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'black', borderWidth: 1, borderColor: 'black', marginVertical:10 }} title="Delete Team" onPress={() => { this.deleteTeam() }}></Button>
                         
                     </Card>
 

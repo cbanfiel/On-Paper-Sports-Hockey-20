@@ -7,10 +7,15 @@ import ListItem from '../components/ListItem';
 
 export default class CommunityRosters extends React.Component {
 
-    componentWillUnmount(){
-        if(this.props.update!=null){
-          this.props.update();
-        }
+    leaveScene = () => {
+          console.log('called');
+          if(this.props.filtered != null){
+                Actions.pop();
+          }else{
+              this.props.update(()=>{
+                 Actions.popTo('mainmenu')
+              })
+          }
       }
 
     filterList(){
@@ -55,7 +60,7 @@ export default class CommunityRosters extends React.Component {
                         
                         this.state.filteredList.map((item, i) => (
                         <ListItem titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} subtitleStyle={{ fontFamily: 'advent-pro' }} containerStyle={{ backgroundColor: 'rgba(255,255,255,0)' }} 
-                        onPress={() => {getDataFromLink(item.link, item.type, item.sliderType), this.props.filtered!= null? (Actions.pop()) : Actions.popTo('mainmenu')}}
+                        onPress={() => {getDataFromLink(item.link, item.type, item.sliderType, this.leaveScene)}}
                         title={item.name} 
                         rightTitleStyle={{fontFamily:'advent-pro'}}
                         rightTitle={item.type}

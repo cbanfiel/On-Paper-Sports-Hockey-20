@@ -74,13 +74,18 @@ export default class SavesMenu extends React.Component {
 
   
   loadFromFileSystem = (fileName) =>{
-    loadFromFileSystem(fileName);
+    loadFromFileSystem(fileName, this.leaveScene)
+  };
+
+  leaveScene = () => {
     if(this.props.filtered!= null){
       Actions.pop();
     }else{
+      this.props.updateState(() => {
       Actions.popTo('mainmenu');
+      });
     }
-  };
+  }
 
   deleteFromFileSystem = async (fileName) =>{
     const file = fileName;
