@@ -4,6 +4,9 @@ export let teamsData = require('./JSON/Teams.json');
 var playerData = require('./JSON/Players.json');
 var freeAgents = require('./JSON/FreeAgents.json');
 
+import {Sliders} from './Sliders.js';
+
+
 var draftData = require('./JSON/DraftData.json');
 
 export const portraits = require('./Portraits.json');
@@ -43,6 +46,10 @@ const POS_D_REQUIREMENTS = 6;
 const POS_G_REQUIREMENTS = 2;
 
 
+//NEW
+export let sliders = new Sliders();
+
+//LEGACY
 //sliders
 export let twoPointPercentageLow = 20;
 export let twoPointPercentageHigh = 73;
@@ -97,10 +104,12 @@ export function resetSliders() {
  shotSkillFactorSlider = 7;
  goalieAdjustmentSlider = 3;
  playerSigningDifficulty = 90;
+ sliders.proSliderPreset();
 
 }
 
 export function collegeSliderPreset() {
+    sliders.collegeSliderPreset();
     twoPointPercentageLow = 20;
     twoPointPercentageHigh = 73;
     threePointPercentageLow = 25;
@@ -3042,15 +3051,22 @@ export class Franchise {
         let rating = Math.round((teamRating + scaledSeed)/2) - 20;
         // console.log(`${teams[i].name} ${rating}`);
 
-        if(teams[i] === selectedTeam){
-          console.log(`generateprospect rating: ${rating}`);
-        }
+                if (teams[i] === selectedTeam) {
+                    console.log(`generateprospect b4: ${rating}`);
+                    rating = Math.round(((((sliders.recruitingDifficulty*-1)+100)/100) * rating) + rating);
+                    console.log(`generateprospect rating: ${rating}`);
+                }
 
-        if(rating<=60){
-          rating = 60;
-        }
-        generateProspects(teams[i], rating);
-      }
+                if(rating >= 99){
+                    rating = 99;
+                }
+
+                if (rating <= 60) {
+                    rating = 60;
+                }
+
+                generateProspects(teams[i], rating);
+            }
         } else {
 
             for (let i = 0; i < teams.length; i++) {
@@ -4336,7 +4352,8 @@ export function saveData(slot) {
         teams: [],
         freeAgents: '',
         draftClass: '',
-        sliders: ''
+        sliders: '',
+        newSliders: sliders
     }
 
     for (let i = 0; i < teams.length; i++) {
@@ -4498,6 +4515,11 @@ export const loadData = (data) => {
                 setFranchiseSliders(loadedData.sliders.gamesPerSeason, loadedData.sliders.playoffSeeds, loadedData.sliders.seriesWinCount, loadedData.sliders.conferencesOn, loadedData.sliders.collegeMode);
             }
 
+
+        }
+
+        if(loadedData.newSliders != null){
+            sliders.loadSliders(loadedData.newSliders);
         }
 
         generateDraftClass();
@@ -5233,8 +5255,10 @@ export function saveFranchise(slot) {
         freeAgents: '',
         draftClass: '',
         sliders: '',
+        newSliders: sliders,
         day: franchise.season.day,
-        pastChampions: franchise.pastChampions
+        pastChampions: franchise.pastChampions,
+        logo: selectedTeam.logoSrc
     }
 
     for (let i = 0; i < teams.length; i++) {
@@ -5429,6 +5453,12 @@ export const loadFranchise = (data) => {
                 setFranchiseSliders(loadedData.sliders.gamesPerSeason, loadedData.sliders.playoffSeeds, loadedData.sliders.seriesWinCount, loadedData.sliders.conferencesOn, loadedData.sliders.collegeMode, true);
         }
 
+
+
+        if(loadedData.newSliders != null){
+            sliders.loadSliders(loadedData.newSliders);
+        }
+
         // generateDraftClass();
 
 
@@ -5503,8 +5533,7 @@ export const loadFranchise = (data) => {
 
 
 
-    }
-    catch (err) {
+    }catch (err) {
         console.log(err);
     }
 }

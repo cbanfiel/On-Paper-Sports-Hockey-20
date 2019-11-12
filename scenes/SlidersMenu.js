@@ -3,8 +3,8 @@ import { Text, View, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Button, Card, Slider, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import { setSliders, setFranchiseSliders, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, trainingPointsAvailable, defenseSlider, offenseSlider, passSkillFactorSlider, shotSkillFactorSlider, goalieAdjustmentSlider, playerSigningDifficulty } from '../data/script';
-
+import { setSliders, setFranchiseSliders, conferences, gamesPerSeason, playoffSeeds, seriesWinCount, conferencesOn, teams, franchise, collegeMode, difficulty, tradeThreshold, resetSliders, collegeSliderPreset, trainingPointsAvailable, defenseSlider, offenseSlider, passSkillFactorSlider, shotSkillFactorSlider, goalieAdjustmentSlider, playerSigningDifficulty, sliders } from '../data/script';
+import { Sliders } from '../data/Sliders';
 export default class SlidersMenu extends React.Component {
 
     state = {
@@ -23,7 +23,8 @@ export default class SlidersMenu extends React.Component {
         passSkillFactorSlider: passSkillFactorSlider,
         shotSkillFactorSlider: shotSkillFactorSlider,
         goalieAdjustmentSlider : goalieAdjustmentSlider,
-        playerSigningDifficulty: playerSigningDifficulty
+        playerSigningDifficulty: playerSigningDifficulty,
+        recruitingDifficulty : sliders.recruitingDifficulty
 
     }
 
@@ -62,6 +63,10 @@ export default class SlidersMenu extends React.Component {
             return;
         }
         if(this.state.playerSigningDifficulty != playerSigningDifficulty){
+            this.setState({ gameSlidersChanged: true });
+            return;
+        }
+        if(this.state.recruitingDifficulty != sliders.recruitingDifficulty){
             this.setState({ gameSlidersChanged: true });
             return;
         }
@@ -219,6 +224,7 @@ export default class SlidersMenu extends React.Component {
 
     saveChanges() {
         setSliders(this.state.defenseSlider, this.state.offenseSlider, this.state.passSkillFactorSlider, this.state.shotSkillFactorSlider, this.state.goalieAdjustmentSlider, this.state.difficulty, this.state.tradeDifficulty, this.state.trainingPointsAvailable, this.state.playerSigningDifficulty);
+        sliders.recruitingDifficulty = this.state.recruitingDifficulty;
         this.setState({ gameSlidersChanged: false });
     }
 
@@ -266,7 +272,8 @@ export default class SlidersMenu extends React.Component {
                 shotSkillFactorSlider: shotSkillFactorSlider,
                 goalieAdjustmentSlider : goalieAdjustmentSlider,
             franchiseSlidersChanged: false,
-            gameSlidersChanged: false
+            gameSlidersChanged: false,
+            recruitingDifficulty: sliders.recruitingDifficulty
         });
     }
 
@@ -289,7 +296,8 @@ export default class SlidersMenu extends React.Component {
             shotSkillFactorSlider: shotSkillFactorSlider,
             goalieAdjustmentSlider : goalieAdjustmentSlider,
         franchiseSlidersChanged: false,
-        gameSlidersChanged: false
+        gameSlidersChanged: false,
+        recruitingDifficulty: sliders.recruitingDifficulty
     });
     }
 
@@ -448,6 +456,16 @@ export default class SlidersMenu extends React.Component {
                             onValueChange={value => { this.checkGameSliders(), this.setState({ playerSigningDifficulty: value }) }}
                         />
 
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"User Recruiting Difficulty: " + this.state.recruitingDifficulty}</Text>
+                        <Slider
+                            thumbTintColor={'rgb(180,180,180)'}
+                            maximumTrackTintColor={'rgb(180,180,180)'}
+                            step={2}
+                            minimumValue={80}
+                            maximumValue={120}
+                            value={this.state.recruitingDifficulty}
+                            onValueChange={value => { this.checkGameSliders(), this.setState({ recruitingDifficulty: value }) }}
+                        />
 
                         <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(255,0,0,0.75)', borderColor: 'rgba(255,255,255,0)', borderWidth: 1, borderColor: 'black' }} title={this.state.gameSlidersChanged ? "Commit Game Slider Changes" : "Current"} disabled={this.state.gameSlidersChanged ? false : true} disabledStyle={{ backgroundColor: 'rgba(10,200,60,0.75)' }} disabledTitleStyle={{ color: 'black' }} onPress={() => { this.saveChanges() }}></Button>
 

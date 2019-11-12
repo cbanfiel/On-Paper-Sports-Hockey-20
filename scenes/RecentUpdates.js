@@ -9,6 +9,10 @@ import ListItem from '../components/ListItem';
 
 const updateLog = [
     {
+        date: '11/12/2019',
+        updates: "-Player age now displayed in roster lists\n-player expected salary now displayed in resigning menu\n-New recruiting difficulty slider "
+    },
+    {
         date: '11/9/2019',
         updates: "-Added generic player faces\n-Added generic team logos\n-You can now use the generic player portraits in the create a player menu\n-You can now use the generic team logos in the create a team menu"
     },

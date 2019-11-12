@@ -141,7 +141,7 @@ export default class PlayoffMenu extends React.Component {
                   <Text style={{ flex: 1, textAlign: 'center', fontSize: 35, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.results[matchup.game - 2].team2Score : null}</Text>
                 </View>
 
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.team1Wins > matchup.team2Wins ? matchup.team1.name + ' Leads ' + matchup.team1Wins + '-' + matchup.team2Wins : matchup.team2Wins > matchup.team1Wins ? matchup.team2.name + ' Leads ' + matchup.team2Wins + '-' + matchup.team1Wins : 'Series Tied ' + matchup.team2Wins + '-' + matchup.team1Wins : null}</Text>
+                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{matchup.game > 1 ? matchup.team1Wins > matchup.team2Wins ? matchup.team1.name + ' Lead ' + matchup.team1Wins + '-' + matchup.team2Wins : matchup.team2Wins > matchup.team1Wins ? matchup.team2.name + ' Lead ' + matchup.team2Wins + '-' + matchup.team1Wins : 'Series Tied ' + matchup.team2Wins + '-' + matchup.team1Wins : null}</Text>
               </Card>
             </TouchableOpacity>
           ))}

@@ -98,7 +98,7 @@ export default class DraftClassMenu extends React.Component {
                     <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={player.faceSrc }
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                     onPress={() => Actions.playerprofile({selectedPlayer : player, update:this.update})}
                     onLongPress={() => this.setModalVisible(true, player)}
                 />

@@ -215,7 +215,7 @@ manageOffer(ply){
             onPress={() => {Actions.push('offercontractmenu', {selectedPlayer: player, back:this.props.back, playerpool:availableFreeAgents, update: this.forceUpdate, forced:this.props.forced} ) }}
             title={player.positionString + ' #' + player.number + ' ' + player.name}
             leftAvatar={player.faceSrc }
-            subtitle={'Rating: ' + player.rating}
+            subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
             rightTitle = {collegeMode? 'Recruiting: ' + displaySalary(player.salary, true)  : '$' +  displaySalary(player.salary, true)}
             onLongPress={() => this.setModalVisible(true, player)}
         />

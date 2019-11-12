@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ScrollView, Alert, TouchableOpacity, Modal, Text, Dimensions } from 'react-native';
 import { Button, Input, Icon } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { sortedRoster, collegeMode, releasePlayer, saveAsDraftClass, manageSaveName, selectedTeam, REDSHIRT_LOGO, checkRequirementsWithoutPlayer } from '../data/script';
+import { sortedRoster, collegeMode, releasePlayer, saveAsDraftClass, manageSaveName, selectedTeam, REDSHIRT_LOGO, checkRequirementsWithoutPlayer, displaySalary } from '../data/script';
 import Background from '../components/background';
 import TeamHeader from '../components/TeamHeader';
 import ListItem from '../components/ListItem';
@@ -186,7 +186,7 @@ export default class RosterList extends React.Component {
                 <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={player.faceSrc} 
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                     rightAvatar = {player.teamLogoSrc}
                     onPress={this.props.selectable === true ? () => Actions.playerprofile({selectedPlayer: player, view: 'draft', franchise: this.props.franchise, update: this.props.update}) : null }
                     onLongPress={() => this.setModalVisible(true, player)}
@@ -198,7 +198,7 @@ export default class RosterList extends React.Component {
                 <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={player.faceSrc} 
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                     rightAvatar = {player.teamLogoSrc}
                     onPress={this.props.selectable === true ? () => {this.props.draft(player), Actions.pop()} : null }
                     onLongPress={() => this.setModalVisible(true, player)}
@@ -210,7 +210,8 @@ export default class RosterList extends React.Component {
                     <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={ player.faceSrc }
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
+                    rightTitle = {collegeMode? 'Recruiting: ' + displaySalary(player.salary, true)  : '$' +  displaySalary(player.salary, true)}
                     onPress={() => {Actions.offercontractmenu({selectedPlayer : player, playerpool : this.props.selectedTeam.expiring, back:this.props.back, forced:this.props.forced})}}
                     onLongPress={() => this.setModalVisible(true, player)}
                     ></ListItem>
@@ -221,7 +222,8 @@ export default class RosterList extends React.Component {
                     <ListItem 
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={ player.faceSrc } 
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
+                    rightAvatar= {player.teamLogoSrc}
                     onPress={() => {Actions.playerstatshistory({ player: player })}}
                     onLongPress={() => this.setModalVisible(true, player)}
 
@@ -233,7 +235,7 @@ export default class RosterList extends React.Component {
                     <ListItem 
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={ player.faceSrc } 
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                     onPress={() => {releasePlayer(player), Actions.pop()}}
                     onLongPress={() => this.setModalVisible(true, player)}
 
@@ -245,7 +247,7 @@ export default class RosterList extends React.Component {
                     <ListItem
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                  leftAvatar={ player.faceSrc } 
-                                subtitle={'Rating: ' + player.rating}
+                                subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                                 rightTitle={collegeMode?( player.getCollegeYearString() ) : null }
                                 onPress={() => {Actions.trainingscreen({player: player, points: this.props.selectedTeam.trainingPoints, update:this.updateState})}}
                                 onLongPress={() => this.setModalVisible(true, player)}
@@ -258,7 +260,7 @@ export default class RosterList extends React.Component {
                     <ListItem
                                 title={player.positionString + ' #' + player.number + ' ' + player.name}
                                  leftAvatar={ player.faceSrc } 
-                                subtitle={'Rating: ' + player.rating}
+                                subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                                 rightTitle={collegeMode?(player.getCollegeYearString()) : null }
                                 rightAvatar={player.redshirted? REDSHIRT_LOGO: null}
                                 rightAvatarStyle={ {flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 15, width: 1}}
@@ -271,7 +273,7 @@ export default class RosterList extends React.Component {
                     <ListItem
                     title={player.positionString + ' #' + player.number + ' ' + player.name}
                      leftAvatar={ player.faceSrc } 
-                    subtitle={'Rating: ' + player.rating}
+                    subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
                     rightTitle={collegeMode?( player.getCollegeYearString() ) : null}
                     onPress={() => {Actions.playerprofile({selectedPlayer : player, update:this.updateState})}}
                     onLongPress={() => this.setModalVisible(true, player)}
