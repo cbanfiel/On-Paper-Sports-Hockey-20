@@ -11,6 +11,8 @@ var draftData = require('./JSON/DraftData.json');
 
 export const portraits = require('./Portraits.json');
 
+import {Coach, generateFreeAgentCoaches, coachOffseasonSetup, coachSetup, coachSigning, availableCoaches, loadAvailableCoaches} from './Coach.js';
+
 
 import * as FileSystem from 'expo-file-system';
 
@@ -403,6 +405,9 @@ class Team {
         this.name = team.name;
         this.rating = 0;
         this.logoSrc = team.logoSrc;
+        this.coach = new Coach();
+        this.coach.teamLogoSrc = team.logoSrc;
+        this.coachingBudget = 2000000;
         this.uri = null;
         this.schedule = [];
         this.played = [];
@@ -533,15 +538,6 @@ class Team {
         this.sf = 0;
         this.pf = 0;
         this.c = 0;
-
-        //Coach Sliders
-        this.offVsDefFocus = Math.round(Math.random() * 6) - 3;
-        this.qualityVsQuantity = Math.round(Math.random() * 6) - 3;
-        this.defenseAggresiveVsConservative = Math.round(Math.random() * 6) - 3;
-        this.forwardsVsDefensemen = Math.round(Math.random() * 6) - 3;
-
-        //hockey coach sliders
-        this.freezeThePuckVsPlayThePuck = Math.round(Math.random() * 6) - 3;
 
         //hockey
         this.offLine1 = [];
@@ -1081,6 +1077,9 @@ export function loadRosters() {
 
     generateFreeAgents(200,20);
     generateDraftClass();
+
+      //COACH UPDATE
+  coachSetup(teams);
 }
 
 //DRAFT CLASS GENERATOR
@@ -1442,9 +1441,9 @@ export class Game {
             total += ply.off;
             if (i > 2) {
                 //defensemen
-                total -= off.forwardsVsDefensemen * 3;
+                total -= off.coach.forwardsVsDefensemen * 3;
             } else {
-                total += off.forwardsVsDefensemen * 3;
+                total += off.coach.forwardsVsDefensemen * 3;
             }
         }
         for (let i = 0; i < off.onIce.length; i++) {
@@ -1452,9 +1451,9 @@ export class Game {
             let posFactor = 0;
             if (i > 2) {
                 //defensemen
-                posFactor -= off.forwardsVsDefensemen * 3;
+                posFactor -= off.coach.forwardsVsDefensemen * 3;
             } else {
-                posFactor += off.forwardsVsDefensemen * 3;
+                posFactor += off.coach.forwardsVsDefensemen * 3;
             }
 
             ply.usage = ((ply.off + posFactor) / total) * 100;
@@ -1613,7 +1612,7 @@ export class Game {
             }
 
             // // TURNOVER
-            // if(Math.random()*100 < (5  + (2*def.defenseAggresiveVsConservative))){
+            // if(Math.random()*100 < (5  + (2*def.coach.defenseAggresiveVsConservative))){
             //     return;
             // }
 
@@ -1621,14 +1620,15 @@ export class Game {
             let scaledOff = scaleBetween(offenseOverall, 0, offenseSlider, 200, 495);
             let assistFactor = scaleBetween(assister.pass, 0, passSkillFactorSlider, 40, 99);
 
+            let coachVcoach = scaleBetween(off.coach.offenseRating,0,2,40,99) - scaleBetween(def.coach.defenseRating,0,2,40,99);
             let offVsDef = scaledDef - scaledOff;
 
             // console.log('def' + scaledDef);
             // console.log('off' + scaledOff);
 
-            let offVsDefSliders = (off.offVsDefFocus - def.offVsDefFocus) / 4;
-            let aggressiveVsConservativeSliders = (off.defenseAggresiveVsConservative - def.defenseAggresiveVsConservative) / 4;
-            let freezeThePuckVsPlayThePuckSliders = (off.freezeThePuckVsPlayThePuck - def.freezeThePuckVsPlayThePuck) / 4;
+            let offVsDefSliders = (off.coach.offVsDefFocus - def.coach.offVsDefFocus) / 4;
+            let aggressiveVsConservativeSliders = (off.coach.defenseAggresiveVsConservative - def.coach.defenseAggresiveVsConservative) / 4;
+            let freezeThePuckVsPlayThePuckSliders = (off.coach.freezeThePuckVsPlayThePuck - def.coach.freezeThePuckVsPlayThePuck) / 4;
 
             let shooterRatingFactor = scaleBetween(shooter.off, 0, shotSkillFactorSlider, 40, 99);
 
@@ -1647,7 +1647,7 @@ export class Game {
             goalieSavePercentage += goalieAdjustmentSlider;
 
             //time off clock
-            let timeOff = Math.floor(Math.random() * 60) + 30 - (off.qualityVsQuantity * 8);
+            let timeOff = Math.floor(Math.random() * 60) + 30 - (off.coach.qualityVsQuantity * 8);
             this.time -= timeOff;
             this.iceTime = timeOff;
 
@@ -1660,26 +1660,13 @@ export class Game {
                 difficultySliderFactor = (-difficulty / 2)
             }
 
-            let saveFactor = (goalieSavePercentage - shooterRatingFactor + offVsDef - assistFactor + off.qualityVsQuantity - offVsDefSliders - aggressiveVsConservativeSliders - freezeThePuckVsPlayThePuckSliders + difficultySliderFactor);
-            // if(def.name === 'Detroit Red Wings'){
-            //     console.log('END: ' + saveFactor);
-            //     console.log('GOALIE %' + goalieSavePercentage);
-            //     console.log('SHOOTERRATINGFAC -' + shooterRatingFactor);
-            //     console.log('OFFVSDEF +'+offVsDef);
-            //     console.log('ASSIST -' + assistFactor);
-            //     console.log('OFFQUALVSQUAN +' + off.qualityVsQuantity);
-            //     console.log('offvsdefslider -' + offVsDefSliders);
-            //     console.log('defaggvscons -' + def.defenseAggresiveVsConservative);
-            //     console.log('defFreeze -' + def.freezeThePuckVsPlayThePuck);
-            //     console.log('offFreeze +' + off.freezeThePuckVsPlayThePuck);
+            let saveFactor = (goalieSavePercentage - shooterRatingFactor + offVsDef - assistFactor + off.coach.qualityVsQuantity - offVsDefSliders - aggressiveVsConservativeSliders - freezeThePuckVsPlayThePuckSliders + difficultySliderFactor - coachVcoach);
 
-            // }
             if (saveFactor > 96) {
                 saveFactor = 96;
             }
-            // console.log(saveFactor);
             let chance = Math.random() * 100;
-            // console.log(chance);
+
             //shot
             shooter.shots++;
             off.seasonShots++;
@@ -1688,7 +1675,7 @@ export class Game {
                 //save
                 goalie.saves++;
                 def.seasonSaves++;
-                let reboundPercentage = Math.random() * 10 + (off.qualityVsQuantity * 2);
+                let reboundPercentage = Math.random() * 10 + (off.coach.qualityVsQuantity * 2);
                 if (reboundPercentage > Math.random() * 100) {
                     //rebound
                     this.hockeyPossesion(off, def);
@@ -2244,6 +2231,7 @@ export class Franchise {
             this.retirementStage();
 
             if (!collegeMode) {
+                coachSigning(teams);
                 this.currentDraft = this.manualDraft();
                 this.currentDraft.simDraft();
                 this.checkForBustOrStar();
@@ -2309,10 +2297,8 @@ export class Franchise {
             this.retirementStage();
         }
         if (this.stage === 'draft') {
-
-            //draft
+            coachSigning(teams);
             this.currentDraft = this.manualDraft();
-
         }
         if (this.stage === 'resigning') {
             //bust or star for drafted
@@ -2397,44 +2383,17 @@ export class Franchise {
                 ply.reflexesOld = ply.reflexes;
                 ply.positioningOld = ply.positioning;
 
+                let coachTraining = scaleBetween(teams[i].coach.training,0,2,40,99);
+                let development = scaleBetween(ply.age,-4,3.5 + coachTraining, 43,20);
 
                 if (ply.position != 4) {
-                    //slight boost for really young players
-                    if (ply.age <= 23) {
-                        ply.off += Math.round(Math.random() * 1);
-                        ply.def += Math.round(Math.random() * 1);
-                        ply.pass += Math.round(Math.random() * 1);
-                        ply.faceOff += Math.round(Math.random() * 1);
-                    }
-
-                    if (ply.age <= 26) {
-                        ply.off += Math.round(Math.random() * 4) - 1;
-                        ply.def += Math.round(Math.random() * 4) - 1;
-                        ply.pass += Math.round(Math.random() * 3) - 1;
-                        ply.faceOff += Math.round(Math.random() * 3) - 1;
-                    }
-                    else if (ply.age < 30) {
-                        ply.off += Math.floor(Math.random() * 2);
-                        ply.def += Math.floor(Math.random() * 2);
-                        ply.pass += Math.floor(Math.random() * 2);
-                        ply.faceOff += Math.floor(Math.random() * 2);
-                    } else if (ply.age < 35) {
-                        ply.off += Math.round(Math.random() * 3) - 3;
-                        ply.def += Math.round(Math.random() * 3) - 3;
-                        ply.pass += Math.round(Math.random() * 1);
-                        ply.faceOff += Math.round(Math.random() * 3) - 3;
-                    } else {
-                        ply.off -= Math.round(Math.random() * 5)
-                        ply.def -= Math.round(Math.random() * 5)
-                        ply.pass += Math.round(Math.random() * 1);
-                        ply.faceOff -= Math.round(Math.random() * 5)
-                    }
+                        ply.off += Math.round(Math.random() * development);
+                        ply.def += Math.round(Math.random() * development);
+                        ply.pass += Math.round(Math.random() * development);
+                        ply.faceOff += Math.round(Math.random() * development);
 
                     if (Math.random() * 500 >= 499) {
                         //BREAKOUT PLYER
-                        // console.log(ply.name);
-                        // console.log(ply.rating);
-                        // console.log(ply.teamName);
                         ply.off += Math.round(Math.random() * 10)
                         ply.def += Math.round(Math.random() * 10)
                         ply.pass += Math.round(Math.random() * 10);
@@ -2442,39 +2401,11 @@ export class Franchise {
                     }
 
                 } else {
-                    if (ply.age <= 23) {
-                        ply.positioning += Math.round(Math.random() * 1);
-                        ply.reflexes += Math.round(Math.random() * 1);
-
-                    }
-
-                    if (ply.age <= 26) {
-                        ply.positioning += Math.round(Math.random() * 4) - 1;
-                        ply.reflexes += Math.round(Math.random() * 4) - 1;
-
-
-                    }
-                    else if (ply.age < 30) {
-                        ply.positioning += Math.floor(Math.random() * 2);
-                        ply.reflexes += Math.floor(Math.random() * 2);
-
-
-                    } else if (ply.age < 35) {
-                        ply.positioning += Math.round(Math.random() * 3) - 3;
-                        ply.reflexes += Math.round(Math.random() * 3) - 3;
-
-
-                    } else {
-                        ply.positioning -= Math.round(Math.random() * 5)
-                        ply.reflexes -= Math.round(Math.random() * 5)
-
-                    }
+                        ply.positioning += Math.round(Math.random() * development);
+                        ply.reflexes += Math.round(Math.random() * development);
 
                     if (Math.random() * 500 >= 499) {
                         //BREAKOUT PLYER
-                        // console.log(ply.name);
-                        // console.log(ply.rating);
-                        // console.log(ply.teamName);
                         ply.positioning += Math.round(Math.random() * 10)
                         ply.reflexes += Math.round(Math.random() * 10)
 
@@ -3041,20 +2972,21 @@ export class Franchise {
     freeAgencySetup() {
         if (collegeMode) {
 
+            coachSigning(teams);
+
                   //NEW WAY
       for(let i=0; i<teams.length; i++){
         let seedRat = teams.length - teams[i].seed;
         let teamRating = teams[i].rating;
+        let recruiting = scaleBetween(teams[i].coach.signingInterest,-2,2,40,99);
         let scaledSeed = scaleBetween((seedRat), 68, 90, 0, teams.length);
 
 
-        let rating = Math.round((teamRating + scaledSeed)/2) - 20;
+        let rating = Math.round(((teamRating + scaledSeed)/2) + recruiting) - 20;
         // console.log(`${teams[i].name} ${rating}`);
 
                 if (teams[i] === selectedTeam) {
-                    console.log(`generateprospect b4: ${rating}`);
                     rating = Math.round(((((sliders.recruitingDifficulty*-1)+100)/100) * rating) + rating);
-                    console.log(`generateprospect rating: ${rating}`);
                 }
 
                 if(rating >= 99){
@@ -3410,6 +3342,9 @@ export class Franchise {
 
         this.retirements.roster = [];
 
+         //COACH
+    coachOffseasonSetup(teams);
+
 
         if (collegeMode) {
 
@@ -3683,7 +3618,7 @@ export class Franchise {
 var shuffle = function (array) {
 
     var currentIndex = array.length;
-    var forwardsVsDefensemenraryValue, randomIndex;
+    var temporaryValue, randomIndex;
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
@@ -3692,9 +3627,9 @@ var shuffle = function (array) {
         currentIndex -= 1;
 
         // And swap it with the current element.
-        forwardsVsDefensemenraryValue = array[currentIndex];
+        temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
-        array[randomIndex] = forwardsVsDefensemenraryValue;
+        array[randomIndex] = temporaryValue;
     }
 
     return array;
@@ -4362,7 +4297,8 @@ export function saveData(slot) {
             id: teams[i].id,
             conferenceId: teams[i].conferenceId,
             logoSrc: teams[i].logoSrc,
-            roster: teams[i].roster
+            roster: teams[i].roster,
+            coach: teams[i].coach
         };
         data.teams.push(teamDat);
     }
@@ -4465,6 +4401,9 @@ export const loadData = (data) => {
         for (let i = 0; i < loadedData.teams.length; i++) {
             teams.push(new Team(loadedData.teams[i]));
             teams[i].roster = [];
+            if(loadedData.teams[i].coach != null){
+                teams[i].coach = Object.assign(new Coach, loadedData.teams[i].coach);
+              }
             for (let j = 0; j < loadedData.teams[i].roster.length; j++) {
                 ply = new Player(loadedData.teams[i].roster[j]);
                 ply.calculateRating();
@@ -5097,9 +5036,10 @@ export function getPlayerSigningInterest(team, ply, years) {
     let salaryAddition = scaleBetween(team.powerRanking, ply.salary*playForWinner , ply.salary * playForLoser, 1, teams.length);
   
     let yearFactor = scaleBetween(years, ply.salary * fewYears, ply.salary * manyYears, 1,6);
+    
+    let coachSigningInterest = scaleBetween(team.coach.signingInterest, -2,2,99,40);
   
-    let salaryRequested = Math.floor((ply.salary + salaryAddition - yearFactor)*(playerSigningDifficulty/100));
-  
+    let salaryRequested = Math.floor((ply.salary + salaryAddition - yearFactor)*((playerSigningDifficulty + coachSigningInterest)/100));
   
   
     if(ply.salary<= VETERANSMINIMUM){
@@ -5256,10 +5196,14 @@ export function saveFranchise(slot) {
         draftClass: '',
         sliders: '',
         newSliders: sliders,
+        availableCoaches: [],
         day: franchise.season.day,
         pastChampions: franchise.pastChampions,
         logo: selectedTeam.logoSrc
     }
+
+    data.availableCoaches = availableCoaches;
+
 
     for (let i = 0; i < teams.length; i++) {
         scheduleString = [];
@@ -5275,11 +5219,8 @@ export function saveFranchise(slot) {
             logoSrc: teams[i].logoSrc,
             roster: teams[i].roster,
             history: teams[i].history,
-            offVsDefFocus: teams[i].offVsDefFocus,
-            qualityVsQuantity: teams[i].qualityVsQuantity,
-            defenseAggresiveVsConservative: teams[i].defenseAggresiveVsConservative,
-            forwardsVsDefensemen: teams[i].forwardsVsDefensemen,
-            freezeThePuckVsPlayThePuck: teams[i].freezeThePuckVsPlayThePuck,
+            coach: teams[i].coach,
+            coachingBudget: teams[i].coachingBudget,
             scheduleString: scheduleString,
             wins: teams[i].wins,
             losses: teams[i].losses,
@@ -5366,13 +5307,11 @@ export const loadFranchise = (data) => {
             teams[i].history = loadedData.teams[i].history;
             teams[i].roster = [];
             teams[i].seed = loadedData.teams[i].seed;
-            //coach sliders
-            teams[i].offVsDefFocus = loadedData.teams[i].offVsDefFocus;
-            teams[i].qualityVsQuantity = loadedData.teams[i].qualityVsQuantity;
-            teams[i].defenseAggresiveVsConservative = loadedData.teams[i].defenseAggresiveVsConservative;
-            teams[i].forwardsVsDefensemen = loadedData.teams[i].forwardsVsDefensemen;
-            teams[i].frontCourtVsBackCourt = loadedData.teams[i].frontCourtVsBackCourt;
-            teams[i].freezeThePuckVsPlayThePuck = loadedData.teams[i].freezeThePuckVsPlayThePuck;
+                //coach 
+      if(loadedData.teams[i].coach != null){
+        teams[i].coach = Object.assign(new Coach, loadedData.teams[i].coach);
+        teams[i].coachingBudget = loadedData.teams[i].coachingBudget;
+      }
             //stats
             teams[i].seasonPoints = loadedData.teams[i].seasonPoints;
             teams[i].seasonPointsAllowed = loadedData.teams[i].seasonPointsAllowed;
@@ -5424,6 +5363,12 @@ export const loadFranchise = (data) => {
         // for (let i = 0; i < rosterData.length; i++) {
         //     teams.push(new Team(rosterData[i]));
         // }
+
+    //coach
+    if(loadedData.availableCoaches !=null){
+        loadAvailableCoaches(loadedData.availableCoaches);
+      }
+
         availableFreeAgents.roster = [];
         for (let i = 0; i < loadedData.freeAgents.roster.length; i++) {
             availableFreeAgents.roster.push(new Player(loadedData.freeAgents.roster[i]));
