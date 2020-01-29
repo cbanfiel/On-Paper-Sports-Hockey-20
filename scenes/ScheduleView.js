@@ -29,10 +29,10 @@ export default class ScheduleView extends React.Component {
 
   getTitle(team){
     if(collegeMode && team.seed<=25){
-      return  ` #${team.seed} ${team.name}`
+      return  ` #${team.seed} ${team.name} (${team.wins}-${team.losses-team.otLosses}-${team.otLosses})`
     }
     else{
-      return ` ${team.name}`
+      return ` ${team.name} (${team.wins}-${team.losses-team.otLosses}-${team.otLosses})`
     }
   }
 

@@ -72,6 +72,11 @@ export default class TeamList extends React.Component {
             this.props.updateTeam(team);
             Actions.pop();
         }
+
+        else if(this.props.home === 7){
+            this.props.swapTeam(team,this.props.week);
+            this.props.update();
+        }
        
         else {
             //SELECTED TEAM=2

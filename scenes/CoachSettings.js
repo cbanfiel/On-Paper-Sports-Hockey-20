@@ -3,32 +3,51 @@ import { Text, View, ScrollView } from 'react-native';
 import { Button, Card, Slider, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Background from '../components/background';
-import { selectedTeam } from '../data/script';
+import { selectedTeam, displaySalary } from '../data/script';
 import CachedImage from '../components/CachedImage';
 
 export default class CoachSettings extends React.Component {
-    state = {
-        offVsDefFocus: selectedTeam.offVsDefFocus,
-        qualityVsQuantity: selectedTeam.qualityVsQuantity,
-        defenseAggresiveVsConservative: selectedTeam.defenseAggresiveVsConservative,
-        forwardsVsDefensemen: selectedTeam.forwardsVsDefensemen,
-        rotationSize: selectedTeam.rotationSize,
-        frontCourtVsBackCourt: selectedTeam.frontCourtVsBackCourt,
-        freezeThePuckVsPlayThePuck: selectedTeam.freezeThePuckVsPlayThePuck
+
+    update = (_callback, popto) => {
+        this.setState({
+            offVsDefFocus: selectedTeam.coach.offVsDefFocus,
+            qualityVsQuantity: selectedTeam.coach.qualityVsQuantity,
+            defenseAggresiveVsConservative: selectedTeam.coach.defenseAggresiveVsConservative,
+            forwardsVsDefensemen: selectedTeam.coach.forwardsVsDefensemen,
+            rotationSize: selectedTeam.coach.rotationSize,
+            frontCourtVsBackCourt: selectedTeam.coach.frontCourtVsBackCourt,
+            freezeThePuckVsPlayThePuck: selectedTeam.coach.freezeThePuckVsPlayThePuck
+        }, () => _callback(popto))
+    }
+
+    constructor(props){
+        super(props);
+
+        if(selectedTeam.coach != null){
+            this.state = {
+                offVsDefFocus: selectedTeam.coach.offVsDefFocus,
+                qualityVsQuantity: selectedTeam.coach.qualityVsQuantity,
+                defenseAggresiveVsConservative: selectedTeam.coach.defenseAggresiveVsConservative,
+                forwardsVsDefensemen: selectedTeam.coach.forwardsVsDefensemen,
+                rotationSize: selectedTeam.coach.rotationSize,
+                frontCourtVsBackCourt: selectedTeam.coach.frontCourtVsBackCourt,
+                freezeThePuckVsPlayThePuck: selectedTeam.coach.freezeThePuckVsPlayThePuck
+            }
+        }
     }
 
 
 
     saveChanges() {
-        selectedTeam.offVsDefFocus = this.state.offVsDefFocus;
-        selectedTeam.qualityVsQuantity = this.state.qualityVsQuantity;
-        selectedTeam.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
-        selectedTeam.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
-        selectedTeam.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
-        selectedTeam.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
+        selectedTeam.coach.offVsDefFocus = this.state.offVsDefFocus;
+        selectedTeam.coach.qualityVsQuantity = this.state.qualityVsQuantity;
+        selectedTeam.coach.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
+        selectedTeam.coach.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
+        selectedTeam.coach.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
+        selectedTeam.coach.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
         if(this.props.inGame!=true){
             if(this.state.rotationSize != selectedTeam.rotationSize){
-                selectedTeam.rotationSize = this.state.rotationSize;
+                selectedTeam.coach.rotationSize = this.state.rotationSize;
                 selectedTeam.reorderLineup();
             }
         }
@@ -101,7 +120,44 @@ export default class CoachSettings extends React.Component {
     render() {
         return (
             <Background>
+                        {selectedTeam.coach != null?(
+
                 <ScrollView contentContainerStyle={{paddingBottom: 20}}>
+
+                    {!this.props.inGame ? (
+                    <Card
+                
+                containerStyle={{
+                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'black',
+                    alignSelf:'center'
+                }} >
+                         <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <CachedImage uri={selectedTeam.logoSrc} style={{ height: 30, width: 30, maxHeight: 30, resizeMode: 'contain', marginRight: 5 }} />
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.name}</Text>
+                </View>
+                <Divider style={{ backgroundColor: 'black'}}></Divider>
+                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <CachedImage uri={selectedTeam.coach.faceSrc} style={{ height: 100, width: 100, maxHeight: 100, resizeMode: 'contain', marginRight: 5 }} />
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'HC: ' + selectedTeam.coach.name}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Age: ' + selectedTeam.coach.age}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: selectedTeam.coach.contractExpired? 'red' : 'black', fontFamily: 'advent-pro' }}>{selectedTeam.coach.contractExpired? 'CONTRACT EXPIRED' :selectedTeam.coach.years + ' Years $' + displaySalary(selectedTeam.coach.salary)}</Text>
+
+
+                </View>
+                <Divider style={{ backgroundColor: 'black', margin: 10 }}></Divider>
+                    <Text style={{ textAlign: "center", fontSize: 15, color: 'black', fontFamily: 'advent-pro' }}>{'OFF: ' + selectedTeam.coach.offenseRating}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 15, color: 'black', fontFamily: 'advent-pro' }}>{'DEF: ' + selectedTeam.coach.defenseRating}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 15, color: 'black', fontFamily: 'advent-pro' }}>{'SIGNING: ' + selectedTeam.coach.signingInterest}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 15, color: 'black', fontFamily: 'advent-pro' }}>{'TRAINING: ' + selectedTeam.coach.training}</Text>
+
+                    <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginTop: 5}} title="View Coaches" onPress={() => {Actions.coachlist({update: this.update})}}></Button>
+                    <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginTop: 5}} title={selectedTeam.coach.contractExpired?"Resign Coach" : "Coach Menu"} onPress={() => {Actions.coachmenu({coach: selectedTeam.coach, team: selectedTeam, update:this.update})}}></Button>
+
+                    </Card>
+
+                    ):null}
+
 
                     <Card
                         containerStyle={{
@@ -192,6 +248,15 @@ export default class CoachSettings extends React.Component {
 
 
                 </ScrollView>
+                      ): <Card
+                      containerStyle={{
+                          width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                          borderColor: 'black',
+                          alignSelf:'center'
+                      }} >
+                      <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ backgroundColor: 'rgba(0,0,0,0)', borderColor: 'rgba(255,255,255,0.75)', borderWidth: 1, borderColor: 'black', marginTop: 5}} title="Hire A Coach" onPress={() => {Actions.coachlist({update: this.update})}}></Button>
+                      </Card>
+    }
             </Background>
 
 

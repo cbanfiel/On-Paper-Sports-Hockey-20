@@ -19,7 +19,7 @@ export default class CoachHistory extends React.Component {
                         teamName={"YEAR #" + (i+1)} 
                         key={i} 
                         teamLogoSrc={history.logoSrc }
-                        stats={history.champions ?  'CHAMPS\n' : '' + 'Record: ' + history.wins + '-' + (history.losses)}
+                        stats={history.champions ?  'CHAMPS\n' : '' + 'Record: ' + history.wins + '-' + (history.losses-history.otLosses) + '-' + history.otLosses}
                         playerInfo = {'HC ' + this.props.coach.name}
                         faceSrc = {this.props.coach.faceSrc}
                         

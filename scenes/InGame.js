@@ -11,12 +11,12 @@ let poss;
 export default class InGame extends React.Component {
 
   resetCoachingSliders(){
-    selectedTeam.offVsDefFocus = this.state.offVsDefFocus;
-    selectedTeam.qualityVsQuantity = this.state.qualityVsQuantity;
-    selectedTeam.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
-    selectedTeam.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
-    selectedTeam.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
-    selectedTeam.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
+    selectedTeam.coach.offVsDefFocus = this.state.offVsDefFocus;
+    selectedTeam.coach.qualityVsQuantity = this.state.qualityVsQuantity;
+    selectedTeam.coach.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
+    selectedTeam.coach.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
+    selectedTeam.coach.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
+    selectedTeam.coach.freezeThePuckVsPlayThePuck =  this.state.freezeThePuckVsPlayThePuck;
   }
 
 
@@ -29,13 +29,13 @@ export default class InGame extends React.Component {
     playByPlay: null,
     speed: 100,
     completed: false,
-    offVsDefFocus: selectedTeam.offVsDefFocus,
-    qualityVsQuantity: selectedTeam.qualityVsQuantity,
-    defenseAggresiveVsConservative: selectedTeam.defenseAggresiveVsConservative,
-    forwardsVsDefensemen: selectedTeam.forwardsVsDefensemen,
-    rotationSize: selectedTeam.rotationSize,
-    frontCourtVsBackCourt: selectedTeam.frontCourtVsBackCourt,
-    freezeThePuckVsPlayThePuck: selectedTeam.freezeThePuckVsPlayThePuck
+    offVsDefFocus: selectedTeam.coach.offVsDefFocus,
+    qualityVsQuantity: selectedTeam.coach.qualityVsQuantity,
+    defenseAggresiveVsConservative: selectedTeam.coach.defenseAggresiveVsConservative,
+    forwardsVsDefensemen: selectedTeam.coach.forwardsVsDefensemen,
+    rotationSize: selectedTeam.coach.rotationSize,
+    frontCourtVsBackCourt: selectedTeam.coach.frontCourtVsBackCourt,
+    freezeThePuckVsPlayThePuck: selectedTeam.coach.freezeThePuckVsPlayThePuck
   }
 
   time = () => {
@@ -241,7 +241,7 @@ leavePage(){
 
                     </View>
                     <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim Game'}</Text>
+                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.timer != null ? 'Pause' : 'Sim Game'}</Text>
                   </Card>
                 </TouchableOpacity>
 
@@ -317,14 +317,14 @@ leavePage(){
                             disabled={this.state.timer != null}
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
-                            step={25}
-                            minimumValue={50}
+                            step={100}
+                            minimumValue={100}
                             maximumValue={1000}
                             value={1000 - this.state.speed}
                             onValueChange={value => this.setState({ speed: 1000 - value })}
                         />
 
-          <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{1000 - this.state.speed}</Text>
+          <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{(1000 - this.state.speed)/100}</Text>
           <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
           <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Simulation Speed'}</Text>
         </Card>

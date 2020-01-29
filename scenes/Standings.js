@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, View, TouchableOpacity, Modal } from 'react-native';
 import {Icon} from 'react-native-elements';
-import { standings, collegeMode } from '../data/script';
+import { standings, collegeMode, teams } from '../data/script';
 import Background from '../components/background';
 import ListItem from '../components/ListItem';
 import TeamCardModal from '../components/TeamCardModal';
@@ -84,7 +84,7 @@ export default class Standings extends React.Component {
              title={collegeMode ? (`#${i+1} ${team.name}`):  i+1 + '. ' + team.name} 
              key={team.name} 
              leftAvatar={team.logoSrc }
-             subtitle={'Record: ' + team.wins + '-' + (team.losses)}
+             subtitle={'Record: ' + team.wins + '-' + (team.losses-team.otLosses) + '-' + team.otLosses}
             onLongPress={() => this.setModalVisible(true, team)}
             ></ListItem>
           ))}

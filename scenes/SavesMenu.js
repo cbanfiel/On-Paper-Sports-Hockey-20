@@ -37,6 +37,11 @@ export default class SavesMenu extends React.Component {
     });
   }
 
+  removeSpaces = (str) =>{
+    let newStr = str.replace(/\s/g, '_');
+    return newStr;
+  }
+
 
   saveToFileSystem = (file) =>{
     if(file != null){
@@ -260,7 +265,7 @@ this.props.loadOnly != null ?(
 {
 this.state.saved?
 null :
-<Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: value })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
+<Input containerStyle = {{backgroundColor:'rgba(255,255,255,0)', padding: 15}} onChangeText={value => this.setState({ saveName: this.removeSpaces(value) })} placeholder={'Enter a save name'} placeholderTextColor={'rgb(80,80,80)'} inputStyle={{ color: 'black', fontFamily: 'advent-pro', textAlign:'center' }} >{this.state.saveName}</Input>
 }
   <Button titleStyle={{ fontFamily: 'advent-pro', color:'black' }} buttonStyle={{ padding: 15 , borderRadius:0, borderBottomWidth:1, borderTopWidth:1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(255,255,255,0)'}} title= {!this.state.saved? "Save Current " + this.props.saveType : this.props.saveType + " Saved Successfully"} disabled={this.state.saved} disabledStyle={{ backgroundColor:'rgba(10,200,60,0.75)',  padding: 15 , borderRadius:0, borderBottomWidth:1, borderColor: 'rgba(255,255,255,0)'}} disabledTitleStyle={{fontFamily: 'advent-pro', color:'black'}} onPress={() => { this.saveToFileSystem() }}></Button>
 

@@ -557,6 +557,7 @@ class Team {
 
              //new from football
              this.scholarshipsAvailable = 0;
+             this.secondChancePoints = 0;
              this.interestedProspects = {roster: []};
              this.offered = [];
              //keep track of retirmements
@@ -667,10 +668,10 @@ class Team {
             console.log(this.name + ' Def Line 1 Error');
         }
         if (this.defLine2.length < 2) {
-            console.log(this.name + ' Def Line 1 Error');
+            console.log(this.name + ' Def Line 2 Error');
         }
         if (this.defLine3.length < 2) {
-            console.log(this.name + ' Def Line 1 Error');
+            console.log(this.name + ' Def Line 3 Error');
         }
         if (this.goalies.length < 2) {
             console.log(this.name + ' Goalies Error');
@@ -2244,6 +2245,9 @@ export class Franchise {
             //roster size limit
             this.releasePlayers();
 
+            this.trainingPoints();
+
+
             //new season
             this.advanceToNextYear();
         }
@@ -2384,7 +2388,7 @@ export class Franchise {
                 ply.positioningOld = ply.positioning;
 
                 let coachTraining = scaleBetween(teams[i].coach.training,0,2,40,99);
-                let development = scaleBetween(ply.age,-4,3.5 + coachTraining, 43,20);
+                let development = scaleBetween(ply.age,-4,3.5 + coachTraining, 39,18);
 
                 if (ply.position != 4) {
                         ply.off += Math.round(Math.random() * development);
@@ -2976,6 +2980,7 @@ export class Franchise {
 
                   //NEW WAY
       for(let i=0; i<teams.length; i++){
+        teams[i].secondChancePoints = 3;
         let seedRat = teams.length - teams[i].seed;
         let teamRating = teams[i].rating;
         let recruiting = scaleBetween(teams[i].coach.signingInterest,-2,2,40,99);
@@ -3330,10 +3335,9 @@ export class Franchise {
     
         console.log(`H: ${high} L: ${low} AVG: ${total/teams.length}`);
 
-
-        //AUTOSAVE THE FRANCHISE ROSTER
-
-        saveFranchise('Franchise_Autosave');
+            //added specific autosave names
+    let teamName = selectedTeam.name.split(' ').join('');
+    saveFranchise(teamName + "_Autosave");
 
 
     }

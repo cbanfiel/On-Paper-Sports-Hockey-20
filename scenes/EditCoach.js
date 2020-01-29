@@ -20,10 +20,12 @@ export default class EditCoach extends React.Component {
         signingInterest: this.props.coach.signingInterest,
         training: this.props.coach.training,
         offVsDefFocus: this.props.coach.offVsDefFocus,
-        offenseType: this.props.coach.offenseType,
-        defenseType: this.props.coach.defenseType,
-        runVsPass: this.props.coach.runVsPass,
-        offTempo: this.props.coach.offTempo
+        qualityVsQuantity: this.props.coach.qualityVsQuantity,
+        defenseAggresiveVsConservative: this.props.coach.defenseAggresiveVsConservative,
+        forwardsVsDefensemen: this.props.coach.forwardsVsDefensemen,
+        rotationSize: this.props.coach.rotationSize,
+        frontCourtVsBackCourt: this.props.coach.frontCourtVsBackCourt,
+        freezeThePuckVsPlayThePuck: this.props.coach.freezeThePuckVsPlayThePuck
 
     }
 
@@ -38,33 +40,34 @@ export default class EditCoach extends React.Component {
         this.props.coach.signingInterest = this.state.signingInterest
         this.props.coach.training = this.state.training;
         this.props.coach.offVsDefFocus = this.state.offVsDefFocus;
-        this.props.coach.offenseType = this.state.offenseType
-        this.props.coach.defenseType = this.state.defenseType;
-        this.props.coach.runVsPass= this.state.runVsPass;
-        this.props.coach.offTempo= this.state.offTempo;
+        this.props.coach.qualityVsQuantity = this.state.qualityVsQuantity;
+        this.props.coach.defenseAggresiveVsConservative = this.state.defenseAggresiveVsConservative;
+        this.props.coach.forwardsVsDefensemen = this.state.forwardsVsDefensemen;
+        this.props.coach.frontCourtVsBackCourt = this.state.frontCourtVsBackCourt;
+        this.props.coach.freezeThePuckVsPlayThePuck = this.state.freezeThePuckVsPlayThePuck;
+        this.props.coach.rotationSize = this.state.rotationSize;
         this.props.coach.calculateRating();
         this.props.update(Actions.popTo, 'coachsettings');
     }
 
-    previousPortrait(){
-        let index=portraits.indexOf(this.state.faceSrc);
+    previousPortrait() {
+        let index = portraits.indexOf(this.state.faceSrc);
         index--;
-        if(index<0){
-          index = portraits.length-1;
+        if (index < 0) {
+            index = portraits.length - 1;
         }
-        this.setState({faceSrc: portraits[index]});
-       }
-   
-       nextPortrait(){
-         let index=portraits.indexOf(this.state.faceSrc);
-         index++;
-         if(index>portraits.length-1){
-           index = 0;
-         }
-         this.setState({faceSrc: portraits[index]});
-        }
+        this.setState({ faceSrc: portraits[index] });
+    }
 
-    
+    nextPortrait() {
+        let index = portraits.indexOf(this.state.faceSrc);
+        index++;
+        if (index > portraits.length - 1) {
+            index = 0;
+        }
+        this.setState({ faceSrc: portraits[index] });
+    }
+
     getOffVsDefFocusString() {
         if (this.state.offVsDefFocus === 0) {
             return "Focus: Balanced"
@@ -75,59 +78,56 @@ export default class EditCoach extends React.Component {
         }
     }
 
-    getOffenseType(){
-        if(this.state.offenseType === OFF_PRO){
-            return "Pro Style"
-        }
-        if(this.state.offenseType === OFF_SPREAD){
-            return "Spread"
-        }
-        if(this.state.offenseType === OFF_OPTION){
-            return "Option"
-        }
-        if(this.state.offenseType === OFF_PISTOL){
-            return "Pistol"
+    getqualityVsQuantityString() {
+        if (this.state.qualityVsQuantity === 0) {
+            return "Shot Focus: Balanced"
+        } else if (this.state.qualityVsQuantity > 0) {
+            return "Shot Focus: Quantity"
+        } else {
+            return "Shot Focus: Quality"
         }
     }
 
-    getDefenseType(){
-        if(this.state.defenseType === DEF_43){
-            return "4-3"
-        }
-        if(this.state.defenseType === DEF_34){
-            return "3-4"
-        }
-        if(this.state.defenseType === DEF_335){
-            return "3-3-5"
-        }
-        if(this.state.defenseType === DEF_425){
-            return "4-2-5"
-        }
-        if(this.state.defenseType === DEF_52){
-            return "5-2"
+    getdefenseAggresiveVsConservative() {
+        if (this.state.defenseAggresiveVsConservative === 0) {
+            return "Defensive Focus: Balanced"
+        } else if (this.state.defenseAggresiveVsConservative > 0) {
+            return "Defensive Focus: Aggresive"
+        } else {
+            return "Defensive Focus: Conservative"
         }
     }
 
-    getRunVsPass(){
-        if(this.state.runVsPass>60){
-            return "Focus: Pass";
+    getforwardsVsDefensemen() {
+        if (this.state.forwardsVsDefensemen === 0) {
+            return "Scoring Focus: Balanced"
+        } else if (this.state.forwardsVsDefensemen > 0) {
+            return "Scoring Focus: Forwards"
+        } else {
+            return "Scoring Focus: Defenseman"
         }
-        if(this.state.runVsPass<54){
-            return "Focus: Run";
-        }
-
-        return "Focus: Balanced";
     }
-    getOffTempo(){
-        if(this.state.offTempo>1){
-            return `Tempo: Fast + ${this.state.offTempo}`;
-        }
-        if(this.state.offTempo<-1){
-            return `Tempo: Slow  ${this.state.offTempo}`;
-        }
 
-        return `Tempo: Balanced  ${this.state.offTempo}`;
+    getFrontCourtVsBackCourt() {
+        if (this.state.frontCourtVsBackCourt === 0) {
+            return "Scoring Focus: Balanced"
+        } else if (this.state.frontCourtVsBackCourt > 0) {
+            return "Scoring Focus: Backcourt"
+        } else {
+            return "Scoring Focus: Frontcourt"
+        }
     }
+
+    getfreezeThePuckVsPlayThePuck() {
+        if (this.state.freezeThePuckVsPlayThePuck === 0) {
+            return "Goalie Focus: Balanced"
+        } else if (this.state.freezeThePuckVsPlayThePuck > 0) {
+            return "Goalie Focus: Play The Puck"
+        } else {
+            return "Goalie Focus: Freeze The Puck"
+        }
+    }
+
 
     setFaceSource(value) {
         //check to see if it is link
@@ -149,23 +149,23 @@ export default class EditCoach extends React.Component {
                             borderColor: 'black',
                             alignSelf: 'center'
                         }} >
-{
-this.props.team == null ?(null):
-                        <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                            <CachedImage uri={this.props.team.logoSrc} style={{ height: 30, width: 30, maxHeight: 30, resizeMode: 'contain', marginRight: 5 }} />
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.props.team.name}</Text>
-                        </View>
-    
-}
-<View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
-                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.previousPortrait()}>
-                          <Text style={{ textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'<-'}</Text>
+                        {
+                            this.props.team == null ? (null) :
+                                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                    <CachedImage uri={this.props.team.logoSrc} style={{ height: 30, width: 30, maxHeight: 30, resizeMode: 'contain', marginRight: 5 }} />
+                                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.props.team.name}</Text>
+                                </View>
 
-                          </TouchableOpacity>
-                        <CachedImage uri={this.state.faceSrc  } style={{flex:1, height: 75, width: 75, resizeMode:'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }}/>
-                          <TouchableOpacity style={{flex:1, justifyContent:'center', alignItems:'center'}}  onPress={() =>this.nextPortrait()}>
-                          <Text style={{textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'->'}</Text>
-                          </TouchableOpacity>
+                        }
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => this.previousPortrait()}>
+                                <Text style={{ textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'<-'}</Text>
+
+                            </TouchableOpacity>
+                            <CachedImage uri={this.state.faceSrc} style={{ flex: 1, height: 75, width: 75, resizeMode: 'contain', flexDirection: 'column', alignSelf: 'center', marginBottom: 5 }} />
+                            <TouchableOpacity style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} onPress={() => this.nextPortrait()}>
+                                <Text style={{ textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'->'}</Text>
+                            </TouchableOpacity>
                         </View>
 
 
@@ -189,7 +189,7 @@ this.props.team == null ?(null):
                             onValueChange={value => this.setState({ age: value })}
                         />
 
-<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"CONTRACT YEARS: " + this.state.years}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{"CONTRACT YEARS: " + this.state.years}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -211,7 +211,6 @@ this.props.team == null ?(null):
                             onValueChange={value => this.setState({ salary: value })}
                         />
 
-                    
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getOffVsDefFocusString()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
@@ -224,50 +223,50 @@ this.props.team == null ?(null):
                         />
 
 
-
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getOffenseType()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getqualityVsQuantityString()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={0}
+                            minimumValue={-3}
                             maximumValue={3}
-                            value={this.state.offenseType}
-                            onValueChange={value => { this.setState({ offenseType: value }) }}
+                            value={this.state.qualityVsQuantity}
+                            onValueChange={value => { this.setState({ qualityVsQuantity: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getDefenseType()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getdefenseAggresiveVsConservative()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={0}
-                            maximumValue={4}
-                            value={this.state.defenseType}
-                            onValueChange={value => { this.setState({ defenseType: value }) }}
+                            minimumValue={-3}
+                            maximumValue={3}
+                            value={this.state.defenseAggresiveVsConservative}
+                            onValueChange={value => { this.setState({ defenseAggresiveVsConservative: value }) }}
                         />
 
-                            <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getRunVsPass()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getforwardsVsDefensemen()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={44}
-                            maximumValue={70}
-                            value={this.state.runVsPass}
-                            onValueChange={value => { this.setState({ runVsPass: value }) }}
+                            minimumValue={-3}
+                            maximumValue={3}
+                            value={this.state.forwardsVsDefensemen}
+                            onValueChange={value => { this.setState({ forwardsVsDefensemen: value }) }}
                         />
 
-                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getOffTempo()}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.getfreezeThePuckVsPlayThePuck()}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
                             step={1}
-                            minimumValue={-5}
-                            maximumValue={5}
-                            value={this.state.offTempo}
-                            onValueChange={value => { this.setState({ offTempo: value }) }}
+                            minimumValue={-3}
+                            maximumValue={3}
+                            value={this.state.freezeThePuckVsPlayThePuck}
+                            onValueChange={value => { this.setState({ freezeThePuckVsPlayThePuck: value }) }}
                         />
+
 
                         <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Offense: ' + this.state.offenseRating}</Text>
                         <Slider
@@ -280,7 +279,7 @@ this.props.team == null ?(null):
                             onValueChange={value => { this.setState({ offenseRating: value }) }}
                         />
 
-<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Defense: ' + this.state.defenseRating}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Defense: ' + this.state.defenseRating}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -291,7 +290,7 @@ this.props.team == null ?(null):
                             onValueChange={value => { this.setState({ defenseRating: value }) }}
                         />
 
-<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Training: ' + this.state.training}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Training: ' + this.state.training}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -302,7 +301,7 @@ this.props.team == null ?(null):
                             onValueChange={value => { this.setState({ training: value }) }}
                         />
 
-<Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Signing: ' + this.state.signingInterest}</Text>
+                        <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Signing: ' + this.state.signingInterest}</Text>
                         <Slider
                             thumbTintColor={'rgb(180,180,180)'}
                             maximumTrackTintColor={'rgb(180,180,180)'}
@@ -320,11 +319,6 @@ this.props.team == null ?(null):
 
 
                     </Card>
-
-
-
-
-
                 </ScrollView>
             </Background>
 

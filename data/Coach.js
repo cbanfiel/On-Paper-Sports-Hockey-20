@@ -101,7 +101,7 @@ export function coachSetup(teams){
 }
 
 const saveCoachHistory = (coach, team) =>{
-    coach.history.push({wins: team.wins, losses: team.losses, logoSrc: team.logoSrc, name: team.name});
+    coach.history.push({wins: team.wins, losses: team.losses, otLosses:team.otLosses, logoSrc: team.logoSrc, name: team.name});
 }
 
 export function coachOffseasonSetup(teams){

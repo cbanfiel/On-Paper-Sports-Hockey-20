@@ -42,20 +42,22 @@ import PlayerRoleMenu from './scenes/PlayerRoleMenu';
 import ResigningStage from './scenes/ResigningStage';
 import RetirementStage from './scenes/RetirementStage';
 import FreeAgencyStage from './scenes/FreeAgencyStage';
-import RecoveryMenu from './scenes/RecoveryMenu';
 import RecentUpdates from './scenes/RecentUpdates';
 import PlayerSearch from './scenes/PlayerSearch';
 import TrainingStage from './scenes/TrainingStage';
 import TrainingScreen from './scenes/TrainingScreen';
-
-
+import CoachList from './scenes/CoachList';
+import CoachMenu from './scenes/CoachMenu';
+import CoachHistory from './scenes/CoachHistory';
+import EditCoach from './scenes/EditCoach';
+import EditSchedule from './scenes/EditSchedule';
+import SecondChanceMenu from './scenes/SecondChanceMenu';
 export default class App extends React.Component {
   
 
 
   render() {
     return (
-          
           <Router>
             <Stack key="root">
               <Scene key="mainmenu" component={MainMenu} title="MainMenu" initial hideNavBar />
@@ -105,34 +107,14 @@ export default class App extends React.Component {
               <Scene key="playersearch" component={PlayerSearch} title="Reccent Updates" hideNavBar />
               <Scene key="trainingstage" component={TrainingStage} title="Training Stage" hideNavBar />
               <Scene key="trainingscreen" component={TrainingScreen} title="Training Stage" hideNavBar />
-              {/* <Scene key="recoverymenu" component={RecoveryMenu} title="FreeAgency" hideNavBar /> */}
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-
-
-
-
-              
-
+              <Scene key="coachlist" component={CoachList} title="" hideNavBar />
+              <Scene key="coachmenu" component={CoachMenu} title="" hideNavBar />
+              <Scene key="coachhistory" component={CoachHistory} title="" hideNavBar />
+              <Scene key="editcoach" component={EditCoach} title="" hideNavBar />
+              <Scene key="secondchancemenu" component={SecondChanceMenu} title="" hideNavBar />
+              <Scene key="editschedule" component={EditSchedule} title="" hideNavBar />
+       
+       
         </Stack>
         </Router>
     );
