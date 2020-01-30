@@ -1,10 +1,9 @@
 [
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/1.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/2.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/3.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/4.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/5.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/6.png?raw=true",
-    "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/coach/7.png?raw=true",
-
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/1.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/2.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/3.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/4.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/5.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/6.png",
+    "https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/coach/7.png"
 ]

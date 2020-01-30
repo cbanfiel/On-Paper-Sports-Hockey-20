@@ -3,121 +3,161 @@
   "name": "Brooklyn Beavers",
   "id": 0,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/beavers.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/badgers.png"
 },
 {
   "name": "Indianapolis Vikings",
   "id": 1,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/vikings.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/vikings.png"
 },
 {
   "name": "San Jose Snakes",
   "id": 2,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/snakes.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/snakes.png"
 },
 {
   "name": "Jacksonville Gators",
   "id": 3,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/gators.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/gators.png"
 },
 {
   "name": "Denver Dragons",
   "id": 4,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/dragons.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/dragons.png"
 },
 {
   "name": "Fort Worth Eagles",
   "id": 5,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/eagles.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/eagles.png"
 },
 {
   "name": "Seattle Warriors",
   "id": 6,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/warriors.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/warriors.png"
 },
 {
   "name": "Oakland Owls",
   "id": 7,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/owls.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/owls.png"
 },
 {
   "name": "Houston Stallions",
   "id": 8,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/broncos.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/broncos.png"
 },
 {
   "name": "Portland Badgers",
   "id": 9,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/badgers.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/badgers.png"
 },
 {
   "name": "Louisville Knights",
   "id": 10,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/knights.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/knights.png"
 },
 {
   "name": "Detroit Roosters",
   "id": 11,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/roosters.png?raw=true"
-}
-,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/roosters.png"
+},
 {
   "name": "Chicago Rhinos",
   "id": 12,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/rhinos.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/rhinos.png"
 },
 {
   "name": "Phoenix Gorillas",
   "id": 13,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/gorillas.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/gorillas.png"
 },
 {
   "name": "Charlotte Cougars",
   "id": 14,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/cougars.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/cougars.png"
 },
 {
   "name": "Dallas Demons",
   "id": 15,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/demons.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/demons.png"
 },
 {
   "name": "Omaha Dinos",
   "id": 16,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/dinos.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/dinos.png"
 },
 {
   "name": "Honolulu Dolphins",
   "id": 17,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/dolphins.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/dolphins.png"
 },
 {
   "name": "Virginia Beach Rams",
   "id": 18,
   "conferenceId": 0,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/rams.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/rams.png"
 },
 {
   "name": "Milwaukee Trojans",
   "id": 19,
   "conferenceId": 1,
-  "logoSrc": "https://github.com/cbanfiel/On-Paper-Sports-Images/blob/master/logos/trojans.png?raw=true"
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/trojans.png"
+},
+{
+  "name": "New York Griffins",
+  "id": 20,
+  "conferenceId": 0,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/griffins.png"
+}
+,
+{
+  "name": "Los Angeles Pirates",
+  "id": 21,
+  "conferenceId": 1,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/pirates.png"
+}
+,
+{
+  "name": "San Antonio Chiefs",
+  "id": 22,
+  "conferenceId": 0,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/chiefs.png"
+}
+,
+{
+  "name": "Houston Coyotes",
+  "id": 23,
+  "conferenceId": 1,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/coyotes.png"
+}
+,
+{
+  "name": "Miami Rockets",
+  "id": 24,
+  "conferenceId": 0,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/rockets.png"
+}
+,
+{
+  "name": "Phoenix Hawks",
+  "id": 25,
+  "conferenceId": 1,
+  "logoSrc": "https://on-paper-sports.s3.us-east-2.amazonaws.com/team_logos/hawks.png"
 }
 ]
