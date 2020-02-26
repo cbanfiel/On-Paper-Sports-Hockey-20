@@ -1,13 +1,17 @@
 import React from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
-import { Card } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
-import { TouchableOpacity } from 'react-native';
 import Background from '../components/background';
-import ListItem from '../components/ListItem';
 
 
 const updateLog = [
+    {
+        date: '1/31/2020',
+        updates: "-Reduced initial coach rating disparity"
+    },
+    {
+        date: '1/30/2020',
+        updates: "-Added Coaches, all teams now have coaches that can be hired/fired.\n-Custom Schedule Component, At the beginning of each season you can now edit your schedule.\n-New stat list display (larger then previous for easier viewing of statistics)\n-Added second chances in recruiting, you can use second chances to try and flip recruits that have committed to other schools\n-Various quality of life changes and bug fixes"
+    },
     {
         date: '11/12/2019',
         updates: "-Player age now displayed in roster lists\n-player expected salary now displayed in resigning menu\n-New recruiting difficulty slider "

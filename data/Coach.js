@@ -9,11 +9,11 @@ export class Coach {
     constructor() {
         let firstName = draftData[Math.floor(Math.random() * draftData.length)].firstname;
         let lastName = draftData[Math.floor(Math.random() * draftData.length)].lastname;
-        this.offenseRating = Math.floor(Math.random() * 60) + 40;
-        this.defenseRating = Math.floor(Math.random() * 60) + 40;
-        this.signingInterest = Math.floor(Math.random() * 60) + 40;
-        this.training = Math.floor(Math.random() * 60) + 40;
-        this.trading = Math.floor(Math.random() * 60) + 40;
+        this.offenseRating = Math.floor(Math.random() * 20) + 65;
+        this.defenseRating = Math.floor(Math.random() * 20) + 65;
+        this.signingInterest = Math.floor(Math.random() * 20) + 65;
+        this.training = Math.floor(Math.random() * 20) + 65;
+        this.trading = Math.floor(Math.random() * 20) + 65;
         this.name = firstName + " " + lastName;
         this.faceSrc = portraits[Math.floor(Math.random() * portraits.length)];
         this.teamLogoSrc;
