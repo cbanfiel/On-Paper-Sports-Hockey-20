@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Scene, Stack, Actions} from 'react-native-router-flux';
+import { Router, Scene, Stack, Actions } from 'react-native-router-flux';
 import MainMenu from './scenes/MainMenu';
 import SelectTeams from './scenes/SelectTeams';
 import TeamList from './scenes/TeamList'
@@ -52,71 +52,74 @@ import CoachHistory from './scenes/CoachHistory';
 import EditCoach from './scenes/EditCoach';
 import EditSchedule from './scenes/EditSchedule';
 import SecondChanceMenu from './scenes/SecondChanceMenu';
+import TradeFinder from './scenes/TradeFinder';
+import TradeFinderResults from './scenes/TradeFinderResults';
 export default class App extends React.Component {
-  
+
 
 
   render() {
     return (
-          <Router>
-            <Stack key="root">
-              <Scene key="mainmenu" component={MainMenu} title="MainMenu" initial hideNavBar />
-              <Scene key="selectteams" component={SelectTeams} title="SelectTeams" hideNavBar />
-              <Scene key="teamlist" component={TeamList} title="Teamlist" hideNavBar />
-              <Scene key="ingame" component={InGame} title="Teamlist" hideNavBar />
-              <Scene key="statslist" component={StatsList} title="Statslist" hideNavBar />
-              <Scene key="rosterlist" component={RosterList} title="Rosterlist" hideNavBar />
-              <Scene key="seasonmenu" component={SeasonMenu} title="Rosterlist" hideNavBar />
-              <Scene key="scheduleview" component={ScheduleView} title="Rosterlist" hideNavBar />
-              <Scene key="standings" component={Standings} title="Rosterlist" hideNavBar />
-              <Scene key="trademenu" component={TradeMenu} title="TradeMenu" hideNavBar />
-              <Scene key="rostermenu" component={RosterMenu} title="RosterMenu" hideNavBar />
-              <Scene key="gamestats" component={GameStats} title="GameStats" hideNavBar />
-              <Scene key="gamestats" component={GameStats} title="GameStats" hideNavBar />
-              <Scene key="playerprofile" component={PlayerProfile} title="PlayeProfile" hideNavBar />
-              <Scene key="editplayerratings" component={EditPlayerRatings} title="EditPlayer" hideNavBar />
-              <Scene key="editplayerinfo" component={EditPlayerInfo} title="EditPlayerInfo" hideNavBar />
-              <Scene key="signplayermenu" component={SignPlayerMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="offercontractmenu" component={OfferContractMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="draftclassmenu" component={DraftClassMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="draftmenu" component={DraftMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="optionsmenu" component={OptionsMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="conferencelist" component={ConferenceList} title="EditPlayerInfo" hideNavBar />
-              <Scene key="playoffmenu" component={PlayoffMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="slidersmenu" component={SlidersMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="teamhistory" component={TeamHistory} title="EditPlayerInfo" hideNavBar />
-              <Scene key="seasonstatsmenu" component={SeasonStatsMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="seasonrostermenu" component={SeasonRosterMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="createteammenu" component={CreateTeamMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="createaplayermenu" component={CreateAPlayerMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="teamstats" component={TeamStats} title="EditPlayerInfo" hideNavBar />
-              <Scene key="editlineupmenu" component={EditLineupMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="editteam" component={EditTeam} title="EditPlayerInfo" hideNavBar />
-              <Scene key="savesmenu" component={SavesMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="importexportmenu" component={ImportExportMenu} title="EditPlayerInfo" hideNavBar />
-              <Scene key="communityrosters" component={CommunityRosters} title="EditPlayerInfo" hideNavBar />
-              <Scene key="ingamestats" component={InGameStats} title="EditPlayerInfo" hideNavBar />
-              <Scene key="lastplay" component={LastPlay} title="EditPlayerInfo" hideNavBar />
-              <Scene key="playerstatshistory" component={PlayerStatsHistory} title="PlayerStatsHistory" hideNavBar />
-              <Scene key="coachsettings" component={CoachSettings} title="CoachSettings" hideNavBar />
-              <Scene key="playerrolemenu" component={PlayerRoleMenu} title="PlayerRoleMenu" hideNavBar />
-              <Scene key="resigningstage" component={ResigningStage} title="ResigningStage" hideNavBar />
-              <Scene key="retirementstage" component={RetirementStage} title="Retirements" hideNavBar />
-              <Scene key="freeagencystage" component={FreeAgencyStage} title="FreeAgency" hideNavBar />
-              <Scene key="recentupdates" component={RecentUpdates} title="Reccent Updates" hideNavBar />
-              <Scene key="playersearch" component={PlayerSearch} title="Reccent Updates" hideNavBar />
-              <Scene key="trainingstage" component={TrainingStage} title="Training Stage" hideNavBar />
-              <Scene key="trainingscreen" component={TrainingScreen} title="Training Stage" hideNavBar />
-              <Scene key="coachlist" component={CoachList} title="" hideNavBar />
-              <Scene key="coachmenu" component={CoachMenu} title="" hideNavBar />
-              <Scene key="coachhistory" component={CoachHistory} title="" hideNavBar />
-              <Scene key="editcoach" component={EditCoach} title="" hideNavBar />
-              <Scene key="secondchancemenu" component={SecondChanceMenu} title="" hideNavBar />
-              <Scene key="editschedule" component={EditSchedule} title="" hideNavBar />
-       
-       
+      <Router>
+        <Stack key="root">
+          <Scene key="mainmenu" component={MainMenu} title="MainMenu" initial hideNavBar />
+          <Scene key="selectteams" component={SelectTeams} title="SelectTeams" hideNavBar />
+          <Scene key="teamlist" component={TeamList} title="Teamlist" hideNavBar />
+          <Scene key="ingame" component={InGame} title="Teamlist" hideNavBar />
+          <Scene key="statslist" component={StatsList} title="Statslist" hideNavBar />
+          <Scene key="rosterlist" component={RosterList} title="Rosterlist" hideNavBar />
+          <Scene key="seasonmenu" component={SeasonMenu} title="Rosterlist" hideNavBar />
+          <Scene key="scheduleview" component={ScheduleView} title="Rosterlist" hideNavBar />
+          <Scene key="standings" component={Standings} title="Rosterlist" hideNavBar />
+          <Scene key="trademenu" component={TradeMenu} title="TradeMenu" hideNavBar />
+          <Scene key="rostermenu" component={RosterMenu} title="RosterMenu" hideNavBar />
+          <Scene key="gamestats" component={GameStats} title="GameStats" hideNavBar />
+          <Scene key="gamestats" component={GameStats} title="GameStats" hideNavBar />
+          <Scene key="playerprofile" component={PlayerProfile} title="PlayeProfile" hideNavBar />
+          <Scene key="editplayerratings" component={EditPlayerRatings} title="EditPlayer" hideNavBar />
+          <Scene key="editplayerinfo" component={EditPlayerInfo} title="EditPlayerInfo" hideNavBar />
+          <Scene key="signplayermenu" component={SignPlayerMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="offercontractmenu" component={OfferContractMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="draftclassmenu" component={DraftClassMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="draftmenu" component={DraftMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="optionsmenu" component={OptionsMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="conferencelist" component={ConferenceList} title="EditPlayerInfo" hideNavBar />
+          <Scene key="playoffmenu" component={PlayoffMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="slidersmenu" component={SlidersMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="teamhistory" component={TeamHistory} title="EditPlayerInfo" hideNavBar />
+          <Scene key="seasonstatsmenu" component={SeasonStatsMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="seasonrostermenu" component={SeasonRosterMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="createteammenu" component={CreateTeamMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="createaplayermenu" component={CreateAPlayerMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="teamstats" component={TeamStats} title="EditPlayerInfo" hideNavBar />
+          <Scene key="editlineupmenu" component={EditLineupMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="editteam" component={EditTeam} title="EditPlayerInfo" hideNavBar />
+          <Scene key="savesmenu" component={SavesMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="importexportmenu" component={ImportExportMenu} title="EditPlayerInfo" hideNavBar />
+          <Scene key="communityrosters" component={CommunityRosters} title="EditPlayerInfo" hideNavBar />
+          <Scene key="ingamestats" component={InGameStats} title="EditPlayerInfo" hideNavBar />
+          <Scene key="lastplay" component={LastPlay} title="EditPlayerInfo" hideNavBar />
+          <Scene key="playerstatshistory" component={PlayerStatsHistory} title="PlayerStatsHistory" hideNavBar />
+          <Scene key="coachsettings" component={CoachSettings} title="CoachSettings" hideNavBar />
+          <Scene key="playerrolemenu" component={PlayerRoleMenu} title="PlayerRoleMenu" hideNavBar />
+          <Scene key="resigningstage" component={ResigningStage} title="ResigningStage" hideNavBar />
+          <Scene key="retirementstage" component={RetirementStage} title="Retirements" hideNavBar />
+          <Scene key="freeagencystage" component={FreeAgencyStage} title="FreeAgency" hideNavBar />
+          <Scene key="recentupdates" component={RecentUpdates} title="Reccent Updates" hideNavBar />
+          <Scene key="playersearch" component={PlayerSearch} title="Reccent Updates" hideNavBar />
+          <Scene key="trainingstage" component={TrainingStage} title="Training Stage" hideNavBar />
+          <Scene key="trainingscreen" component={TrainingScreen} title="Training Stage" hideNavBar />
+          <Scene key="coachlist" component={CoachList} title="" hideNavBar />
+          <Scene key="coachmenu" component={CoachMenu} title="" hideNavBar />
+          <Scene key="coachhistory" component={CoachHistory} title="" hideNavBar />
+          <Scene key="editcoach" component={EditCoach} title="" hideNavBar />
+          <Scene key="secondchancemenu" component={SecondChanceMenu} title="" hideNavBar />
+          <Scene key="editschedule" component={EditSchedule} title="" hideNavBar />
+          <Scene key="tradefinder" component={TradeFinder} title="" hideNavBar />
+          <Scene key="tradefinderresults" component={TradeFinderResults} title="" hideNavBar />
+
         </Stack>
-        </Router>
+      </Router>
     );
   }
 }

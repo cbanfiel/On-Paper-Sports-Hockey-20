@@ -7,87 +7,103 @@ import Background from '../components/background';
 import Picache from 'picache';
 import CachedImage from '../components/CachedImage';
 
-export default class ResigningStage extends React.Component{
+export default class ResigningStage extends React.Component {
 
-    render(){
+  render() {
 
-        return (
-            <Background>
-              <ScrollView contentContainerStyle={{paddingBottom: 20}}>
-  
-  
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: selectedTeam, back: Actions.currentScene, view: 'resigning', forced:false }) }}>
-                <Card
-                  containerStyle={{
-                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'black',
-                    alignSelf:'center'
-                  }}
-                  >
-  
-                  <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{uri: selectedTeam.logoSrc }} />
-                  </View>
-                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Expiring Contracts'}</Text>
-                </Card>
-              </TouchableOpacity>
-  
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: selectedTeam, back: 'seasonmenu' }) }}>
-                <Card
-                  containerStyle={{
-                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'black',
-                    alignSelf:'center'
-                  }}
-                  >
-  
-                  <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{uri: selectedTeam.logoSrc }} />
-                  </View>
-                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
-                </Card>
-              </TouchableOpacity>
-  
-              <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.teamlist({ home: 3, back: 'season', isForced: false, requirementsOff: true })}>
-                          <Card
-                              containerStyle={{
-                                  width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                                  borderColor: 'black',
-                                  alignSelf:'center'
-                              }}
-                              >
-  
-                              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                  <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc } />
-                              </View>
-                              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
-                              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
-                          </Card>
-                      </TouchableOpacity>
-  
-  
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => {franchise.stage = 'freeagency', franchise.simStage() , this.props.teamListStage(franchise.stage), Actions.replace('freeagencystage', {teamListStage: this.props.teamListStage})}}>
-  
-                <Card
-                  containerStyle={{
-                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'black',
-                    alignSelf:'center'
-                  }}
-                  >
-  
-                  <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Picache style={{ flex: 1, overflow: 'hidden',  resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source = {{ uri: selectedTeam.logoSrc }} />
-                  </View>
-                  <Divider style={{backgroundColor:'black' ,  height:1, margin:5}} ></Divider>
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim To Free Agency'}</Text>
-                </Card>
-              </TouchableOpacity>
-              </ScrollView>
-            </Background>
-          )
-        }
+    return (
+      <Background>
+        <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
 
-        }
+
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: selectedTeam, back: Actions.currentScene, view: 'resigning', forced: false }) }}>
+            <Card
+              containerStyle={{
+                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'black',
+                alignSelf: 'center'
+              }}
+            >
+
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
+              </View>
+              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Expiring Contracts'}</Text>
+            </Card>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({ selectedTeam: selectedTeam, back: 'seasonmenu' }) }}>
+            <Card
+              containerStyle={{
+                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'black',
+                alignSelf: 'center'
+              }}
+            >
+
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
+              </View>
+              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Current Roster'}</Text>
+            </Card>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.tradefinder({ popTo: Actions.currentScene, requirementsOff: true })}>
+            <Card
+              containerStyle={{
+                width: '95%', backgroundColor: 'rgba(255,255,255,0)', alignSelf: 'center', borderColor: 'rgba(0,0,0,0.9)'
+              }}
+            >
+
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc} />
+              </View>
+              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade Finder'}</Text>
+            </Card>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.teamlist({ home: 3, back: 'season', isForced: false, requirementsOff: true })}>
+            <Card
+              containerStyle={{
+                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'black',
+                alignSelf: 'center'
+              }}
+            >
+
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <CachedImage style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} uri={selectedTeam.logoSrc} />
+              </View>
+              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Trade'}</Text>
+            </Card>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.stage = 'freeagency', franchise.simStage(), this.props.teamListStage(franchise.stage), Actions.replace('freeagencystage', { teamListStage: this.props.teamListStage }) }}>
+
+            <Card
+              containerStyle={{
+                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'black',
+                alignSelf: 'center'
+              }}
+            >
+
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
+              </View>
+              <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim To Free Agency'}</Text>
+            </Card>
+          </TouchableOpacity>
+        </ScrollView>
+      </Background>
+    )
+  }
+
+}

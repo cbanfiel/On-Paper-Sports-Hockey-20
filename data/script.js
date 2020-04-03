@@ -1,17 +1,15 @@
-
-
 export let teamsData = require('./JSON/Teams.json');
 var playerData = require('./JSON/Players.json');
 var freeAgents = require('./JSON/FreeAgents.json');
 
-import {Sliders} from './Sliders.js';
+import { Sliders } from './Sliders.js';
 
 
 var draftData = require('./JSON/DraftData.json');
 
 export const portraits = require('./Portraits.json');
 
-import {Coach, generateFreeAgentCoaches, coachOffseasonSetup, coachSetup, coachSigning, availableCoaches, loadAvailableCoaches} from './Coach.js';
+import { Coach, generateFreeAgentCoaches, coachOffseasonSetup, coachSetup, coachSigning, availableCoaches, loadAvailableCoaches } from './Coach.js';
 
 
 import * as FileSystem from 'expo-file-system';
@@ -98,15 +96,15 @@ export function setAutoSign(bool) {
 
 
 export function resetSliders() {
- tradeThreshold = 0.3;
- trainingPointsAvailable = 2;
- defenseSlider = 12;
- offenseSlider = 6;
- passSkillFactorSlider = 7;
- shotSkillFactorSlider = 7;
- goalieAdjustmentSlider = 3;
- playerSigningDifficulty = 90;
- sliders.proSliderPreset();
+    tradeThreshold = 0.3;
+    trainingPointsAvailable = 2;
+    defenseSlider = 12;
+    offenseSlider = 6;
+    passSkillFactorSlider = 7;
+    shotSkillFactorSlider = 7;
+    goalieAdjustmentSlider = 3;
+    playerSigningDifficulty = 90;
+    sliders.proSliderPreset();
 
 }
 
@@ -132,19 +130,15 @@ export function collegeSliderPreset() {
         playoffSeeds = 64;
     } else if (teams.length >= 32) {
         playoffSeeds = 32;
-    }
-    else if (teams.length >= 16) {
+    } else if (teams.length >= 16) {
         playoffSeeds = 16;
     } else if (teams.length >= 8) {
         playoffSeeds = 8;
-    }
-    else if (teams.length >= 4) {
+    } else if (teams.length >= 4) {
         playoffSeeds = 4;
-    }
-    else if (teams.length >= 2) {
+    } else if (teams.length >= 2) {
         playoffSeeds = 2;
-    }
-    else if (teams.length >= 1) {
+    } else if (teams.length >= 1) {
         playoffSeeds = 1;
     }
 }
@@ -158,9 +152,9 @@ export function setSliders(def, off, pass, shot, goalies, diff, tradeDiff, tptsa
     difficulty = diff;
     tradeThreshold = tradeDiff;
     trainingPointsAvailable = tptsavail;
-    if(psd == null){
+    if (psd == null) {
         playerSigningDifficulty = 90;
-    }else{
+    } else {
         playerSigningDifficulty = psd;
     }
 }
@@ -194,9 +188,9 @@ class Player {
         this.positionString;
         this.getPositionString();
         this.faceSrc = player.faceSrc;
-    if (player.faceSrc == null || player.faceSrc.length < 1) {
-    this.faceSrc = portraits[Math.floor(Math.random()*portraits.length)];
-    }
+        if (player.faceSrc == null || player.faceSrc.length < 1) {
+            this.faceSrc = portraits[Math.floor(Math.random() * portraits.length)];
+        }
         this.teamLogoSrc;
         this.teamName;
         this.usage = 0;
@@ -308,26 +302,26 @@ class Player {
         }
     }
 
-    getCollegeYearString(){
+    getCollegeYearString() {
         let str = ''
-        if(this.age === 18){
-          str = 'FR'
+        if (this.age === 18) {
+            str = 'FR'
         }
-        if(this.age === 19){
-          str = 'SO'
+        if (this.age === 19) {
+            str = 'SO'
         }
-        if(this.age === 20){
-          str = 'JR'
+        if (this.age === 20) {
+            str = 'JR'
         }
-        if(this.age >= 21){
-          str = 'SR'
+        if (this.age >= 21) {
+            str = 'SR'
         }
-    
-        if(this.redshirt || this.redshirted){
-          str += ' (RS)';
+
+        if (this.redshirt || this.redshirted) {
+            str += ' (RS)';
         }
         return str;
-      }
+    }
 
     calculateRating() {
 
@@ -373,7 +367,7 @@ class Player {
 
 
         let bestrating = [this.off, this.def, this.pass, this.faceOff];
-        bestrating.sort(function (a, b) {
+        bestrating.sort(function(a, b) {
             if (a < b) {
                 return 1;
             }
@@ -391,7 +385,7 @@ class Player {
                 this.rating = 99;
             }
         } else {
-            this.rating = Math.round((this.positioning + this.reflexes)/2);
+            this.rating = Math.round((this.positioning + this.reflexes) / 2);
         }
 
     }
@@ -430,68 +424,68 @@ class Team {
 
 
         this.draftPicks = [{
-            round: 1,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 2,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 3,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 4,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 5,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 6,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
-        {
-            round: 7,
-            originalTeam: this.name,
-            value: null,
-            salary: 0,
-            isPick: true,
-            projectedPick: null,
-            currentTeam: null
-        },
+                round: 1,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 2,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 3,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 4,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 5,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 6,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
+            {
+                round: 7,
+                originalTeam: this.name,
+                value: null,
+                salary: 0,
+                isPick: true,
+                projectedPick: null,
+                currentTeam: null
+            },
         ]
 
 
@@ -516,8 +510,8 @@ class Team {
             name: 'Expiring Contracts',
             roster: [],
             logoSrc: 'https://on-paper-sports.s3.us-east-2.amazonaws.com/app_icons/hockey.png',
-            reorderLineup: function () {
-                availableFreeAgents.roster.sort(function (a, b) {
+            reorderLineup: function() {
+                availableFreeAgents.roster.sort(function(a, b) {
                     if (a.rating > b.rating)
                         return -1;
                     if (a.rating < b.rating)
@@ -555,42 +549,42 @@ class Team {
         this.defShiftOnIce = 1;
         this.offShiftOnIce = 1;
 
-             //new from football
-             this.scholarshipsAvailable = 0;
-             this.secondChancePoints = 0;
-             this.interestedProspects = {roster: []};
-             this.offered = [];
-             //keep track of retirmements
-    this.retirements = [];
-    
-    this.scheduleRating = 0;
+        //new from football
+        this.scholarshipsAvailable = 0;
+        this.secondChancePoints = 0;
+        this.interestedProspects = { roster: [] };
+        this.offered = [];
+        //keep track of retirmements
+        this.retirements = [];
 
-    this.totalRankingRating = 0;
+        this.scheduleRating = 0;
+
+        this.totalRankingRating = 0;
 
     }
 
-    manageGoalieUsage(){
-        for(let i=0; i<this.goalies.length; i++){
+    manageGoalieUsage() {
+        for (let i = 0; i < this.goalies.length; i++) {
             this.goalies[i].goalieUsage = 0;
         }
 
         let total = 0;
         let goalies = this.goalies.length;
-        if(this.goalies.length>=3){
+        if (this.goalies.length >= 3) {
             goalies = 3;
         }
-        for(let i=0; i<goalies; i++){
-            total += this.goalies[i].rating + ((goalies-i)*90);
+        for (let i = 0; i < goalies; i++) {
+            total += this.goalies[i].rating + ((goalies - i) * 90);
         }
-        for(let i=0; i<goalies; i++){
-            this.goalies[i].goalieUsage = ((this.goalies[i].rating + ((goalies-i)*90))/total)*100;
+        for (let i = 0; i < goalies; i++) {
+            this.goalies[i].goalieUsage = ((this.goalies[i].rating + ((goalies - i) * 90)) / total) * 100;
         }
 
-        
+
     }
 
     manageHockeyLineups() {
-        this.roster.sort(function (a, b) {
+        this.roster.sort(function(a, b) {
             if (a.rating > b.rating)
                 return -1;
             if (a.rating < b.rating)
@@ -610,45 +604,40 @@ class Team {
 
         for (let i = 0; i < this.roster.length; i++) {
             let ply = this.roster[i];
-            if(!ply.redshirted){
-            if (ply.position <= 2) {
-                //off
-                if (this.offLine1.length < 3) {
-                    this.offLine1.push(ply);
+            if (!ply.redshirted) {
+                if (ply.position <= 2) {
+                    //off
+                    if (this.offLine1.length < 3) {
+                        this.offLine1.push(ply);
+                    } else if (this.offLine2.length < 3) {
+                        this.offLine2.push(ply);
+
+                    } else if (this.offLine3.length < 3) {
+                        this.offLine3.push(ply);
+
+                    } else if (this.offLine4.length < 3) {
+                        this.offLine4.push(ply);
+
+                    }
                 }
-                else if (this.offLine2.length < 3) {
-                    this.offLine2.push(ply);
+                if (ply.position === 3) {
+                    if (this.defLine1.length < 2) {
+                        this.defLine1.push(ply);
+
+                    } else if (this.defLine2.length < 2) {
+                        this.defLine2.push(ply);
+
+                    } else if (this.defLine3.length < 2) {
+                        this.defLine3.push(ply);
+
+                    }
 
                 }
-                else if (this.offLine3.length < 3) {
-                    this.offLine3.push(ply);
-
-                }
-                else if (this.offLine4.length < 3) {
-                    this.offLine4.push(ply);
+                if (ply.position === 4) {
+                    this.goalies.push(ply);
 
                 }
             }
-            if (ply.position === 3) {
-                if (this.defLine1.length < 2) {
-                    this.defLine1.push(ply);
-
-                }
-                else if (this.defLine2.length < 2) {
-                    this.defLine2.push(ply);
-
-                }
-                else if (this.defLine3.length < 2) {
-                    this.defLine3.push(ply);
-
-                }
-
-            }
-            if (ply.position === 4) {
-                this.goalies.push(ply);
-
-            }
-        }
 
         }
 
@@ -682,28 +671,28 @@ class Team {
         //quick fixs
         this.firstTeam = this.onIce;
 
-        this.offLine1.sort(function (a, b) {
+        this.offLine1.sort(function(a, b) {
             if (a.position < b.position)
                 return -1;
             if (a.position > b.position)
                 return 1;
             return 0;
         })
-        this.offLine2.sort(function (a, b) {
+        this.offLine2.sort(function(a, b) {
             if (a.position < b.position)
                 return -1;
             if (a.position > b.position)
                 return 1;
             return 0;
         })
-        this.offLine3.sort(function (a, b) {
+        this.offLine3.sort(function(a, b) {
             if (a.position < b.position)
                 return -1;
             if (a.position > b.position)
                 return 1;
             return 0;
         })
-        this.offLine4.sort(function (a, b) {
+        this.offLine4.sort(function(a, b) {
             if (a.position < b.position)
                 return -1;
             if (a.position > b.position)
@@ -715,15 +704,15 @@ class Team {
         this.manageGoalieUsage();
     }
 
-    generateScheduleRating(){
+    generateScheduleRating() {
         let rat = 0;
-        for(let i=0; i<this.schedule.length; i++){
-          rat += this.schedule[i].rating;
+        for (let i = 0; i < this.schedule.length; i++) {
+            rat += this.schedule[i].rating;
         }
-    
-        this.scheduleRating = Math.round(rat/this.schedule.length);
-        
-      }
+
+        this.scheduleRating = Math.round(rat / this.schedule.length);
+
+    }
 
     releaseExpiring() {
         for (let i = 0; i < this.expiring.roster.length; i++) {
@@ -748,9 +737,9 @@ class Team {
 
 
             this.rating = Math.round((total + bests + bests + bests + bests) / (this.roster.length + 24));
-            this.rating  = Math.round(scaleBetween(this.rating,60,99,65,85));
-            if(this.rating>=99){
-              this.rating = 99;
+            this.rating = Math.round(scaleBetween(this.rating, 60, 99, 65, 85));
+            if (this.rating >= 99) {
+                this.rating = 99;
             }
 
 
@@ -812,14 +801,13 @@ class Team {
                 }
             }
 
-            this.secondTeam.sort(function (a, b) {
+            this.secondTeam.sort(function(a, b) {
                 if (a.rating > b.rating) {
                     return -1;
                 }
                 if (a.rating < b.rating) {
                     return 1;
-                }
-                else { return 0 }
+                } else { return 0 }
             })
 
             this.secondTeam[0].role = 2;
@@ -949,9 +937,9 @@ class Team {
                 }
             }
 
-        }
-        catch (err) {
-            console.log(this.name + " ERROR"); console.log(err);
+        } catch (err) {
+            console.log(this.name + " ERROR");
+            console.log(err);
         }
 
         //messes up
@@ -962,14 +950,13 @@ class Team {
         this.lineup = this.firstTeam.slice(0);
 
 
-        this.bench.sort(function (a, b) {
+        this.bench.sort(function(a, b) {
             if (a.minutes > b.minutes) {
                 return 1;
             }
             if (a.minutes > b.minutes) {
                 return -1;
-            }
-            else { return 0; }
+            } else { return 0; }
         });
 
 
@@ -1017,8 +1004,8 @@ export let availableFreeAgents = {
     name: 'Free Agents',
     roster: [],
     logoSrc: 'https://on-paper-sports.s3.us-east-2.amazonaws.com/app_icons/hockey.png',
-    reorderLineup: function () {
-        availableFreeAgents.roster.sort(function (a, b) {
+    reorderLineup: function() {
+        availableFreeAgents.roster.sort(function(a, b) {
             if (a.rating > b.rating)
                 return -1;
             if (a.rating < b.rating)
@@ -1046,7 +1033,7 @@ export function loadRosters() {
             }
         }
         if (teams[i].roster.length <= 0) {
-            let rating = 83+(Math.round(Math.random()*6)-3);
+            let rating = 83 + (Math.round(Math.random() * 6) - 3);
             generateCustomRoster(teams[i], rating);
         }
         for (let k = 0; k < conferences.length; k++) {
@@ -1076,11 +1063,11 @@ export function loadRosters() {
     availableFreeAgents.reorderLineup();
     setSalaryExpectations(availableFreeAgents);
 
-    generateFreeAgents(200,20);
+    generateFreeAgents(200, 20);
     generateDraftClass();
 
-      //COACH UPDATE
-  coachSetup(teams);
+    //COACH UPDATE
+    coachSetup(teams);
 }
 
 //DRAFT CLASS GENERATOR
@@ -1088,8 +1075,8 @@ export let draftClass = {
     name: 'Draft Class',
     roster: [],
     logoSrc: 'https://on-paper-sports.s3.us-east-2.amazonaws.com/app_icons/hockey.png',
-    reorderLineup: function () {
-        draftClass.roster.sort(function (a, b) {
+    reorderLineup: function() {
+        draftClass.roster.sort(function(a, b) {
             if (a.rating > b.rating)
                 return -1;
             if (a.rating < b.rating)
@@ -1105,67 +1092,63 @@ export function generateCustomRoster(team, rating) {
     let cs = 0;
     let lws = 0;
     let rws = 0;
-    let ds=0;
+    let ds = 0;
     let goalies = 0;
     for (let i = 0; i < rosterSize; i++) {
 
         let ply;
         //find good spread
-    let rand = Math.floor(Math.random()*25)-10;
-    let rat = rating + rand;
-    if(rat<61){
-      rat = 61;
-    }
-    if(rat > 99){
-        rat = 99;
-    }
+        let rand = Math.floor(Math.random() * 25) - 10;
+        let rat = rating + rand;
+        if (rat < 61) {
+            rat = 61;
+        }
+        if (rat > 99) {
+            rat = 99;
+        }
 
-        if(goalies < POS_G_REQUIREMENTS){
+        if (goalies < POS_G_REQUIREMENTS) {
             ply = generatePlayer(POS_G, rat);
             goalies++;
-        }
-        else if(lws < POS_LW_REQUIREMENTS){
+        } else if (lws < POS_LW_REQUIREMENTS) {
             ply = generatePlayer(POS_LW, rat);
             lws++;
-        }
-        else if(cs < POS_C_REQUIREMENTS){
+        } else if (cs < POS_C_REQUIREMENTS) {
             ply = generatePlayer(POS_C, rat);
             cs++;
-        }
-        else if(rws < POS_RW_REQUIREMENTS){
+        } else if (rws < POS_RW_REQUIREMENTS) {
             ply = generatePlayer(POS_RW, rat);
             rws++;
-        }
-        else if(ds < POS_D_REQUIREMENTS){
+        } else if (ds < POS_D_REQUIREMENTS) {
             ply = generatePlayer(POS_D, rat);
             ds++;
-        }else{
-            let position = Math.floor(Math.random()*(POS_G+1));
+        } else {
+            let position = Math.floor(Math.random() * (POS_G + 1));
             ply = generatePlayer(position, rat);
         }
 
 
 
-    //RATING FORMULA
-    ply.calculateRating();
-    ply.years = Math.floor(Math.random() * 3) + 1;
-    ply.salary = Math.round(
-      scaleBetween(
-        tradeValueCalculation(ply),
-        VETERANSMINIMUM,
-        15000000,
-        120,
-        600
-      )
-    ) - Math.round(Math.random()*3000000);
-    if(ply.salary < VETERANSMINIMUM){
-        ply.salary = VETERANSMINIMUM;
-    }
-    ply.age = Math.floor(Math.random()*14)+23;
-      if(collegeMode){
-        //set up for college fr - sr
-        ply.age = Math.floor(Math.random()*4)+18;
-      }
+        //RATING FORMULA
+        ply.calculateRating();
+        ply.years = Math.floor(Math.random() * 3) + 1;
+        ply.salary = Math.round(
+            scaleBetween(
+                tradeValueCalculation(ply),
+                VETERANSMINIMUM,
+                15000000,
+                120,
+                600
+            )
+        ) - Math.round(Math.random() * 3000000);
+        if (ply.salary < VETERANSMINIMUM) {
+            ply.salary = VETERANSMINIMUM;
+        }
+        ply.age = Math.floor(Math.random() * 14) + 23;
+        if (collegeMode) {
+            //set up for college fr - sr
+            ply.age = Math.floor(Math.random() * 4) + 18;
+        }
         team.roster.push(ply);
     }
 
@@ -1183,16 +1166,16 @@ export function generateCustomRoster(team, rating) {
             for (let i = 0; i < team.roster.length; i++) {
                 let ply = team.roster[i];
 
-                if(ply.position === POS_G){
+                if (ply.position === POS_G) {
                     ply.reflexes--;
                     ply.positioning--;
-                }else{
+                } else {
                     ply.off--;
                     ply.def--;
                     ply.faceOff--;
                     ply.pass--;
                 }
-       
+
                 ply.calculateRating();
                 team.calculateRating();
                 if (team.rating <= rating) {
@@ -1207,16 +1190,16 @@ export function generateCustomRoster(team, rating) {
             for (let i = 0; i < team.roster.length; i++) {
                 let ply = team.roster[i];
 
-                if(ply.position === POS_G){
+                if (ply.position === POS_G) {
                     ply.reflexes++;
                     ply.positioning++;
-                }else{
+                } else {
                     ply.off++;
                     ply.def++;
                     ply.faceOff++;
                     ply.pass++;
                 }
-       
+
                 ply.calculateRating();
                 team.calculateRating();
                 if (team.rating >= rating) {
@@ -1287,64 +1270,62 @@ export function generateFreeAgents(amount, ratingSubtraction) {
 
 function generateDraftClass() {
     draftClass.roster = [];
-      let cs = 0;
+    let cs = 0;
     let lws = 0;
     let rws = 0;
     let ds = 0;
     let gs = 0;
     //swtiched to teams .length * 10
-    for (let i = 0; i < (teams.length*10); i++) {
+    for (let i = 0; i < (teams.length * 10); i++) {
         let ply;
-      let playerRating = 73 - (Math.round(Math.random()*12));
-      //10% elite players
-      if(Math.random()*100 <= 10){
-        playerRating += Math.round(Math.random()*15)+2;
-      }
-  
-      //block over 89
-      if(playerRating>=85){
-        playerRating = 85;
-      }
-  
-      //block 60 and under
-      if(playerRating<=61){
-        playerRating = Math.round(Math.random()*4)+61;
-      }
-      
-      if (cs < POS_C_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_C, playerRating);
-        cs++;
-      } else if (lws < POS_LW_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_LW, playerRating);
-  
-        lws++;
-      } else if (rws < POS_RW_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_RW, playerRating);
-  
-        rws++;
-      }
-      else if (ds < POS_D_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_D, playerRating);
-  
-        ds++;
-      }
-      else if (gs < POS_G_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_G, playerRating);
-  
-        gs++;
-      }else{
-        let chosenPosition = Math.floor(Math.random()*(POS_G+1));
-        ply = generatePlayer(chosenPosition, playerRating);
-      }
-      //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
-      ply.years = 2 + 1;
-      ply.salary = 1200000;
-      ply.age = 20 + Math.floor(Math.random()*4);
-  
-  
-      draftClass.roster.push(ply);
+        let playerRating = 73 - (Math.round(Math.random() * 12));
+        //10% elite players
+        if (Math.random() * 100 <= 10) {
+            playerRating += Math.round(Math.random() * 15) + 2;
+        }
+
+        //block over 89
+        if (playerRating >= 85) {
+            playerRating = 85;
+        }
+
+        //block 60 and under
+        if (playerRating <= 61) {
+            playerRating = Math.round(Math.random() * 4) + 61;
+        }
+
+        if (cs < POS_C_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_C, playerRating);
+            cs++;
+        } else if (lws < POS_LW_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_LW, playerRating);
+
+            lws++;
+        } else if (rws < POS_RW_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_RW, playerRating);
+
+            rws++;
+        } else if (ds < POS_D_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_D, playerRating);
+
+            ds++;
+        } else if (gs < POS_G_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_G, playerRating);
+
+            gs++;
+        } else {
+            let chosenPosition = Math.floor(Math.random() * (POS_G + 1));
+            ply = generatePlayer(chosenPosition, playerRating);
+        }
+        //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
+        ply.years = 2 + 1;
+        ply.salary = 1200000;
+        ply.age = 20 + Math.floor(Math.random() * 4);
+
+
+        draftClass.roster.push(ply);
     }
-  }
+}
 
 loadRosters();
 
@@ -1474,7 +1455,7 @@ export class Game {
         }
         // console.log(`total ${totalAssist}`);
         // console.log(`perc ${percentUsed}`);
-        if(percentUsed < 99){
+        if (percentUsed < 99) {
             console.log(off.name);
         }
 
@@ -1487,23 +1468,18 @@ export class Game {
         //
         if (team.offShiftOnIce === 1) {
             newOffShift = team.offLine1;
-        }
-        else if (team.offShiftOnIce === 2) {
+        } else if (team.offShiftOnIce === 2) {
             newOffShift = team.offLine2;
-        }
-        else if (team.offShiftOnIce === 3) {
+        } else if (team.offShiftOnIce === 3) {
             newOffShift = team.offLine3;
-        }
-        else if (team.offShiftOnIce === 4) {
+        } else if (team.offShiftOnIce === 4) {
             newOffShift = team.offLine4;
         }
         if (team.defShiftOnIce === 1) {
             newDefShift = team.defLine1;
-        }
-        else if (team.defShiftOnIce === 2) {
+        } else if (team.defShiftOnIce === 2) {
             newDefShift = team.defLine2;
-        }
-        else if (team.defShiftOnIce === 3) {
+        } else if (team.defShiftOnIce === 3) {
             newDefShift = team.defLine3;
         }
 
@@ -1513,20 +1489,17 @@ export class Game {
             newOffShift = team.offLine2;
             team.offShiftOnIce = 2;
             this.iceTime = 0;
-        }
-        else if (team.offShiftOnIce === 2 && this.iceTime >= 50) {
+        } else if (team.offShiftOnIce === 2 && this.iceTime >= 50) {
             newOffShift = team.offLine3;
             team.offShiftOnIce = 3;
             this.iceTime = 0;
 
-        }
-        else if (team.offShiftOnIce === 3 && this.iceTime >= 35) {
+        } else if (team.offShiftOnIce === 3 && this.iceTime >= 35) {
             newOffShift = team.offLine4;
             team.offShiftOnIce = 4;
             this.iceTime = 0;
 
-        }
-        else if (team.offShiftOnIce === 4 && this.iceTime >= 25) {
+        } else if (team.offShiftOnIce === 4 && this.iceTime >= 25) {
             newOffShift = team.offLine1;
             team.offShiftOnIce = 1;
             this.iceTime = 0;
@@ -1535,13 +1508,11 @@ export class Game {
             newDefShift = team.defLine2;
             team.defShiftOnIce = 2;
             this.iceTime = 0;
-        }
-        else if (team.defShiftOnIce === 2) {
+        } else if (team.defShiftOnIce === 2) {
             newDefShift = team.defLine3;
             team.defShiftOnIce = 3;
             this.iceTime = 0;
-        }
-        else if (team.defShiftOnIce === 3) {
+        } else if (team.defShiftOnIce === 3) {
             newDefShift = team.defLine1;
             team.defShiftOnIce = 1;
             this.iceTime = 0;
@@ -1591,7 +1562,7 @@ export class Game {
                 }
             }
 
-          
+
 
 
             let goalie = def.inNet;
@@ -1621,7 +1592,7 @@ export class Game {
             let scaledOff = scaleBetween(offenseOverall, 0, offenseSlider, 200, 495);
             let assistFactor = scaleBetween(assister.pass, 0, passSkillFactorSlider, 40, 99);
 
-            let coachVcoach = scaleBetween(off.coach.offenseRating,0,2,40,99) - scaleBetween(def.coach.defenseRating,0,2,40,99);
+            let coachVcoach = scaleBetween(off.coach.offenseRating, 0, 2, 40, 99) - scaleBetween(def.coach.defenseRating, 0, 2, 40, 99);
             let offVsDef = scaledDef - scaledOff;
 
             // console.log('def' + scaledDef);
@@ -1635,13 +1606,13 @@ export class Game {
 
             //goalie.rating includes reflexes and positioning
             let goalieSavePercentage = 0;
-            if(Math.random()*100 < 30){
+            if (Math.random() * 100 < 30) {
                 //reflex save
-            goalieSavePercentage = scaleBetween(goalie.reflexes, 66, 96, 40, 99);
+                goalieSavePercentage = scaleBetween(goalie.reflexes, 66, 96, 40, 99);
 
-            }else{
+            } else {
                 //positioning save
-            goalieSavePercentage = scaleBetween(goalie.positioning, 82, 99, 40, 99);
+                goalieSavePercentage = scaleBetween(goalie.positioning, 82, 99, 40, 99);
 
             }
 
@@ -1766,30 +1737,30 @@ export class Game {
         }
     }
 
-    chooseStartingGoalies(){
-        let rand = Math.random()*100;
+    chooseStartingGoalies() {
+        let rand = Math.random() * 100;
         let tot = 0;
-        for(let i=0; i<home.goalies.length; i++){
-            tot+= home.goalies[i].goalieUsage;
-            if(tot >= rand){
+        for (let i = 0; i < home.goalies.length; i++) {
+            tot += home.goalies[i].goalieUsage;
+            if (tot >= rand) {
                 home.inNet = home.goalies[i];
                 home.inNet.gamesStarted++;
                 break;
             }
         }
 
-        rand = Math.random()*100;
+        rand = Math.random() * 100;
         tot = 0;
-        for(let i=0; i<away.goalies.length; i++){
-            tot+= away.goalies[i].goalieUsage;
-            if(tot >= rand){
+        for (let i = 0; i < away.goalies.length; i++) {
+            tot += away.goalies[i].goalieUsage;
+            if (tot >= rand) {
                 away.inNet = away.goalies[i];
                 away.inNet.gamesStarted++;
                 break;
             }
         }
 
-        
+
     }
 
 
@@ -1965,7 +1936,7 @@ export class Season {
                     try {
                         teams[j].schedule[i] = teams[(j + 1)]
                         teams[(j + 1)].schedule[i] = teams[(j)];
-                    } catch{
+                    } catch {
                         teams[j].schedule[i] = teams[j];
                     }
 
@@ -1975,13 +1946,13 @@ export class Season {
 
         }
 
-        for(let i=0; i<teams.length; i++){
+        for (let i = 0; i < teams.length; i++) {
             teams[i].generateScheduleRating();
-          }
-      
-      
-          //setup rankings
-          sortStandings();
+        }
+
+
+        //setup rankings
+        sortStandings();
 
     }
 
@@ -2153,8 +2124,8 @@ export class Franchise {
             name: 'Retirements',
             roster: [],
             logoSrc: 'https://on-paper-sports.s3.us-east-2.amazonaws.com/app_icons/hockey.png',
-            reorderLineup: function () {
-                draftClass.roster.sort(function (a, b) {
+            reorderLineup: function() {
+                draftClass.roster.sort(function(a, b) {
                     if (a.rating > b.rating)
                         return -1;
                     if (a.rating < b.rating)
@@ -2166,21 +2137,21 @@ export class Franchise {
     }
 
     startPlayoffs() {
-         //check glitch in hockey/basketball
-    // need to sort teams before playoffs
-    teams.sort(function (a, b) {
-        if (a.seed > b.seed) return 1;
-        if (a.seed < b.seed) return -1;
-        return 0;
-      });
-      for (let i = 0; i < conferences.length; i++) {
-        //check this again
-        conferences[i].teams.sort(function (a, b) {
-          if (a.seed > b.seed) return 1;
-          if (a.seed < b.seed) return -1;
-          return 0;
+        //check glitch in hockey/basketball
+        // need to sort teams before playoffs
+        teams.sort(function(a, b) {
+            if (a.seed > b.seed) return 1;
+            if (a.seed < b.seed) return -1;
+            return 0;
         });
-      }
+        for (let i = 0; i < conferences.length; i++) {
+            //check this again
+            conferences[i].teams.sort(function(a, b) {
+                if (a.seed > b.seed) return 1;
+                if (a.seed < b.seed) return -1;
+                return 0;
+            });
+        }
 
         //JUST IN CASE OF PLAYOFF SEED NUMBER BEING BIGGER THAN CONF TEAMS
         this.playoffs = new Playoffs();
@@ -2363,12 +2334,12 @@ export class Franchise {
         for (let i = 0; i < teams.length; i++) {
             for (let j = 0; j < teams[i].roster.length; j++) {
                 let ply = teams[i].roster[j];
-                if(ply.redshirted){
+                if (ply.redshirted) {
                     ply.redshirted = false;
                     ply.redshirt = true;
-                  }else{
-                      ply.age++;
-                  }
+                } else {
+                    ply.age++;
+                }
 
                 let history = "";
                 //SAVE PREVIOUS SEASONS STATS
@@ -2387,14 +2358,14 @@ export class Franchise {
                 ply.reflexesOld = ply.reflexes;
                 ply.positioningOld = ply.positioning;
 
-                let coachTraining = scaleBetween(teams[i].coach.training,0,2,40,99);
-                let development = scaleBetween(ply.age,-4,3.5 + coachTraining, 39,18);
+                let coachTraining = scaleBetween(teams[i].coach.training, 0, 2, 40, 99);
+                let development = scaleBetween(ply.age, -4, 3.5 + coachTraining, 39, 18);
 
                 if (ply.position != 4) {
-                        ply.off += Math.round(Math.random() * development);
-                        ply.def += Math.round(Math.random() * development);
-                        ply.pass += Math.round(Math.random() * development);
-                        ply.faceOff += Math.round(Math.random() * development);
+                    ply.off += Math.round(Math.random() * development);
+                    ply.def += Math.round(Math.random() * development);
+                    ply.pass += Math.round(Math.random() * development);
+                    ply.faceOff += Math.round(Math.random() * development);
 
                     if (Math.random() * 500 >= 499) {
                         //BREAKOUT PLYER
@@ -2405,8 +2376,8 @@ export class Franchise {
                     }
 
                 } else {
-                        ply.positioning += Math.round(Math.random() * development);
-                        ply.reflexes += Math.round(Math.random() * development);
+                    ply.positioning += Math.round(Math.random() * development);
+                    ply.reflexes += Math.round(Math.random() * development);
 
                     if (Math.random() * 500 >= 499) {
                         //BREAKOUT PLYER
@@ -2494,7 +2465,7 @@ export class Franchise {
 
             } else {
                 ply.off += randomFactor
-                //nba bug found
+                    //nba bug found
                 ply.def += randomFactor
                 ply.faceOff += randomFactor
                 ply.pass += randomFactor
@@ -2507,46 +2478,46 @@ export class Franchise {
 
 
     signing() {
-        
+
         if (collegeMode) {
             this.recruiting()
-            
+
         } else {
-                for (let i = 0; i < teams.length; i++) {
+            for (let i = 0; i < teams.length; i++) {
 
-            teams[i].c = 0;
-            teams[i].lw = 0;
-            teams[i].rw = 0;
-            teams[i].d = 0;
-            teams[i].g = 0;
+                teams[i].c = 0;
+                teams[i].lw = 0;
+                teams[i].rw = 0;
+                teams[i].d = 0;
+                teams[i].g = 0;
 
-            teams[i].salary = 0;
+                teams[i].salary = 0;
 
-            for (let j = 0; j < teams[i].roster.length; j++) {
-                let player = teams[i].roster[j];
-                teams[i].salary += player.salary;
+                for (let j = 0; j < teams[i].roster.length; j++) {
+                    let player = teams[i].roster[j];
+                    teams[i].salary += player.salary;
 
-                if (teams[i].roster[j].position === POS_C) {
-                    teams[i].c++;
-                }
-                if (teams[i].roster[j].position === POS_LW) {
-                    teams[i].lw++;
-                }
-                if (teams[i].roster[j].position === POS_RW) {
-                    teams[i].rw++;
-                }
-                if (teams[i].roster[j].position === POS_D) {
-                    teams[i].d++;
-                }
-                if (teams[i].roster[j].position === POS_G) {
-                    teams[i].g++;
+                    if (teams[i].roster[j].position === POS_C) {
+                        teams[i].c++;
+                    }
+                    if (teams[i].roster[j].position === POS_LW) {
+                        teams[i].lw++;
+                    }
+                    if (teams[i].roster[j].position === POS_RW) {
+                        teams[i].rw++;
+                    }
+                    if (teams[i].roster[j].position === POS_D) {
+                        teams[i].d++;
+                    }
+                    if (teams[i].roster[j].position === POS_G) {
+                        teams[i].g++;
+                    }
                 }
             }
         }
-        }
 
 
-        teams.sort(function (a, b) {
+        teams.sort(function(a, b) {
             if (a.wins < b.wins) {
                 return 1;
             }
@@ -2556,7 +2527,7 @@ export class Franchise {
             return 0;
         })
 
-        availableFreeAgents.roster.sort(function (a, b) {
+        availableFreeAgents.roster.sort(function(a, b) {
             if (a.rating < b.rating) {
                 return 1;
             }
@@ -2728,7 +2699,7 @@ export class Franchise {
                 // teams[i].reorderLineup();
 
                 //sort recruits by rating
-                teams[i].interestedProspects.roster.sort(function (a, b) {
+                teams[i].interestedProspects.roster.sort(function(a, b) {
                     if (a.rating < b.rating) {
                         return 1;
                     }
@@ -2854,7 +2825,7 @@ export class Franchise {
 
                 while (teams[i].scholarshipsAvailable > 0) {
                     if (teams[i] != selectedTeam) {
-                        
+
                         let index = Math.floor(Math.random() * 5);
                         if (index >= teams[i].interestedProspects.roster.length) {
                             index = 0;
@@ -2978,23 +2949,23 @@ export class Franchise {
 
             coachSigning(teams);
 
-                  //NEW WAY
-      for(let i=0; i<teams.length; i++){
-        teams[i].secondChancePoints = 3;
-        let seedRat = teams.length - teams[i].seed;
-        let teamRating = teams[i].rating;
-        let recruiting = scaleBetween(teams[i].coach.signingInterest,-2,2,40,99);
-        let scaledSeed = scaleBetween((seedRat), 68, 90, 0, teams.length);
+            //NEW WAY
+            for (let i = 0; i < teams.length; i++) {
+                teams[i].secondChancePoints = 3;
+                let seedRat = teams.length - teams[i].seed;
+                let teamRating = teams[i].rating;
+                let recruiting = scaleBetween(teams[i].coach.signingInterest, -2, 2, 40, 99);
+                let scaledSeed = scaleBetween((seedRat), 68, 90, 0, teams.length);
 
 
-        let rating = Math.round(((teamRating + scaledSeed)/2) + recruiting) - 20;
-        // console.log(`${teams[i].name} ${rating}`);
+                let rating = Math.round(((teamRating + scaledSeed) / 2) + recruiting) - 20;
+                // console.log(`${teams[i].name} ${rating}`);
 
                 if (teams[i] === selectedTeam) {
-                    rating = Math.round(((((sliders.recruitingDifficulty*-1)+100)/100) * rating) + rating);
+                    rating = Math.round(((((sliders.recruitingDifficulty * -1) + 100) / 100) * rating) + rating);
                 }
 
-                if(rating >= 99){
+                if (rating >= 99) {
                     rating = 99;
                 }
 
@@ -3049,8 +3020,7 @@ export class Franchise {
                             } else {
                                 released.push(teams[i].expiring.roster[j]);
                             }
-                        }
-                        else if (teams[i].expiring.roster[j].rating > 76) {
+                        } else if (teams[i].expiring.roster[j].rating > 76) {
                             if ((Math.random() * 10) < 6) {
                                 teams[i].expiring.roster[j].years = Math.floor(Math.random() * 4) + 1;
                                 teams[i].roster.push(teams[i].expiring.roster[j]);
@@ -3058,8 +3028,7 @@ export class Franchise {
                             } else {
                                 released.push(teams[i].expiring.roster[j]);
                             }
-                        }
-                        else if (teams[i].expiring.roster[j].rating > 69) {
+                        } else if (teams[i].expiring.roster[j].rating > 69) {
                             if ((Math.random() * 10) < 4) {
                                 teams[i].expiring.roster[j].years = Math.floor(Math.random() * 4) + 1;
                                 teams[i].roster.push(teams[i].expiring.roster[j]);
@@ -3091,16 +3060,14 @@ export class Franchise {
                         } else {
                             released.push(teams[i].expiring.roster[j]);
                         }
-                    }
-                    else if (teams[i].expiring.roster[j].rating > 76) {
+                    } else if (teams[i].expiring.roster[j].rating > 76) {
                         if ((Math.random() * 10) < 6) {
                             teams[i].expiring.roster[j].years = Math.floor(Math.random() * 4) + 1;
                             teams[i].roster.push(teams[i].expiring.roster[j]);
                         } else {
                             released.push(teams[i].expiring.roster[j]);
                         }
-                    }
-                    else if (teams[i].expiring.roster[j].rating > 69) {
+                    } else if (teams[i].expiring.roster[j].rating > 69) {
                         if ((Math.random() * 10) < 4) {
                             teams[i].expiring.roster[j].years = Math.floor(Math.random() * 4) + 1;
                             teams[i].roster.push(teams[i].expiring.roster[j]);
@@ -3133,7 +3100,7 @@ export class Franchise {
     releasePlayers() {
         for (let i = 0; i < teams.length; i++) {
             if (teams[i].roster.length > rosterSize) {
-                teams[i].roster.sort(function (a, b) {
+                teams[i].roster.sort(function(a, b) {
                     if (a.rating > b.rating) {
                         return 1;
                     }
@@ -3149,49 +3116,49 @@ export class Franchise {
                 //     teams[i].roster.splice(0, 1);
                 // }
 
-                let fws=0;
+                let fws = 0;
                 let def = 0;
                 let goalies = 0;
 
-                for(let j=0; j<teams[i].roster.length; j++){
+                for (let j = 0; j < teams[i].roster.length; j++) {
                     let ply = teams[i].roster[j];
-                    if(ply.position<=2){
+                    if (ply.position <= 2) {
                         fws++;
-                    }else if(ply.position === 3){
+                    } else if (ply.position === 3) {
                         def++;
-                    }else if(ply.position === 4){
+                    } else if (ply.position === 4) {
                         goalies++;
                     }
                 }
 
                 let released = [];
-                for(let j=0; j<teams[i].roster.length; j++){
-                    if((fws + def + goalies) <= rosterSize){
+                for (let j = 0; j < teams[i].roster.length; j++) {
+                    if ((fws + def + goalies) <= rosterSize) {
                         break;
                     }
                     let ply = teams[i].roster[j];
-                    if(ply.position<=2){
-                        if((fws - 1) >= 12){
+                    if (ply.position <= 2) {
+                        if ((fws - 1) >= 12) {
                             fws--;
                             released.push(ply);
                         }
-                    }else if(ply.position === 3){
-                        if((def - 1) >= 6){
+                    } else if (ply.position === 3) {
+                        if ((def - 1) >= 6) {
                             def--;
                             released.push(ply);
                         }
-                    }else if(ply.position === 4){
-                        if((goalies - 1) >= 2){
+                    } else if (ply.position === 4) {
+                        if ((goalies - 1) >= 2) {
                             goalies--;
                             released.push(ply);
                         }
                     }
                 }
 
-                for(let j=0; j<released.length; j++){
+                for (let j = 0; j < released.length; j++) {
                     let ply = released[j];
                     availableFreeAgents.roster.push(ply);
-                    teams[i].roster.splice(teams[i].roster.indexOf(ply),1);
+                    teams[i].roster.splice(teams[i].roster.indexOf(ply), 1);
                 }
             }
         }
@@ -3220,77 +3187,77 @@ export class Franchise {
             teams[i].reorderLineup();
 
             teams[i].draftPicks = [{
-                round: 1,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 2,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 3,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 4,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 5,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 6,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            },
-            {
-                round: 7,
-                originalTeam: teams[i].name,
-                value: null,
-                salary: 0,
-                isPick: true,
-                projectedPick: null,
-                currentTeam: null
-            }
+                    round: 1,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 2,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 3,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 4,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 5,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 6,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                },
+                {
+                    round: 7,
+                    originalTeam: teams[i].name,
+                    value: null,
+                    salary: 0,
+                    isPick: true,
+                    projectedPick: null,
+                    currentTeam: null
+                }
             ]
 
 
 
         }
 
-        if(collegeMode){
+        if (collegeMode) {
             cpuRedshirting();
-          }
+        }
 
         //fix for free agents having old team logos
         for (let i = 0; i < availableFreeAgents.roster.length; i++) {
@@ -3321,23 +3288,23 @@ export class Franchise {
         let low = 200;
         let high = 0;
         let total = 0;
-        for(let i=0; i<teams.length; i++){
-          if(teams[i]!= selectedTeam){
-          if(teams[i].rating>high){
-            high = teams[i].rating;
-          }
-          if(teams[i].rating<low){
-            low = teams[i].rating;
-          }
+        for (let i = 0; i < teams.length; i++) {
+            if (teams[i] != selectedTeam) {
+                if (teams[i].rating > high) {
+                    high = teams[i].rating;
+                }
+                if (teams[i].rating < low) {
+                    low = teams[i].rating;
+                }
+            }
+            total += teams[i].rating;
         }
-          total+= teams[i].rating;
-        }
-    
+
         console.log(`H: ${high} L: ${low} AVG: ${total/teams.length}`);
 
-            //added specific autosave names
-    let teamName = selectedTeam.name.split(' ').join('');
-    saveFranchise(teamName + "_Autosave");
+        //added specific autosave names
+        let teamName = selectedTeam.name.split(' ').join('');
+        saveFranchise(teamName + "_Autosave");
 
 
     }
@@ -3346,68 +3313,68 @@ export class Franchise {
 
         this.retirements.roster = [];
 
-         //COACH
-    coachOffseasonSetup(teams);
+        //COACH
+        coachOffseasonSetup(teams);
 
 
         if (collegeMode) {
 
             for (let i = 0; i < teams.length; i++) {
                 teams[i].scholarshipsAvailable = 0;
-              for (let j = 0; j < teams[i].roster.length; j++) {
-                let player = teams[i].roster[j];
-                let rand = Math.random() * 100;
-                //added cant graduate til at least a jr
-                let canGraduateEarly = true;
-                  //taken away  because of football
-                if ((player.rating >= 88 && rand > 35 && canGraduateEarly) || player.age >= 22) {
-                  teams[i].scholarshipsAvailable++;
-                  //made a team specific retirement list
-                  teams[i].retirements.push(player);
-                  this.retirements.roster.push(player);
-                  //players not graduating glitch 
-                  // let index = teams[i].roster.indexOf(player);
-                  // teams[i].roster.splice(index, 1);
+                for (let j = 0; j < teams[i].roster.length; j++) {
+                    let player = teams[i].roster[j];
+                    let rand = Math.random() * 100;
+                    //added cant graduate til at least a jr
+                    let canGraduateEarly = true;
+                    //taken away  because of football
+                    if ((player.rating >= 88 && rand > 35 && canGraduateEarly) || player.age >= 22) {
+                        teams[i].scholarshipsAvailable++;
+                        //made a team specific retirement list
+                        teams[i].retirements.push(player);
+                        this.retirements.roster.push(player);
+                        //players not graduating glitch 
+                        // let index = teams[i].roster.indexOf(player);
+                        // teams[i].roster.splice(index, 1);
+                    }
+
+                    //check for leave for draft early
                 }
-      
-                //check for leave for draft early
-              }
-      
-              //new loop through team retirements
-              for(let j=0; j<teams[i].retirements.length; j++){
-                  let player = teams[i].retirements[j];
-                  let index = teams[i].roster.indexOf(player);
-                  teams[i].roster.splice(index, 1);
-              }
-      
-              //set retirements to empty array
-              teams[i].retirements = [];
-      
-      
-      
-      
-              if(teams[i].scholarshipsAvailable < 10){
-                teams[i].scholarshipsAvailable = 10;
-              }
+
+                //new loop through team retirements
+                for (let j = 0; j < teams[i].retirements.length; j++) {
+                    let player = teams[i].retirements[j];
+                    let index = teams[i].roster.indexOf(player);
+                    teams[i].roster.splice(index, 1);
+                }
+
+                //set retirements to empty array
+                teams[i].retirements = [];
+
+
+
+
+                if (teams[i].scholarshipsAvailable < 10) {
+                    teams[i].scholarshipsAvailable = 10;
+                }
             }
-      
+
             this.classLength = this.retirements.roster.length;
-      
+
             //sort
-            this.retirements.roster.sort(function (a, b) {
-              if (a.rating > b.rating) {
-                return -1;
-              }
-        
-              if (a.rating < b.rating) {
-                return 1;
-              }
-              return 0;
+            this.retirements.roster.sort(function(a, b) {
+                if (a.rating > b.rating) {
+                    return -1;
+                }
+
+                if (a.rating < b.rating) {
+                    return 1;
+                }
+                return 0;
             });
-      
+
             //limit to 320
-            while(this.retirements.roster.length > 320){
-              this.retirements.roster.pop();
+            while (this.retirements.roster.length > 320) {
+                this.retirements.roster.pop();
             }
 
         } else {
@@ -3427,7 +3394,7 @@ export class Franchise {
             }
         }
 
-        availableFreeAgents.roster.sort(function (a, b) {
+        availableFreeAgents.roster.sort(function(a, b) {
             if (a.rating > b.rating) {
                 return -1;
             }
@@ -3470,7 +3437,7 @@ export class Franchise {
                 draftOrder.push(teams[i].draftPicks[j]);
             }
         }
-        draftOrder.sort(function (a, b) {
+        draftOrder.sort(function(a, b) {
             if (a.projectedPick > b.projectedPick) {
                 return 1;
             }
@@ -3479,7 +3446,7 @@ export class Franchise {
             } else { return 0; }
         });
 
-        draftOrder.sort(function (a, b) {
+        draftOrder.sort(function(a, b) {
             if (a.round > b.round) {
                 return 1;
             }
@@ -3488,7 +3455,7 @@ export class Franchise {
             } else { return 0; }
         });
 
-        draftClass.roster.sort(function (a, b) {
+        draftClass.roster.sort(function(a, b) {
             if (a.rating < b.rating) {
                 return 1;
             }
@@ -3503,8 +3470,8 @@ export class Franchise {
                 name: 'Drafted',
                 roster: [],
                 logoSrc: 'https://on-paper-sports.s3.us-east-2.amazonaws.com/app_icons/hockey.png',
-                reorderLineup: function () {
-                    availableFreeAgents.roster.sort(function (a, b) {
+                reorderLineup: function() {
+                    availableFreeAgents.roster.sort(function(a, b) {
                         if (a.rating > b.rating)
                             return -1;
                         if (a.rating < b.rating)
@@ -3518,7 +3485,7 @@ export class Franchise {
             picks: 0,
             draftOrder: draftOrder,
             completed: false,
-            simPick: function () {
+            simPick: function() {
                 if (this.completed) {
                     return;
                 }
@@ -3535,7 +3502,7 @@ export class Franchise {
 
 
             },
-            simDraft: function () {
+            simDraft: function() {
                 if (this.completed) {
                     return;
                 }
@@ -3549,12 +3516,12 @@ export class Franchise {
                 inDraft = false;
 
             },
-            newDraft: function () {
+            newDraft: function() {
                 this.round = 0;
                 this.pick = 0;
                 this.completed = false;
             },
-            userPick: function (player) {
+            userPick: function(player) {
                 if (this.completed) {
                     return;
                 }
@@ -3572,7 +3539,7 @@ export class Franchise {
                 }
 
             },
-            simToNextUserPick: function () {
+            simToNextUserPick: function() {
                 try {
                     while (draftOrder[this.pick].currentTeam != selectedTeam) {
                         if (this.completed) {
@@ -3593,7 +3560,7 @@ export class Franchise {
     }
 
     draft() {
-        teams.sort(function (a, b) {
+        teams.sort(function(a, b) {
             if (a.wins > b.wins) {
                 return 1;
             }
@@ -3619,7 +3586,7 @@ export class Franchise {
 
 
 
-var shuffle = function (array) {
+var shuffle = function(array) {
 
     var currentIndex = array.length;
     var temporaryValue, randomIndex;
@@ -3642,95 +3609,95 @@ var shuffle = function (array) {
 
 function sortStandings() {
     if (conferencesOn) {
-      for (let i = 0; i < conferences.length; i++) {
-        conferences[i].teams.sort(function (a, b) {
-          if (a.wins > b.wins) return -1;
-          if (a.wins < b.wins) return 1;
-          return 0;
-        });
-        for (let j = 0; j < conferences[i].teams.length; j++) {
-          conferences[i].teams[j].seed = j + 1;
+        for (let i = 0; i < conferences.length; i++) {
+            conferences[i].teams.sort(function(a, b) {
+                if (a.wins > b.wins) return -1;
+                if (a.wins < b.wins) return 1;
+                return 0;
+            });
+            for (let j = 0; j < conferences[i].teams.length; j++) {
+                conferences[i].teams[j].seed = j + 1;
+            }
         }
-      }
     } else {
-      //rating first then wins
-      //ranking formula
-      for(let i=0; i<teams.length; i++){
-        scheduleRating = teams[i].scheduleRating * 1.5;
-        teamRating = teams[i].rating * 2;
-        winPercentage = ((teams[i].wins/teams[i].schedule.length)*100) *1.5 ;
-  
-  
-  
-  
-        teams[i].totalRankingRating = (scheduleRating + teamRating + winPercentage) / 5;
-        // console.log(`Team: ${teams[i].name} schedRat:${teams[i].scheduleRating} wins:${((teams[i].wins/teams[i].schedule.length)*100)} total:${(teams[i].scheduleRating + teams[i].rating + ((teams[i].wins/teams[i].schedule.length)*100)) / 3}`)
-  
-        
-      }
-  
-  
-  
-      teams.sort(function (a, b) {
-        if (a.totalRankingRating > b.totalRankingRating) return -1;
-        if (a.totalRankingRating < b.totalRankingRating) return 1;
-        return 0;
-      });
-  
-      for (let i = 0; i < teams.length; i++) {
-        teams[i].seed = i + 1;
-      }
-    }
-  }
+        //rating first then wins
+        //ranking formula
+        for (let i = 0; i < teams.length; i++) {
+            scheduleRating = teams[i].scheduleRating * 1.5;
+            teamRating = teams[i].rating * 2;
+            winPercentage = ((teams[i].wins / teams[i].schedule.length) * 100) * 1.5;
 
 
 
 
+            teams[i].totalRankingRating = (scheduleRating + teamRating + winPercentage) / 5;
+            // console.log(`Team: ${teams[i].name} schedRat:${teams[i].scheduleRating} wins:${((teams[i].wins/teams[i].schedule.length)*100)} total:${(teams[i].scheduleRating + teams[i].rating + ((teams[i].wins/teams[i].schedule.length)*100)) / 3}`)
 
-  export function standings(conferenceId) {
-    let sorted = [...teams];
-  
-    if (conferenceId != 3) {
-      for (let i = 0; i < conferences.length; i++) {
-        if (conferenceId === conferences[i].id) {
-          sorted = conferences[i].teams;
+
         }
-      }
+
+
+
+        teams.sort(function(a, b) {
+            if (a.totalRankingRating > b.totalRankingRating) return -1;
+            if (a.totalRankingRating < b.totalRankingRating) return 1;
+            return 0;
+        });
+
+        for (let i = 0; i < teams.length; i++) {
+            teams[i].seed = i + 1;
+        }
     }
-  
+}
+
+
+
+
+
+export function standings(conferenceId) {
+    let sorted = [...teams];
+
+    if (conferenceId != 3) {
+        for (let i = 0; i < conferences.length; i++) {
+            if (conferenceId === conferences[i].id) {
+                sorted = conferences[i].teams;
+            }
+        }
+    }
+
     //CHANGED TO USE SEED NOT RESORTING
     // sorted.sort(function (a, b) {
     //   if (a.rating > b.rating) return -1;
     //   if (a.rating < b.rating) return 1;
     //   return 0;
     // });
-  
+
     // sorted.sort(function (a, b) {
     //   if (a.wins > b.wins) return -1;
     //   if (a.wins < b.wins) return 1;
     //   return 0;
     // });
-  
-    sorted.sort(function (a, b) {
-      if (a.seed < b.seed) return -1;
-      if (a.seed > b.seed) return 1;
-      return 0;
+
+    sorted.sort(function(a, b) {
+        if (a.seed < b.seed) return -1;
+        if (a.seed > b.seed) return 1;
+        return 0;
     });
-  
-    if(collegeMode){
-      while(sorted.length>25){
-        sorted.pop();
-      }
+
+    if (collegeMode) {
+        while (sorted.length > 25) {
+            sorted.pop();
+        }
     }
-  
-  
+
+
     return sorted;
-  }
+}
 
 export function sortedTeams() {
     const sortedTeams = teams;
 
-    sortedTeams.sort(function (a, b) {
+    sortedTeams.sort(function(a, b) {
         if (a.name < b.name) {
             return -1
         }
@@ -3745,7 +3712,7 @@ export function sortedTeams() {
 
 export function sortedRoster(team, sortAttribute) {
     const sortedRoster = team.roster;
-    team.roster.sort(function (a, b) {
+    team.roster.sort(function(a, b) {
         if (sortAttribute === 'position') {
             if (a.position < b.position) {
                 return -1
@@ -3785,7 +3752,7 @@ export function leaugeLeaders() {
     }
 
     for (let i = 0; i < teams.length; i++) {
-        teams[i].roster.sort(function (a, b) {
+        teams[i].roster.sort(function(a, b) {
             if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists)
                 return -1;
             if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists)
@@ -3795,12 +3762,12 @@ export function leaugeLeaders() {
         for (let j = 0; j < 5; j++) {
             leaugeLeaders.roster.push(teams[i].roster[j]);
         }
-        for(let j=0; j<teams[i].goalies.length; j++){
+        for (let j = 0; j < teams[i].goalies.length; j++) {
             leaugeLeaders.roster.push(teams[i].goalies[j]);
         }
     }
 
-    leaugeLeaders.roster.sort(function (a, b) {
+    leaugeLeaders.roster.sort(function(a, b) {
         if (a.seasonGoals + a.seasonAssists > b.seasonGoals + b.seasonAssists)
             return -1;
         if (a.seasonGoals + a.seasonAssists < b.seasonGoals + b.seasonAssists)
@@ -3861,7 +3828,7 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
         setTeamSalaries();
 
 
-        team1.draftPicks.sort(function (a, b) {
+        team1.draftPicks.sort(function(a, b) {
             if (a.projectedPick > b.projectedPick) {
                 return 1;
             }
@@ -3870,7 +3837,7 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
             } else { return 0; }
         });
 
-        team1.draftPicks.sort(function (a, b) {
+        team1.draftPicks.sort(function(a, b) {
             if (a.round > b.round) {
                 return 1;
             }
@@ -3879,7 +3846,7 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
             } else { return 0; }
         });
 
-        team2.draftPicks.sort(function (a, b) {
+        team2.draftPicks.sort(function(a, b) {
             if (a.projectedPick > b.projectedPick) {
                 return 1;
             }
@@ -3888,7 +3855,7 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
             } else { return 0; }
         });
 
-        team2.draftPicks.sort(function (a, b) {
+        team2.draftPicks.sort(function(a, b) {
             if (a.round > b.round) {
                 return 1;
             }
@@ -3898,8 +3865,7 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
         });
 
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -3917,8 +3883,7 @@ export function signPlayer(team, player, years, salary, playerpool) {
     team.salary += player.salary;
     try {
         team.reorderLineup();
-    }
-    catch (err) {
+    } catch (err) {
         console.log('Error Reordering Lineup, Most likely during offseason when teams are not at full rosters');
     }
 
@@ -3932,8 +3897,7 @@ function setSalaryExpectations(rosterpool) {
                 rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 15000000, 65, 99));
                 //VARIATION
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
-            }
-            else {
+            } else {
                 rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 300000, VETERANSMINIMUM, 40, 64));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
 
@@ -3944,8 +3908,7 @@ function setSalaryExpectations(rosterpool) {
                 rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, VETERANSMINIMUM, 15000000, 74, 99));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
 
-            }
-            else {
+            } else {
                 rosterpool.roster[i].salary = Math.round(scaleBetween(rosterpool.roster[i].rating, 300000, VETERANSMINIMUM, 40, 74));
                 rosterpool.roster[i].salary -= Math.round(Math.random() * 100000);
             }
@@ -3977,7 +3940,7 @@ export function calculateCapRoom(team) {
 
 export function displaySalary(salary, player) {
     let sal = Math.round(salary);
-    if(salary<=VETERANSMINIMUM && player=== true){
+    if (salary <= VETERANSMINIMUM && player === true) {
         return 'Minimum';
     }
     return sal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -3989,25 +3952,28 @@ function tradeValueCalculation(ply) {
     if (ply.isPick === true) {
         isPick = true;
         // console.log(ply.projectedPick);
-        if(inDraft){
+        if (inDraft) {
             //FIXED 10-6-19
             if (ply.round > 1) {
-                let index = ply.projectedPick + (teams.length * (ply.round-1)) - 1 - franchise.currentDraft.drafted.roster.length;
+                let index = ply.projectedPick + (teams.length * (ply.round - 1)) - 1 - franchise.currentDraft.drafted.roster.length;
                 // console.log(`index ${index} proj${ply.projectedPick} round${ply.round} len${franchise.currentDraft.drafted.roster.length}`);
                 ply = draftClass.roster[index];
             } else {
                 let index = ply.projectedPick - 1 - franchise.currentDraft.drafted.roster.length;
                 ply = draftClass.roster[index];
             }
-          }else{
+        } else {
+
+            draftClass.reorderLineup();
+
             if (ply.round > 1) {
-                let index = ply.projectedPick + (teams.length * (ply.round-1)) - 1
+                let index = ply.projectedPick + (teams.length * (ply.round - 1)) - 1
                 ply = draftClass.roster[index];
                 // console.log(`index ${index} proj${ply.projectedPick} round${ply.round}`);
             } else {
-              ply = draftClass.roster[ply.projectedPick - 1];
+                ply = draftClass.roster[ply.projectedPick - 1];
             }
-          }
+        }
     }
 
 
@@ -4093,6 +4059,97 @@ function interest(t1Offers, t2Offers, forced) {
 
 
 
+export function getTradeFinderOffers(offer) {
+
+    let offerValue = 0;
+    let offers = [];
+    for (let i = 0; i < offer.length; i++) {
+        if (offer[i].isPick === true) {
+            getDraftPickProjectedPick(offer[i]);
+        }
+        offerValue += tradeValueCalculation(offer[i]);
+    }
+
+
+
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i] != selectedTeam) {
+            let offer = { team: teams[i], players: [] }
+            let otherTeamOfferValue = 0;
+
+            //pick first vs player first
+            if (Math.random() * 100 > 40) {
+                for (let j = 0; j < teams[i].roster.length; j++) {
+                    let ply = teams[i].roster[j];
+                    let playerValue = tradeValueCalculation(ply);
+                    if (playerValue + otherTeamOfferValue + ((playerValue + otherTeamOfferValue) * tradeThreshold) < offerValue) {
+                        offer.players.push(ply);
+                        otherTeamOfferValue += playerValue;
+                    }
+                    if (offer.players.length > 2) {
+                        break;
+                    }
+
+                }
+
+                for (let j = 0; j < teams[i].draftPicks.length; j++) {
+                    let ply = teams[i].draftPicks[j];
+                    getDraftPickProjectedPick(ply);
+                    let playerValue = tradeValueCalculation(ply);
+                    if (playerValue + otherTeamOfferValue + ((playerValue + otherTeamOfferValue) * tradeThreshold) < offerValue) {
+                        offer.players.push(ply);
+                        otherTeamOfferValue += playerValue;
+                        break;
+                    }
+                    if (offer.players.length > 2) {
+                        break;
+                    }
+                }
+            } else {
+                for (let j = 0; j < teams[i].draftPicks.length; j++) {
+                    let ply = teams[i].draftPicks[j];
+                    getDraftPickProjectedPick(ply);
+                    let playerValue = tradeValueCalculation(ply);
+                    if (playerValue + otherTeamOfferValue + ((playerValue + otherTeamOfferValue) * tradeThreshold) < offerValue) {
+                        offer.players.push(ply);
+                        otherTeamOfferValue += playerValue;
+                        break;
+                    }
+                    if (offer.players.length > 2) {
+                        break;
+                    }
+                }
+                for (let j = 0; j < teams[i].roster.length; j++) {
+                    let ply = teams[i].roster[j];
+                    let playerValue = tradeValueCalculation(ply);
+                    if (playerValue + otherTeamOfferValue + ((playerValue + otherTeamOfferValue) * tradeThreshold) < offerValue) {
+                        offer.players.push(ply);
+                        otherTeamOfferValue += playerValue;
+                    }
+                    if (offer.players.length > 2) {
+                        break;
+                    }
+
+                }
+
+
+
+            }
+
+
+
+
+
+            if (offer.players.length > 0) {
+                offers.push(offer);
+            }
+        }
+    }
+
+    return offers;
+}
+
+
 
 
 class Series {
@@ -4124,8 +4181,7 @@ class Series {
             if (game.homescore > game.awayscore) {
                 this.team1Wins++;
             } else {
-                if (game.homescore === game.awayscore) {
-                }
+                if (game.homescore === game.awayscore) {}
                 this.team2Wins++;
             }
             if (this.team1Wins >= seriesWinCount) {
@@ -4317,12 +4373,12 @@ export function saveData(slot) {
         collegeMode: collegeMode,
         difficulty: difficulty,
         tradeThreshold: tradeThreshold,
-        offenseSlider : offenseSlider,
-        defenseSlider : defenseSlider,
+        offenseSlider: offenseSlider,
+        defenseSlider: defenseSlider,
         passSkillFactorSlider: passSkillFactorSlider,
-        shotSkillFactorSlider : shotSkillFactorSlider,
-        goalieAdjustmentSlider : goalieAdjustmentSlider,
-        trainingPointsAvailable : trainingPointsAvailable,
+        shotSkillFactorSlider: shotSkillFactorSlider,
+        goalieAdjustmentSlider: goalieAdjustmentSlider,
+        trainingPointsAvailable: trainingPointsAvailable,
         playerSigningDifficulty: playerSigningDifficulty
 
     }
@@ -4346,7 +4402,7 @@ export function saveData(slot) {
 }
 
 
-saveToFileSystem = async (data, saveName, type) => {
+saveToFileSystem = async(data, saveName, type) => {
     let name = "saves/" + saveName + '.' + type;
     if (saveName.includes('.')) {
         name = "saves/" + saveName;
@@ -4362,7 +4418,7 @@ saveToFileSystem = async (data, saveName, type) => {
 };
 
 
-export const loadFromFileSystem = async (fileName, _callback) => {
+export const loadFromFileSystem = async(fileName, _callback) => {
     const file = fileName;
     if (file.includes('.draftclass')) {
         const load = FileSystem.readAsStringAsync(FileSystem.documentDirectory + "saves/" + file).then((value) => {
@@ -4405,9 +4461,9 @@ export const loadData = (data) => {
         for (let i = 0; i < loadedData.teams.length; i++) {
             teams.push(new Team(loadedData.teams[i]));
             teams[i].roster = [];
-            if(loadedData.teams[i].coach != null){
+            if (loadedData.teams[i].coach != null) {
                 teams[i].coach = Object.assign(new Coach, loadedData.teams[i].coach);
-              }
+            }
             for (let j = 0; j < loadedData.teams[i].roster.length; j++) {
                 ply = new Player(loadedData.teams[i].roster[j]);
                 ply.calculateRating();
@@ -4461,7 +4517,7 @@ export const loadData = (data) => {
 
         }
 
-        if(loadedData.newSliders != null){
+        if (loadedData.newSliders != null) {
             sliders.loadSliders(loadedData.newSliders);
         }
 
@@ -4484,8 +4540,7 @@ export const loadData = (data) => {
 
 
 
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
     }
 }
@@ -4496,7 +4551,8 @@ export function createTeam(name, rating, logoSrc, conferenceId) {
     let team = new Team({
         name: name,
         rating: rating,
-        logoSrc, logoSrc,
+        logoSrc,
+        logoSrc,
         id: id,
         wins: 0,
         losses: 0,
@@ -4525,7 +4581,8 @@ export function createPlayer(name, number, position, age, salary, faceSrc, heigh
     let player = new Player({
         name: name,
         number: number,
-        position, position,
+        position,
+        position,
         age: age,
         height: height,
         salary: salary,
@@ -4534,7 +4591,7 @@ export function createPlayer(name, number, position, age, salary, faceSrc, heigh
         pass: 75,
         faceOff: 75,
         positioning: 75,
-        reflexes:75,
+        reflexes: 75,
         rating: 75,
         faceSrc: faceSrc
     })
@@ -4572,32 +4629,25 @@ function setCustomPlayoffSeeds() {
                 return 16;
             } else if (conferences[0].teams.length >= 8) {
                 return 8;
-            }
-            else if (conferences[0].teams.length >= 4) {
+            } else if (conferences[0].teams.length >= 4) {
                 return 4;
-            }
-            else if (conferences[0].teams.length >= 2) {
+            } else if (conferences[0].teams.length >= 2) {
                 return 2;
-            }
-            else if (conferences[0].teams.length >= 1) {
+            } else if (conferences[0].teams.length >= 1) {
                 return 1;
             }
-        }
-        else if (conferences[0].teams.length <= conferences[1].teams.length) {
+        } else if (conferences[0].teams.length <= conferences[1].teams.length) {
             if (conferences[1].teams.length >= 32) {
                 return 32;
             } else if (conferences[1].teams.length >= 16) {
                 return 16;
             } else if (conferences[1].teams.length >= 8) {
                 return 8;
-            }
-            else if (conferences[1].teams.length >= 4) {
+            } else if (conferences[1].teams.length >= 4) {
                 return 4;
-            }
-            else if (conferences[1].teams.length >= 2) {
+            } else if (conferences[1].teams.length >= 2) {
                 return 2;
-            }
-            else if (conferences[1].teams.length >= 1) {
+            } else if (conferences[1].teams.length >= 1) {
                 return 1;
             }
         }
@@ -4608,14 +4658,11 @@ function setCustomPlayoffSeeds() {
             return 16;
         } else if (teams.length >= 8) {
             return 8;
-        }
-        else if (teams.length >= 4) {
+        } else if (teams.length >= 4) {
             return 4;
-        }
-        else if (teams.length >= 2) {
+        } else if (teams.length >= 2) {
             return 2;
-        }
-        else if (teams.length >= 1) {
+        } else if (teams.length >= 1) {
             return 1;
         }
     }
@@ -4705,13 +4752,11 @@ export async function getDataFromLink(link, type, sliderType, _callback) {
             }
             _callback();
 
-        }
-        else if (type === 'team') {
+        } else if (type === 'team') {
             importTeamJson(responseJson);
             _callback();
 
-        }
-        else if (type === 'draftclass') {
+        } else if (type === 'draftclass') {
             importDraftClassJson(responseJson);
             _callback();
 
@@ -4797,8 +4842,7 @@ export function loadRosterJson(loadedDataIn) {
 
         //     }
         // }
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
         console.log("Error Loading JSON");
     }
@@ -4811,7 +4855,7 @@ export function loadRosterJson(loadedDataIn) {
 export function teamStats() {
     let statsArr = teams;
 
-    statsArr.sort(function (a, b) {
+    statsArr.sort(function(a, b) {
         if (a.seasonPoints > b.seasonPoints) {
             return -1;
         }
@@ -4966,8 +5010,7 @@ export function releasePlayer(player) {
                 player.teamName = availableFreeAgents.name;
                 try {
                     teams[i].reorderLineup();
-                }
-                catch (err) {
+                } catch (err) {
                     console.log('Error Reordering Lineup, Most likely during offseason when teams are not at full rosters');
                 }
                 setTeamSalaries();
@@ -4980,7 +5023,7 @@ export function releasePlayer(player) {
 }
 
 function sortTeamsByRating() {
-    teams.sort(function (a, b) {
+    teams.sort(function(a, b) {
         if (a.rating > b.rating)
             return -1;
         if (a.rating < b.rating)
@@ -5030,30 +5073,30 @@ export function offerContract(team, ply, years, salary, playerpool, isForced) {
 export function getPlayerSigningInterest(team, ply, years) {
 
 
-    let playForWinner = scaleBetween(ply.age, 0.1, -0.25, 19,40 );
-    let playForLoser = scaleBetween(ply.age, 0.3,0.4,19,40);
-  
-    let manyYears = scaleBetween(ply.age, 0.15,0.05,19,40);
-    let fewYears = scaleBetween(ply.age, -0.4,-0.1,19,40);
-  
-  
-    let salaryAddition = scaleBetween(team.powerRanking, ply.salary*playForWinner , ply.salary * playForLoser, 1, teams.length);
-  
-    let yearFactor = scaleBetween(years, ply.salary * fewYears, ply.salary * manyYears, 1,6);
-    
-    let coachSigningInterest = scaleBetween(team.coach.signingInterest, -2,2,99,40);
-  
-    let salaryRequested = Math.floor((ply.salary + salaryAddition - yearFactor)*((playerSigningDifficulty + coachSigningInterest)/100));
-  
-  
-    if(ply.salary<= VETERANSMINIMUM){
+    let playForWinner = scaleBetween(ply.age, 0.1, -0.25, 19, 40);
+    let playForLoser = scaleBetween(ply.age, 0.3, 0.4, 19, 40);
+
+    let manyYears = scaleBetween(ply.age, 0.15, 0.05, 19, 40);
+    let fewYears = scaleBetween(ply.age, -0.4, -0.1, 19, 40);
+
+
+    let salaryAddition = scaleBetween(team.powerRanking, ply.salary * playForWinner, ply.salary * playForLoser, 1, teams.length);
+
+    let yearFactor = scaleBetween(years, ply.salary * fewYears, ply.salary * manyYears, 1, 6);
+
+    let coachSigningInterest = scaleBetween(team.coach.signingInterest, -2, 2, 99, 40);
+
+    let salaryRequested = Math.floor((ply.salary + salaryAddition - yearFactor) * ((playerSigningDifficulty + coachSigningInterest) / 100));
+
+
+    if (ply.salary <= VETERANSMINIMUM) {
         return VETERANSMINIMUM;
     }
-  
+
     // console.log(`SAL: ${ply.salary} TMSD ${team.powerRanking}, SALADD ${salaryAddition}, yearfactor ${yearFactor} ageyr ${ageYrFactor} FIN ${salaryRequested}`);
-    
+
     return salaryRequested;
-  }
+}
 
 export function setPowerRankings() {
 
@@ -5061,7 +5104,7 @@ export function setPowerRankings() {
     let powerranks = [...teams];
 
     if (powerranks[0].wins + powerranks[0].losses < (gamesPerSeason * 0.25)) {
-        powerranks.sort(function (a, b) {
+        powerranks.sort(function(a, b) {
             if (a.rating < b.rating) {
                 return 1;
             }
@@ -5080,7 +5123,7 @@ export function setPowerRankings() {
 
     }
 
-    powerranks.sort(function (a, b) {
+    powerranks.sort(function(a, b) {
         if (a.wins < b.wins) {
             return 1;
         }
@@ -5164,31 +5207,31 @@ export function manageSaveName(value) {
 
 export function returnStatsView(player) {
     let str;
-    if(player.position<4){
+    if (player.position < 4) {
         str = "GOALS: " + player.seasonGoals + "\nSHOTS: " + player.seasonShots + "\nASSISTS: " + player.seasonAssists;
-    }else{
+    } else {
         str = "STARTS: " + player.gamesStarted + "\nSAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10 + "\nGAA: " + Math.round((player.seasonGoalsAllowed / (player.gamesStarted)) * 100) / 100;
     }
     return str;
 }
 export function returnSeasonStatsListView(player) {
     let str;
-    if(player.position<4){
+    if (player.position < 4) {
         str = "GOALS: " + player.seasonGoals + " SHOTS: " + player.seasonShots + " ASSISTS: " + player.seasonAssists;
-    }else{
-        str = "STARTS: " + player.gamesStarted + " SAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10+ " GAA: " + Math.round((player.seasonGoalsAllowed / (player.gamesStarted)) * 100) / 100;
+    } else {
+        str = "STARTS: " + player.gamesStarted + " SAVE%: " + Math.round((player.seasonSaves / (player.seasonSaves + player.seasonGoalsAllowed)) * 1000) / 10 + " GAA: " + Math.round((player.seasonGoalsAllowed / (player.gamesStarted)) * 100) / 100;
     }
     return str;
 }
 
 export function returnStatsListView(player) {
     let str;
-    if(player.position<4){
-    str = "GOALS: " + player.goals + " SHOTS: " + player.shots + " ASSISTS: " + player.assists;
-    }else{
-    str = "SAVE%: " + Math.round((player.saves / (player.saves + player.goalsAllowed)) * 1000) / 10;
+    if (player.position < 4) {
+        str = "GOALS: " + player.goals + " SHOTS: " + player.shots + " ASSISTS: " + player.assists;
+    } else {
+        str = "SAVE%: " + Math.round((player.saves / (player.saves + player.goalsAllowed)) * 1000) / 10;
     }
-    
+
     return str;
 }
 
@@ -5252,12 +5295,12 @@ export function saveFranchise(slot) {
         collegeMode: collegeMode,
         difficulty: difficulty,
         tradeThreshold: tradeThreshold,
-        offenseSlider : offenseSlider,
-        defenseSlider : defenseSlider,
+        offenseSlider: offenseSlider,
+        defenseSlider: defenseSlider,
         passSkillFactorSlider: passSkillFactorSlider,
-        shotSkillFactorSlider : shotSkillFactorSlider,
-        goalieAdjustmentSlider : goalieAdjustmentSlider,
-        trainingPointsAvailable : trainingPointsAvailable,
+        shotSkillFactorSlider: shotSkillFactorSlider,
+        goalieAdjustmentSlider: goalieAdjustmentSlider,
+        trainingPointsAvailable: trainingPointsAvailable,
         playerSigningDifficulty: playerSigningDifficulty
 
     }
@@ -5311,11 +5354,11 @@ export const loadFranchise = (data) => {
             teams[i].history = loadedData.teams[i].history;
             teams[i].roster = [];
             teams[i].seed = loadedData.teams[i].seed;
-                //coach 
-      if(loadedData.teams[i].coach != null){
-        teams[i].coach = Object.assign(new Coach, loadedData.teams[i].coach);
-        teams[i].coachingBudget = loadedData.teams[i].coachingBudget;
-      }
+            //coach 
+            if (loadedData.teams[i].coach != null) {
+                teams[i].coach = Object.assign(new Coach, loadedData.teams[i].coach);
+                teams[i].coachingBudget = loadedData.teams[i].coachingBudget;
+            }
             //stats
             teams[i].seasonPoints = loadedData.teams[i].seasonPoints;
             teams[i].seasonPointsAllowed = loadedData.teams[i].seasonPointsAllowed;
@@ -5368,10 +5411,10 @@ export const loadFranchise = (data) => {
         //     teams.push(new Team(rosterData[i]));
         // }
 
-    //coach
-    if(loadedData.availableCoaches !=null){
-        loadAvailableCoaches(loadedData.availableCoaches);
-      }
+        //coach
+        if (loadedData.availableCoaches != null) {
+            loadAvailableCoaches(loadedData.availableCoaches);
+        }
 
         availableFreeAgents.roster = [];
         for (let i = 0; i < loadedData.freeAgents.roster.length; i++) {
@@ -5380,7 +5423,7 @@ export const loadFranchise = (data) => {
             availableFreeAgents.roster[i].teamLogoSrc = availableFreeAgents.logoSrc;
             availableFreeAgents.roster[i].teamName = availableFreeAgents.name;
             //fixed glitch from football
-            for (let j = 0; j < loadedData.day; j++){
+            for (let j = 0; j < loadedData.day; j++) {
                 availableFreeAgents.roster[i].statsHistory.push({
                     goals: 0,
                     saves: 0,
@@ -5398,13 +5441,13 @@ export const loadFranchise = (data) => {
 
         //this resets franchise
         if (loadedData.sliders != null) {
-                setSliders(loadedData.sliders.defenseSlider, loadedData.sliders.offenseSlider, loadedData.sliders.passSkillFactorSlider, loadedData.sliders.shotSkillFactorSlider, loadedData.sliders.goalieAdjustmentSlider, loadedData.sliders.difficulty, loadedData.sliders.tradeThreshold, loadedData.sliders.trainingPointsAvailable, loadedData.sliders.playerSigningDifficulty);
-                setFranchiseSliders(loadedData.sliders.gamesPerSeason, loadedData.sliders.playoffSeeds, loadedData.sliders.seriesWinCount, loadedData.sliders.conferencesOn, loadedData.sliders.collegeMode, true);
+            setSliders(loadedData.sliders.defenseSlider, loadedData.sliders.offenseSlider, loadedData.sliders.passSkillFactorSlider, loadedData.sliders.shotSkillFactorSlider, loadedData.sliders.goalieAdjustmentSlider, loadedData.sliders.difficulty, loadedData.sliders.tradeThreshold, loadedData.sliders.trainingPointsAvailable, loadedData.sliders.playerSigningDifficulty);
+            setFranchiseSliders(loadedData.sliders.gamesPerSeason, loadedData.sliders.playoffSeeds, loadedData.sliders.seriesWinCount, loadedData.sliders.conferencesOn, loadedData.sliders.collegeMode, true);
         }
 
 
 
-        if(loadedData.newSliders != null){
+        if (loadedData.newSliders != null) {
             sliders.loadSliders(loadedData.newSliders);
         }
 
@@ -5443,8 +5486,8 @@ export const loadFranchise = (data) => {
 
         //franchhise filec
         franchise.season.day = loadedData.day;
-         //set the games to team scchedule length
-    franchise.season.games = teams[0].schedule.length;
+        //set the games to team scchedule length
+        franchise.season.games = teams[0].schedule.length;
         franchise.pastChampions = loadedData.pastChampions;
         franchise.season.endOfSeason = false;
         franchise.offSeason = false;
@@ -5482,7 +5525,7 @@ export const loadFranchise = (data) => {
 
 
 
-    }catch (err) {
+    } catch (err) {
         console.log(err);
     }
 }
@@ -5514,381 +5557,373 @@ export function generateProspects(team, rating) {
     let def = 0;
     let gs = 0;
     let ply;
-    for (let i = 0; i < rosterSize*3; i++) {
-      let playerRating = rating - (Math.round(Math.random()*10));
-      //10% elite players
-      if(Math.random()*100 <= 10){
-        playerRating += Math.round(Math.random()*20)+2;
-      }
-  
-      //block over 87
-      if(playerRating>=88){
-        playerRating = 88;
-      }
-  
-      //block 60 and under
-      if(playerRating<=61){
-        playerRating = Math.round(Math.random()*4)+61;
-      }
-      
-      if (cs < POS_C_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_C, playerRating);
-        cs++;
-      } else if (lws < POS_LW_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_LW, playerRating);
-        lws++;
-      } else if (rws < POS_RW_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_RW, playerRating);
-  
-        rws++;
-      }
-      else if (def < POS_D_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_D, playerRating);
-        def++;
-      }
-      else if (gs < POS_G_REQUIREMENTS*3) {
-        ply = generatePlayer(POS_G, playerRating);
-        gs++;
-      }else{
-        let chosenPosition = Math.floor(Math.random()*(POS_G+1));
-        ply = generatePlayer(chosenPosition, playerRating);
-      }
-  
-    //slight boost with extra random 20%
-    let interest = Math.round(Math.random() * 100) + Math.round(Math.random() * 20);
-
-    //makes it harder to land top tier players
-    //changed from 25 to 15 , 25 was a little to hard imo
-    let interestMod = scaleBetween(ply.rating, 0, 15, 74, 88);
-    // console.log(ply.rating + ' -' + Math.round(interestMod));
-    interest -= Math.round(interestMod);
-    if (interest >= 100) {
-      interest = 99;
-    }
-    if(interest <= 10){
-      interest = Math.round(Math.random()*10) + 5;
-    }
-    
-    ply.interest = interest;
-    team.interestedProspects.roster.push(ply);
-    }
-
-  
+    for (let i = 0; i < rosterSize * 3; i++) {
+        let playerRating = rating - (Math.round(Math.random() * 10));
+        //10% elite players
+        if (Math.random() * 100 <= 10) {
+            playerRating += Math.round(Math.random() * 20) + 2;
         }
 
-        function generatePlayer(pos, rating){
-            let name =
-              draftData[Math.floor(Math.random() * draftData.length)].firstname +
-              " " +
-              draftData[Math.floor(Math.random() * draftData.length)].lastname;
-            let faceSrc = draftData[0].faceSrc;
-            let age = 18;
-            let playerComparison = Math.floor(Math.random() * draftData.length);
-          
-            while(draftData[playerComparison].position != pos){
-              playerComparison = Math.floor(Math.random() * draftData.length);
-            }
-            let number = draftData[playerComparison].number;
-            let position = draftData[playerComparison].position;
-            let height = draftData[playerComparison].height;
-    
-            //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
-            let years = Math.floor(Math.random() * 3) + 1;
-            let salary = 2400000;
-            let off = (draftData[playerComparison].off - 15) + Math.floor(Math.random() * 5);
-            let def = (draftData[playerComparison].def - 15) + Math.floor(Math.random() * 5);
-            let positioning = (draftData[playerComparison].positioning - 15) + Math.floor(Math.random() * 5);
-            let reflexes = (draftData[playerComparison].reflexes - 15) + Math.floor(Math.random() * 5);
-            let pass = (draftData[playerComparison].pass - 15) + Math.floor(Math.random() * 5);
-            let faceOff = (draftData[playerComparison].faceOff - 15) + Math.floor(Math.random() * 5);
-          
-            //RATING FORMULA
-            let ply = new Player({
-                name: name,
-                faceSrc: faceSrc,
-                number: number,
-                age: age,
-                position: position,
-                height: height,
-                off: off,
-                def: def,
-                reflexes: reflexes,
-                positioning: positioning,
-                pass: pass,
-                faceOff: faceOff,
-                years: years,
-                salary: salary,
-            });
-            ply.calculateRating();
-          
-            while(ply.rating > rating){
-              if(ply.rating <= rating){
-                break;
-              }
-              if(ply.position === POS_G){
-                ply.reflexes --;
-                ply.positioning --;
-              }else{
-                ply.off--;
-                ply.def --;
-                ply.pass --;
-                ply.faceOff --;
-              }
-              ply.calculateRating();
-            }
-          
-            while(ply.rating < rating){
-                if(ply.rating >= rating){
-                  break;
-                }
-                if(ply.position === POS_G){
-                  ply.reflexes ++;
-                  ply.positioning ++;
-                }else{
-                  ply.off++;
-                  ply.def ++;
-                  ply.pass ++;
-                  ply.faceOff ++;
-                }
-                ply.calculateRating();
-              }
+        //block over 87
+        if (playerRating >= 88) {
+            playerRating = 88;
+        }
 
-              return ply;
+        //block 60 and under
+        if (playerRating <= 61) {
+            playerRating = Math.round(Math.random() * 4) + 61;
+        }
+
+        if (cs < POS_C_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_C, playerRating);
+            cs++;
+        } else if (lws < POS_LW_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_LW, playerRating);
+            lws++;
+        } else if (rws < POS_RW_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_RW, playerRating);
+
+            rws++;
+        } else if (def < POS_D_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_D, playerRating);
+            def++;
+        } else if (gs < POS_G_REQUIREMENTS * 3) {
+            ply = generatePlayer(POS_G, playerRating);
+            gs++;
+        } else {
+            let chosenPosition = Math.floor(Math.random() * (POS_G + 1));
+            ply = generatePlayer(chosenPosition, playerRating);
+        }
+
+        //slight boost with extra random 20%
+        let interest = Math.round(Math.random() * 100) + Math.round(Math.random() * 20);
+
+        //makes it harder to land top tier players
+        //changed from 25 to 15 , 25 was a little to hard imo
+        let interestMod = scaleBetween(ply.rating, 0, 15, 74, 88);
+        // console.log(ply.rating + ' -' + Math.round(interestMod));
+        interest -= Math.round(interestMod);
+        if (interest >= 100) {
+            interest = 99;
+        }
+        if (interest <= 10) {
+            interest = Math.round(Math.random() * 10) + 5;
+        }
+
+        ply.interest = interest;
+        team.interestedProspects.roster.push(ply);
+    }
+
+
+}
+
+function generatePlayer(pos, rating) {
+    let name =
+        draftData[Math.floor(Math.random() * draftData.length)].firstname +
+        " " +
+        draftData[Math.floor(Math.random() * draftData.length)].lastname;
+    let faceSrc = draftData[0].faceSrc;
+    let age = 18;
+    let playerComparison = Math.floor(Math.random() * draftData.length);
+
+    while (draftData[playerComparison].position != pos) {
+        playerComparison = Math.floor(Math.random() * draftData.length);
+    }
+    let number = draftData[playerComparison].number;
+    let position = draftData[playerComparison].position;
+    let height = draftData[playerComparison].height;
+
+    //2 years the plus one is because the contract years go down AFTER the draft not before but contract years should be 2 for rookies
+    let years = Math.floor(Math.random() * 3) + 1;
+    let salary = 2400000;
+    let off = (draftData[playerComparison].off - 15) + Math.floor(Math.random() * 5);
+    let def = (draftData[playerComparison].def - 15) + Math.floor(Math.random() * 5);
+    let positioning = (draftData[playerComparison].positioning - 15) + Math.floor(Math.random() * 5);
+    let reflexes = (draftData[playerComparison].reflexes - 15) + Math.floor(Math.random() * 5);
+    let pass = (draftData[playerComparison].pass - 15) + Math.floor(Math.random() * 5);
+    let faceOff = (draftData[playerComparison].faceOff - 15) + Math.floor(Math.random() * 5);
+
+    //RATING FORMULA
+    let ply = new Player({
+        name: name,
+        faceSrc: faceSrc,
+        number: number,
+        age: age,
+        position: position,
+        height: height,
+        off: off,
+        def: def,
+        reflexes: reflexes,
+        positioning: positioning,
+        pass: pass,
+        faceOff: faceOff,
+        years: years,
+        salary: salary,
+    });
+    ply.calculateRating();
+
+    while (ply.rating > rating) {
+        if (ply.rating <= rating) {
+            break;
+        }
+        if (ply.position === POS_G) {
+            ply.reflexes--;
+            ply.positioning--;
+        } else {
+            ply.off--;
+            ply.def--;
+            ply.pass--;
+            ply.faceOff--;
+        }
+        ply.calculateRating();
+    }
+
+    while (ply.rating < rating) {
+        if (ply.rating >= rating) {
+            break;
+        }
+        if (ply.position === POS_G) {
+            ply.reflexes++;
+            ply.positioning++;
+        } else {
+            ply.off++;
+            ply.def++;
+            ply.pass++;
+            ply.faceOff++;
+        }
+        ply.calculateRating();
+    }
+
+    return ply;
+}
+
+function selectRecruitedTeam(ply) {
+    if (ply.signed) {
+        return;
+    }
+    let selection = Math.floor(Math.random() * teams.length);
+    let otherTeam = teams[selection];
+    while (otherTeam === selectedTeam) {
+        selection = Math.floor(Math.random() * teams.length);
+        otherTeam = teams[selection];
+    }
+    otherTeam.roster.push(ply);
+    ply.teamLogoSrc = otherTeam.logoSrc;
+    ply.teamName = otherTeam.name;
+    // otherTeam.reorderLineup();
+}
+
+export function checkRequirementsWithoutPlayer(ply, team) {
+
+    let cs = 0;
+    let lws = 0;
+    let rws = 0;
+    let ds = 0;
+    let gs = 0;
+    for (let i = 0; i < team.roster.length; i++) {
+        let ply = team.roster[i];
+        if (!ply.redshirted) {
+            if (ply.position === POS_C) {
+                cs++;
             }
-
-            function selectRecruitedTeam(ply) {
-                if (ply.signed) {
-                    return;
-                }
-                let selection = Math.floor(Math.random() * teams.length);
-                let otherTeam = teams[selection];
-                while (otherTeam === selectedTeam) {
-                    selection = Math.floor(Math.random() * teams.length);
-                    otherTeam = teams[selection];
-                }
-                otherTeam.roster.push(ply);
-                ply.teamLogoSrc = otherTeam.logoSrc;
-                ply.teamName = otherTeam.name;
-                // otherTeam.reorderLineup();
+            if (ply.position === POS_LW) {
+                lws++;
             }
-
-            export function checkRequirementsWithoutPlayer(ply, team) {
-
-                let cs = 0;
-                let lws = 0;
-                let rws = 0;
-                let ds = 0;
-                let gs = 0;
-                for (let i = 0; i < team.roster.length; i++) {
-                    let ply = team.roster[i];
-                    if(!ply.redshirted){
-                    if (ply.position === POS_C) {
-                        cs++;
-                    }
-                    if (ply.position === POS_LW) {
-                        lws++;
-                    }
-                    if (ply.position === POS_RW) {
-                        rws++;
-                    }
-                    if (ply.position === POS_D) {
-                        ds++;
-                    }
-                    if (ply.position === POS_G) {
-                        gs++;
-                    }
-                }
-            
-                }
-            
-                if (ply.position === POS_C) {
-                    return (cs - 1) >= POS_C_REQUIREMENTS
-                }
-                if (ply.position === POS_LW) {
-                    return (lws - 1) >= POS_LW_REQUIREMENTS
-                }
-                if (ply.position === POS_RW) {
-                    return (rws - 1) >= POS_RW_REQUIREMENTS
-                }
-                if (ply.position === POS_D) {
-                    return (ds- 1) >= POS_D_REQUIREMENTS
-                }
-                if (ply.position === POS_G) {
-                    return (gs - 1) >= POS_G_REQUIREMENTS
-                }
-            
-                return true;
+            if (ply.position === POS_RW) {
+                rws++;
             }
+            if (ply.position === POS_D) {
+                ds++;
+            }
+            if (ply.position === POS_G) {
+                gs++;
+            }
+        }
 
-          function cpuRedshirting(){
-            for(let i=0; i<teams.length; i++){
-              if(teams[i] != selectedTeam){
-              let sortedRos = [...teams[i].roster];
-              //sort worst to best
-              sortedRos.sort(function(a,b){
-                if(a.rating>b.rating){
-                  return 1;
+    }
+
+    if (ply.position === POS_C) {
+        return (cs - 1) >= POS_C_REQUIREMENTS
+    }
+    if (ply.position === POS_LW) {
+        return (lws - 1) >= POS_LW_REQUIREMENTS
+    }
+    if (ply.position === POS_RW) {
+        return (rws - 1) >= POS_RW_REQUIREMENTS
+    }
+    if (ply.position === POS_D) {
+        return (ds - 1) >= POS_D_REQUIREMENTS
+    }
+    if (ply.position === POS_G) {
+        return (gs - 1) >= POS_G_REQUIREMENTS
+    }
+
+    return true;
+}
+
+function cpuRedshirting() {
+    for (let i = 0; i < teams.length; i++) {
+        if (teams[i] != selectedTeam) {
+            let sortedRos = [...teams[i].roster];
+            //sort worst to best
+            sortedRos.sort(function(a, b) {
+                if (a.rating > b.rating) {
+                    return 1;
                 }
-                if(a.rating<b.rating){
-                  return -1
+                if (a.rating < b.rating) {
+                    return -1
                 }
                 return 0;
-              });
-              for(let j=0; j<sortedRos.length; j++){
+            });
+            for (let j = 0; j < sortedRos.length; j++) {
                 let ply = sortedRos[j];
-                let rand = Math.random()*100;
-                if(ply.age <= 18 && checkRequirementsWithoutPlayer(ply,teams[i]) && !playerWillStart(ply, teams[i]) && rand>50){
-                  ply.redshirted = true;
-                  
-                }
-          
-              }
-              teams[i].reorderLineup();
-            }
-          }
-          }
-          
-          
-          function playerWillStart(ply, team){
-            team.reorderLineup();
-            if(team.offLine1.includes(ply)){
-                return true;
-            }
-            if(team.offLine2.includes(ply)){
-                return true;
-            }
-            if(team.offLine3.includes(ply)){
-                return true;
-            }
-            if(team.offLine4.includes(ply)){
-                return true;
-            }
-            if(team.defLine1.includes(ply)){
-                return true;
-            }
-            if(team.defLine2.includes(ply)){
-                return true;
-            }
-            if(team.defLine3.includes(ply)){
-                return true;
-            }
-            if(ply.position === POS_G){
-                return team.goalies.indexOf(ply) === 0;
-            }
-          }
+                let rand = Math.random() * 100;
+                if (ply.age <= 18 && checkRequirementsWithoutPlayer(ply, teams[i]) && !playerWillStart(ply, teams[i]) && rand > 50) {
+                    ply.redshirted = true;
 
-          export function sendRecruitOffer(ply, team) {
-            let selection = Math.random() * 100;
-            if (selection < ply.interest) {
-                team.roster.push(ply);
-                ply.teamLogoSrc = team.logoSrc;
-                ply.teamName = team.name;
-                // team.reorderLineup();
-                ply.signed = true;
-            } else {
-                selectRecruitedTeam(ply);
-                ply.signed = true;
-            }
-        
-            if (team.scholarshipsAvailable - 1 < 1) {
-                for (let i = 0; i < team.interestedProspects.roster.length; i++) {
-                    let player = team.interestedProspects.roster[i];
-                    selectRecruitedTeam(player);
-                    player.signed = true;
-        
                 }
+
             }
+            teams[i].reorderLineup();
         }
-
-        //   export let checkRequirements = (team) => {
-        //     team.manageFootballLineup();
-        //     let diff = 0;
-        //     let str = '';
-        //     if(team.qbs.length < POS_QB_REQUIREMENTS){
-        //       diff = POS_QB_REQUIREMENTS - team.qbs.length;
-        //       str += diff + " more QB's"
-        //     }
-        //     if(team.rbs.length < POS_HB_REQUIREMENTS){
-        //       diff = POS_HB_REQUIREMENTS - team.rbs.length;
-        //       str += diff + " more hb's"
-        //     }
-        //     if(team.wrs.length < POS_WR_REQUIREMENTS){
-        //       diff = POS_WR_REQUIREMENTS - team.wrs.length;
-        //       str += diff + " more wr's"
-        //     }
-        //     if(team.tes.length < POS_TE_REQUIREMENTS){
-        //       diff = POS_TE_REQUIREMENTS - team.tes.length;
-        //       str += diff + " more te's"
-        //     }
-        //     if(team.ol.length < POS_OL_REQUIREMENTS){
-        //       diff = POS_OL_REQUIREMENTS - team.ol.length;
-        //       str += diff + " more O-linemen"
-        //     }
-        //     if(team.dl.length < POS_DL_REQUIREMENTS){
-        //       diff = POS_DL_REQUIREMENTS - team.dl.length;
-        //       str += diff + " more D-linemen"
-        //     }
-        //     if(team.dbs.length < POS_DB_REQUIREMENTS){
-        //       diff = POS_DB_REQUIREMENTS - team.dbs.length;
-        //       str += diff + " more db's"
-        //     }
-        //     if(team.ks.length < POS_K_REQUIREMENTS){
-        //       diff = POS_K_REQUIREMENTS - team.ks.length;
-        //       str += diff + " more k's"
-        //     }
-        //     if(team.ps.length < POS_P_REQUIREMENTS){
-        //       diff = POS_P_REQUIREMENTS - team.ps.length;
-        //       str += diff + " more p's"
-        //     }
-          
-        //     if(str===''){
-        //       return false;
-        //     }else{
-        //       return str;
-        //     }
-        //   }
+    }
+}
 
 
+function playerWillStart(ply, team) {
+    team.reorderLineup();
+    if (team.offLine1.includes(ply)) {
+        return true;
+    }
+    if (team.offLine2.includes(ply)) {
+        return true;
+    }
+    if (team.offLine3.includes(ply)) {
+        return true;
+    }
+    if (team.offLine4.includes(ply)) {
+        return true;
+    }
+    if (team.defLine1.includes(ply)) {
+        return true;
+    }
+    if (team.defLine2.includes(ply)) {
+        return true;
+    }
+    if (team.defLine3.includes(ply)) {
+        return true;
+    }
+    if (ply.position === POS_G) {
+        return team.goalies.indexOf(ply) === 0;
+    }
+}
 
-        export function played(roster){
-            let plyed = [];
-            for(let i=0; i<roster.length; i++){
-              if(roster[i].shots > 0){
-                plyed.push(roster[i]);
-              }
-             else if(roster[i].saves > 0){
-               plyed.push(roster[i]);
-             }
-             else if(roster[i].assists > 0){
-               plyed.push(roster[i]);
-             }
-            }
-         
-         
-            plyed.sort(function(a,b){
-              if(a.position > b.position){
-                return 1;
-              }
-              if(a.position < b.position){
-               return -1;
-             }
-             return 0;
-            })
+export function sendRecruitOffer(ply, team) {
+    let selection = Math.random() * 100;
+    if (selection < ply.interest) {
+        team.roster.push(ply);
+        ply.teamLogoSrc = team.logoSrc;
+        ply.teamName = team.name;
+        // team.reorderLineup();
+        ply.signed = true;
+    } else {
+        selectRecruitedTeam(ply);
+        ply.signed = true;
+    }
+
+    if (team.scholarshipsAvailable - 1 < 1) {
+        for (let i = 0; i < team.interestedProspects.roster.length; i++) {
+            let player = team.interestedProspects.roster[i];
+            selectRecruitedTeam(player);
+            player.signed = true;
+
+        }
+    }
+}
+
+//   export let checkRequirements = (team) => {
+//     team.manageFootballLineup();
+//     let diff = 0;
+//     let str = '';
+//     if(team.qbs.length < POS_QB_REQUIREMENTS){
+//       diff = POS_QB_REQUIREMENTS - team.qbs.length;
+//       str += diff + " more QB's"
+//     }
+//     if(team.rbs.length < POS_HB_REQUIREMENTS){
+//       diff = POS_HB_REQUIREMENTS - team.rbs.length;
+//       str += diff + " more hb's"
+//     }
+//     if(team.wrs.length < POS_WR_REQUIREMENTS){
+//       diff = POS_WR_REQUIREMENTS - team.wrs.length;
+//       str += diff + " more wr's"
+//     }
+//     if(team.tes.length < POS_TE_REQUIREMENTS){
+//       diff = POS_TE_REQUIREMENTS - team.tes.length;
+//       str += diff + " more te's"
+//     }
+//     if(team.ol.length < POS_OL_REQUIREMENTS){
+//       diff = POS_OL_REQUIREMENTS - team.ol.length;
+//       str += diff + " more O-linemen"
+//     }
+//     if(team.dl.length < POS_DL_REQUIREMENTS){
+//       diff = POS_DL_REQUIREMENTS - team.dl.length;
+//       str += diff + " more D-linemen"
+//     }
+//     if(team.dbs.length < POS_DB_REQUIREMENTS){
+//       diff = POS_DB_REQUIREMENTS - team.dbs.length;
+//       str += diff + " more db's"
+//     }
+//     if(team.ks.length < POS_K_REQUIREMENTS){
+//       diff = POS_K_REQUIREMENTS - team.ks.length;
+//       str += diff + " more k's"
+//     }
+//     if(team.ps.length < POS_P_REQUIREMENTS){
+//       diff = POS_P_REQUIREMENTS - team.ps.length;
+//       str += diff + " more p's"
+//     }
+
+//     if(str===''){
+//       return false;
+//     }else{
+//       return str;
+//     }
+//   }
 
 
-            plyed.sort(function(a,b){
-                if(a.goals < b.goals){
-                  return 1;
-                }
-                if(a.goals > b.goals){
-                 return -1;
-               }
-               return 0;
-              })
-         
-            return plyed;
-          }
+
+export function played(roster) {
+    let plyed = [];
+    for (let i = 0; i < roster.length; i++) {
+        if (roster[i].shots > 0) {
+            plyed.push(roster[i]);
+        } else if (roster[i].saves > 0) {
+            plyed.push(roster[i]);
+        } else if (roster[i].assists > 0) {
+            plyed.push(roster[i]);
+        }
+    }
 
 
+    plyed.sort(function(a, b) {
+        if (a.position > b.position) {
+            return 1;
+        }
+        if (a.position < b.position) {
+            return -1;
+        }
+        return 0;
+    })
 
 
+    plyed.sort(function(a, b) {
+        if (a.goals < b.goals) {
+            return 1;
+        }
+        if (a.goals > b.goals) {
+            return -1;
+        }
+        return 0;
+    })
+
+    return plyed;
+}
