@@ -8,36 +8,49 @@ import CachedImage from '../components/CachedImage';
 import ListItem from '../components/ListItem';
 import PlayerCardModal from '../components/PlayerCardModal';
 import { LayoutProvider, DataProvider, RecyclerListView } from 'recyclerlistview';
-var {height, width} = Dimensions.get('window');
+var { height, width } = Dimensions.get('window');
 import PositionFilter from '../components/PositionFilter';
 
 
 export default class TradeMenu extends React.Component {
 
-    setPositionFilter(arr, tm){
+    componentDidMount() {
+        //for trade finder component
+        if (this.props.t1Offers != null) {
+            for (let i = 0; i < this.props.t1Offers.players.length; i++) {
+                this.addToTrade(this.props.t1Offers.players[i], this.props.t1Offers.team);
+            }
+
+            for (let i = 0; i < this.props.t2Offers.players.length; i++) {
+                this.addToTrade(this.props.t2Offers.players[i], this.props.t2Offers.team);
+            }
+        }
+    }
+
+    setPositionFilter(arr, tm) {
         const data = [];
         const empty = [];
-    
-        for(let i=0; i<arr.length; i++){
-          data.push({
-            type:'NORMAL',
-            item: arr[i]
-          })
+
+        for (let i = 0; i < arr.length; i++) {
+            data.push({
+                type: 'NORMAL',
+                item: arr[i]
+            })
         }
-    
-        if(tm === selectedTeam){
+
+        if (tm === selectedTeam) {
             this.setState({
-              list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
-              filteredList: arr
+                list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+                filteredList: arr
             });
-        }else{
+        } else {
             this.setState({
                 listT2: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
                 filteredListT2: arr
-              });
+            });
         }
-        
-      }
+
+    }
 
 
     constructor() {
@@ -48,21 +61,21 @@ export default class TradeMenu extends React.Component {
         let arrayForFilterT2 = [];
         this.setPositionFilter = this.setPositionFilter.bind(this);
 
-            arrayForFilter = selectedTeam.roster;
-            for(let i=0; i<selectedTeam.roster.length; i++){
-                data.push({
-                  type:'NORMAL',
-                  item: sortedRoster(selectedTeam,'rating')[i]
-                })
-            }
+        arrayForFilter = selectedTeam.roster;
+        for (let i = 0; i < selectedTeam.roster.length; i++) {
+            data.push({
+                type: 'NORMAL',
+                item: sortedRoster(selectedTeam, 'rating')[i]
+            })
+        }
 
-            arrayForFilterT2 = selectedTeam2.roster;
-            for(let i=0; i<selectedTeam2.roster.length; i++){
-                dataT2.push({
-                  type:'NORMAL',
-                  item: sortedRoster(selectedTeam2,'rating')[i]
-                })
-            }
+        arrayForFilterT2 = selectedTeam2.roster;
+        for (let i = 0; i < selectedTeam2.roster.length; i++) {
+            dataT2.push({
+                type: 'NORMAL',
+                item: sortedRoster(selectedTeam2, 'rating')[i]
+            })
+        }
         this.state = {
             t1Offers: [],
             t2Offers: [],
@@ -79,89 +92,89 @@ export default class TradeMenu extends React.Component {
 
         this.layoutProvider = new LayoutProvider((i) => {
             return this.state.list.getDataForIndex(i).type
-          }, (type, dim) => {
-            switch(type){
-              case 'NORMAL':
-                dim.width = width;
-                dim.height = 70;
-                break;
-              default :
-                dim.width=0;
-                dim.height=0;
-                break
+        }, (type, dim) => {
+            switch (type) {
+                case 'NORMAL':
+                    dim.width = width;
+                    dim.height = 70;
+                    break;
+                default:
+                    dim.width = 0;
+                    dim.height = 0;
+                    break
             }
-          })
+        })
 
-          this.layoutProvider2 = new LayoutProvider((i) => {
+        this.layoutProvider2 = new LayoutProvider((i) => {
             return this.state.listT2.getDataForIndex(i).type
-          }, (type, dim) => {
-            switch(type){
-              case 'NORMAL':
-                dim.width = width;
-                dim.height = 70;
-                break;
-              default :
-                dim.width=0;
-                dim.height=0;
-                break
+        }, (type, dim) => {
+            switch (type) {
+                case 'NORMAL':
+                    dim.width = width;
+                    dim.height = 70;
+                    break;
+                default:
+                    dim.width = 0;
+                    dim.height = 0;
+                    break
             }
-          })
+        })
     }
 
-    rowRenderer = (type,data) => {
+    rowRenderer = (type, data) => {
         let player = data.item;
-        if(player.isPick){
+        if (player.isPick) {
             let pick = player;
-            return(
+            return (
                 <ListItem onPress={() => { this.addToTrade(pick, selectedTeam) }}
-                title={pick.originalTeam + ' Draft Pick'}
-                subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
-                bottomDivider={true}
-                leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
-                rightTitle={this.state.t1Offers.includes(pick) ? "SELECTED" : null}
-    
-            ></ListItem>
+                    title={pick.originalTeam + ' Draft Pick'}
+                    subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
+                    bottomDivider={true}
+                    leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
+                    rightTitle={this.state.t1Offers.includes(pick) ? "SELECTED" : null}
+
+                ></ListItem>
             )
         }
-        return(
+        return (
             <ListItem onPress={() => { this.addToTrade(player, selectedTeam) }}
-            title={player.positionString + ' #' + player.number + ' ' + player.name}
-            leftAvatar={player.faceSrc} subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
-            bottomDivider={true}
-            rightSubtitle={'$' + displaySalary(player.salary)}
-            rightTitle={this.state.t1Offers.includes(player) ? "SELECTED" : null}
-            onLongPress={() => this.setModalVisible(true, player)}
+                title={player.positionString + ' #' + player.number + ' ' + player.name}
+                leftAvatar={player.faceSrc} subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
+                bottomDivider={true}
+                rightSubtitle={'$' + displaySalary(player.salary)}
+                rightTitle={this.state.t1Offers.includes(player) ? "SELECTED" : null}
+                onLongPress={() => this.setModalVisible(true, player)}
 
-        ></ListItem>
+            ></ListItem>
         );
 
     }
 
-    rowRendererT2 = (type,data) => {
+    rowRendererT2 = (type, data) => {
         let player = data.item;
-        if(player.isPick){
+        if (player.isPick) {
             let pick = player;
-            return(
+            return (
                 <ListItem onPress={() => { this.addToTrade(pick, selectedTeam2) }}
-                title={pick.originalTeam + ' Draft Pick'}
-                subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
-                bottomDivider={true}
-                leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
-                rightTitle={this.state.t2Offers.includes(pick) ? "SELECTED" : null}
-    
-            ></ListItem>
+                    title={pick.originalTeam + ' Draft Pick'}
+                    subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
+                    bottomDivider={true}
+                    leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
+                    rightTitle={this.state.t2Offers.includes(pick) ? "SELECTED" : null}
+
+                ></ListItem>
             )
         }
-        return(
+        return (
             <ListItem onPress={() => { this.addToTrade(player, selectedTeam2) }}
-            title={player.positionString + ' #' + player.number + ' ' + player.name}
-            leftAvatar={player.faceSrc} subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
-            bottomDivider={true}
-            rightSubtitle={'$' + displaySalary(player.salary)}
-            rightTitle={this.state.t2Offers.includes(player) ? "SELECTED" : null}
-            onLongPress={() => this.setModalVisible(true, player)}
+                title={player.positionString + ' #' + player.number + ' ' + player.name}
+                leftAvatar={player.faceSrc} subtitle={'Rating: ' + player.rating + ' Age: ' + player.age}
+                bottomDivider={true}
+                rightSubtitle={'$' + displaySalary(player.salary)}
+                rightTitle={this.state.t2Offers.includes(player) ? "SELECTED" : null}
+                onLongPress={() => this.setModalVisible(true, player)}
 
-        ></ListItem>
+            ></ListItem>
         );
 
     }
@@ -208,47 +221,47 @@ export default class TradeMenu extends React.Component {
 
         const data = [];
 
-        if(selectedTeam === team){
-            if(this.state.filteredList!=null){
-                for(let i=0; i<this.state.filteredList.length; i++){
+        if (selectedTeam === team) {
+            if (this.state.filteredList != null) {
+                for (let i = 0; i < this.state.filteredList.length; i++) {
                     data.push({
-                      type:'NORMAL',
-                      item: this.state.filteredList[i]
+                        type: 'NORMAL',
+                        item: this.state.filteredList[i]
                     })
                 }
-            }else{
-                for(let i=0; i<team.roster.length; i++){
+            } else {
+                for (let i = 0; i < team.roster.length; i++) {
                     data.push({
-                      type:'NORMAL',
-                      item: sortedRoster(team,'rating')[i]
+                        type: 'NORMAL',
+                        item: sortedRoster(team, 'rating')[i]
                     })
                 }
             }
-    
-                this.setState({
-                  list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
-                });
 
-        }else{
-            if(this.state.filteredListT2!=null){
-                for(let i=0; i<this.state.filteredListT2.length; i++){
+            this.setState({
+                list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+            });
+
+        } else {
+            if (this.state.filteredListT2 != null) {
+                for (let i = 0; i < this.state.filteredListT2.length; i++) {
                     data.push({
-                      type:'NORMAL',
-                      item: this.state.filteredListT2[i]
+                        type: 'NORMAL',
+                        item: this.state.filteredListT2[i]
                     })
                 }
-            }else{
-                for(let i=0; i<team.roster.length; i++){
+            } else {
+                for (let i = 0; i < team.roster.length; i++) {
                     data.push({
-                      type:'NORMAL',
-                      item: sortedRoster(team,'rating')[i]
+                        type: 'NORMAL',
+                        item: sortedRoster(team, 'rating')[i]
                     })
                 }
             }
 
             this.setState({
                 listT2: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
-              });
+            });
         }
     }
 
@@ -266,77 +279,77 @@ export default class TradeMenu extends React.Component {
                 t2PlayerAmount++;
             }
         }
-        let fws=0;
+        let fws = 0;
         let def = 0;
         let goalies = 0;
-        let t2fws=0;
+        let t2fws = 0;
         let t2def = 0;
         let t2goalies = 0;
         let t1CanTrade = false;
         let t2CanTrade = false;
 
-        for(let i=0; i<selectedTeam.roster.length; i++){
+        for (let i = 0; i < selectedTeam.roster.length; i++) {
             let ply = selectedTeam.roster[i];
-            if(ply.position < 3){
+            if (ply.position < 3) {
                 //forward
                 fws++;
-            }else if(ply.position === 3){
+            } else if (ply.position === 3) {
                 def++;
-            }else if(ply.position === 4){
+            } else if (ply.position === 4) {
                 goalies++;
             }
         }
 
-        for(let i=0; i<selectedTeam2.roster.length; i++){
+        for (let i = 0; i < selectedTeam2.roster.length; i++) {
             let ply = selectedTeam2.roster[i];
-            if(ply.position < 3){
+            if (ply.position < 3) {
                 //forward
                 t2fws++;
-            }else if(ply.position === 3){
+            } else if (ply.position === 3) {
                 t2def++;
-            }else if(ply.position === 4){
+            } else if (ply.position === 4) {
                 t2goalies++;
             }
         }
-        for(let i=0; i<this.state.t1Offers.length; i++){
+        for (let i = 0; i < this.state.t1Offers.length; i++) {
             let ply = this.state.t1Offers[i];
-            if(ply.isPick){
+            if (ply.isPick) {
                 //draft pick
             }
-            else if(ply.position < 3){
+            else if (ply.position < 3) {
                 //forward
                 fws--;
                 t2fws++;
-            }else if(ply.position === 3){
+            } else if (ply.position === 3) {
                 def--;
                 t2def++;
-            }else if(ply.position === 4){
+            } else if (ply.position === 4) {
                 goalies--;
                 t2goalies++;
             }
         }
-        for(let i=0; i<this.state.t2Offers.length; i++){
+        for (let i = 0; i < this.state.t2Offers.length; i++) {
             let ply = this.state.t2Offers[i];
-            if(ply.isPick){
+            if (ply.isPick) {
                 //draft pick
             }
-            else if(ply.position < 3){
+            else if (ply.position < 3) {
                 //forward
                 fws++;
                 t2fws--;
-            }else if(ply.position === 3){
+            } else if (ply.position === 3) {
                 def++;
                 t2def--;
-            }else if(ply.position === 4){
+            } else if (ply.position === 4) {
                 goalies++;
                 t2goalies--;
             }
         }
 
-        if(fws >= 12 && def>=6 && goalies>=2){
+        if (fws >= 12 && def >= 6 && goalies >= 2) {
             t1CanTrade = true;
         }
-        if(t2fws >= 12 && t2def>=6 && t2goalies>=2){
+        if (t2fws >= 12 && t2def >= 6 && t2goalies >= 2) {
             t2CanTrade = true;
         }
 
@@ -364,8 +377,11 @@ export default class TradeMenu extends React.Component {
                 this.props.updateScene();
             }
 
-            console.log(inDraft);
-            Actions.pop();
+            if (this.props.popTo != null) {
+                Actions.popTo(this.props.popTo);
+            } else {
+                Actions.pop();
+            }
         }
     }
 
@@ -390,7 +406,7 @@ export default class TradeMenu extends React.Component {
                             }}>
                                 <View style={{
                                     width: '95%',
-                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center', 
+                                    height: '75%', backgroundColor: 'rgba(255,255,255,1)', alignSelf: 'center',
                                 }}>
                                     <TouchableOpacity
                                         onPress={() => {
@@ -399,8 +415,8 @@ export default class TradeMenu extends React.Component {
                                         style={{ alignSelf: 'flex-end', padding: 15 }}>
                                         <Icon name="close" ></Icon>
                                     </TouchableOpacity>
-                                    <PlayerCardModal modalPlayer = {this.state.modalPlayer}></PlayerCardModal>
-                                   </View>
+                                    <PlayerCardModal modalPlayer={this.state.modalPlayer}></PlayerCardModal>
+                                </View>
                             </View>
                         </Modal>
                     ) : null
@@ -432,19 +448,19 @@ export default class TradeMenu extends React.Component {
 
                 <PositionFilter roster={this.state.arrayForFilter} setPositionFilter={this.setPositionFilter} draftPicks={selectedTeam.draftPicks} team={selectedTeam}></PositionFilter>
 
-<RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false}/>
+                <RecyclerListView style={{ flex: 1, padding: 0, margin: 0 }} rowRenderer={this.rowRenderer} dataProvider={this.state.list} layoutProvider={this.layoutProvider} forceNonDeterministicRendering={false} />
 
-<View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
-    <CachedImage
-        style={{ resizeMode: 'contain', height: 50 }}
-        uri={selectedTeam2.logoSrc} />
-    <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{selectedTeam2.name}</Text>
-    <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{'Cap Space: $' + displaySalary((this.state.t2salary - CAPROOM) * -1)}</Text>
+                <View style={{ backgroundColor: 'rgba(255,255,255,0)', borderBottomWidth: 1 }}>
+                    <CachedImage
+                        style={{ resizeMode: 'contain', height: 50 }}
+                        uri={selectedTeam2.logoSrc} />
+                    <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{selectedTeam2.name}</Text>
+                    <Text style={{ fontFamily: 'advent-pro', textAlign: 'center', fontSize: 20 }}>{'Cap Space: $' + displaySalary((this.state.t2salary - CAPROOM) * -1)}</Text>
 
-</View>
-<PositionFilter roster={this.state.arrayForFilterT2} setPositionFilter={this.setPositionFilter} draftPicks={selectedTeam2.draftPicks} team={selectedTeam2}></PositionFilter>
+                </View>
+                <PositionFilter roster={this.state.arrayForFilterT2} setPositionFilter={this.setPositionFilter} draftPicks={selectedTeam2.draftPicks} team={selectedTeam2}></PositionFilter>
 
-<RecyclerListView style={{flex:1, padding: 0, margin: 0}} rowRenderer={this.rowRendererT2} dataProvider={this.state.listT2} layoutProvider={this.layoutProvider2} forceNonDeterministicRendering={false}/>
+                <RecyclerListView style={{ flex: 1, padding: 0, margin: 0 }} rowRenderer={this.rowRendererT2} dataProvider={this.state.listT2} layoutProvider={this.layoutProvider2} forceNonDeterministicRendering={false} />
 
 
             </Background>

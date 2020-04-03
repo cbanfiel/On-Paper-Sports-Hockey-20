@@ -5,6 +5,10 @@ import Background from '../components/background';
 
 const updateLog = [
     {
+        date: '4/3/2020',
+        updates: "-Added trade finder, use this to easily find trade offers"
+    },
+    {
         date: '1/31/2020',
         updates: "-Reduced initial coach rating disparity"
     },
@@ -49,13 +53,13 @@ const updateLog = [
         updates: "-Can now import draft classes directly from franchise mode in the retirement stage \n-Added a reset sliders button in slider menu"
     },
     {
-    date: '7/7/2019',
-    updates: "-In college mode players can now graduate early \n-In college mode you can now export draft classes at the graduation stage in the offseason \n-Added a bit more randomness in the draft (busts, breakout players, etc)\n-Added player search menu"
-},
-{
-    date: '7/4/2019',
-    updates: "-Revamped save menu and save system \n-You can now name saves and delete them \n-Game autosaves a file called roster_autosave when editing roster files\n-Game autosaves the current franchises roster as franchise_autosave at beginning of each new season\n-You can now directly assign a created player to a team in the create a player menu"
-},
+        date: '7/7/2019',
+        updates: "-In college mode players can now graduate early \n-In college mode you can now export draft classes at the graduation stage in the offseason \n-Added a bit more randomness in the draft (busts, breakout players, etc)\n-Added player search menu"
+    },
+    {
+        date: '7/4/2019',
+        updates: "-Revamped save menu and save system \n-You can now name saves and delete them \n-Game autosaves a file called roster_autosave when editing roster files\n-Game autosaves the current franchises roster as franchise_autosave at beginning of each new season\n-You can now directly assign a created player to a team in the create a player menu"
+    },
 
 
 
@@ -72,12 +76,12 @@ export default class RecentUpdates extends React.Component {
         return (
 
             <Background>
-                <ScrollView style={{backgroundColor:'rgba(255,255,255,0)'}}>
+                <ScrollView style={{ backgroundColor: 'rgba(255,255,255,0)' }}>
                     {updateLog.map((update, i) => (
-                       <View style={{borderBottomWidth:0.5, padding:10}}>
-                           <Text style={{fontSize: 20, color: 'black', fontFamily: 'advent-pro'}} >{update.date}</Text>
-                           <Text style={{fontSize: 17, color: 'black', fontFamily: 'advent-pro'}}>{update.updates}</Text>
-                       </View>
+                        <View style={{ borderBottomWidth: 0.5, padding: 10 }}>
+                            <Text style={{ fontSize: 20, color: 'black', fontFamily: 'advent-pro' }} >{update.date}</Text>
+                            <Text style={{ fontSize: 17, color: 'black', fontFamily: 'advent-pro' }}>{update.updates}</Text>
+                        </View>
 
                     ))
                     }
