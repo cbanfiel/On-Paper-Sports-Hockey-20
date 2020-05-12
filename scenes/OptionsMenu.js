@@ -5,6 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { TouchableOpacity } from 'react-native';
 import Background from '../components/background';
 import { loadRosters, resetFranchise, resetSliders, removeTeams, generateFreeAgents} from '../data/script';
+import DualButton from '../components/DualButton';
 
 export default class OptionsMenu extends React.Component {
 
@@ -28,7 +29,12 @@ export default class OptionsMenu extends React.Component {
   <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Community Rosters</Text>
 </Card>
 </TouchableOpacity>
-
+<DualButton  
+                    leftTitle={'Community Players'}
+                    leftOnPress={()=> {Actions.communityplayers()}}
+                    rightTitle={'Community Teams'}
+                    rightOnPress={()=> {Actions.communityteams()}}
+                    />
           <TouchableOpacity style={{ width: '100%' }} onPress={() => {Actions.slidersmenu()}}>
 
             <Card
@@ -95,20 +101,6 @@ export default class OptionsMenu extends React.Component {
               <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Generate New Free Agents</Text>
             </Card>
           </TouchableOpacity>
-
-          {/* <TouchableOpacity style={{ width: '100%' }} onPress={() => {Actions.importexportmenu()}}>
-
-            <Card
-              containerStyle={{
-                width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                borderColor: 'black',
-                alignSelf:'center'
-              }}
-            >
-              <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Import/Export</Text>
-            </Card>
-          </TouchableOpacity> */}
-
 
           <TouchableOpacity style={{ width: '100%' }} onPress={() => {loadRosters(), resetFranchise(), resetSliders(), this.props.update(()=>Actions.popTo('mainmenu'))}}>
 

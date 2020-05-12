@@ -130,7 +130,7 @@ export default class TradeMenu extends React.Component {
                     title={pick.originalTeam + ' Draft Pick'}
                     subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
                     bottomDivider={true}
-                    leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
+                    leftAvatar={'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'}
                     rightTitle={this.state.t1Offers.includes(pick) ? "SELECTED" : null}
 
                 ></ListItem>
@@ -159,7 +159,7 @@ export default class TradeMenu extends React.Component {
                     title={pick.originalTeam + ' Draft Pick'}
                     subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
                     bottomDivider={true}
-                    leftAvatar={'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'}
+                    leftAvatar={'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'}
                     rightTitle={this.state.t2Offers.includes(pick) ? "SELECTED" : null}
 
                 ></ListItem>

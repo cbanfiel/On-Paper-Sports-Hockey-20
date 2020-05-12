@@ -50,7 +50,23 @@ export default class DraftClassMenu extends React.Component {
     }
 
     update = () =>{
-        this.setState({class:draftClass});
+      const data = [];
+      let arrayForFilter = [];
+      this.setPositionFilter = this.setPositionFilter.bind(this);
+
+  
+      for(let i=0; i<draftClass.roster.length; i++){
+        data.push({
+          type:'NORMAL',
+          item: sortedRoster(draftClass,'rating')[i]
+        })
+      }
+      arrayForFilter = draftClass.roster;
+  
+      this.setState({
+        list: new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(data),
+        arrayForFilter: arrayForFilter
+      });
     }
 
     constructor(props){

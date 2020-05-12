@@ -18,7 +18,7 @@ import * as FileSystem from 'expo-file-system';
 export let inDraft = false;
 
 export const REDSHIRT_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Redshirt.svg/1280px-Redshirt.svg.png';
-
+const GENERIC_PLAYER_PORTRAIT = 'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'
 
 export function setInDraft() {
     inDraft = true;
@@ -181,13 +181,15 @@ export function setRefreshOff(ans) {
 
 
 
-class Player {
+export class Player {
     constructor(player) {
         this.name = player.name;
         this.position = player.position;
         this.positionString;
         this.getPositionString();
         this.faceSrc = player.faceSrc;
+        if(player.faceSrc == 'https://www.2kratings.com/wp-content/uploads/NBA-Player.png'){
+           this.faceSrc = GENERIC_PLAYER_PORTRAIT;        }
         if (player.faceSrc == null || player.faceSrc.length < 1) {
             this.faceSrc = portraits[Math.floor(Math.random() * portraits.length)];
         }
@@ -391,7 +393,7 @@ class Player {
     }
 
 }
-class Team {
+export class Team {
 
     constructor(team) {
         this.conferenceId = team.conferenceId;
@@ -1055,6 +1057,17 @@ export let availableFreeAgents = {
             if (a.rating < b.rating)
                 return 1;
             return 0;
+        })
+    },
+    manageRequirements: function(){
+        requiredPositions.forEach(pos => {
+            let current = availableFreeAgents.roster.filter(ply => ply.position == pos)
+            let needed = 6 - current.length;
+            if(needed > 0){
+                for(let i=0; i<needed; i++){
+                    availableFreeAgents.roster.push(generatePlayer(pos, Math.floor(Math.random()*10)+50));
+                }
+            }
         })
     }
 };
@@ -4848,7 +4861,6 @@ export async function getDataFromLink(link, type, sliderType, _callback) {
 
 
 export let communityRosters = [];
-communityRosters = getDataFromLink('https://on-paper-sports.s3.us-east-2.amazonaws.com/hockey/CommunityFiles.json', 'communityroster');
 
 
 export function loadRosterJson(loadedDataIn) {

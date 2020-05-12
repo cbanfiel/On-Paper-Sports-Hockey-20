@@ -6,9 +6,9 @@ import { selectedTeam, leaugeLeaders, setSelectedTeam2, franchise, sortedRoster,
 import Background from '../components/background';
 import Picache from 'picache';
 import CachedImage from '../components/CachedImage';
-
-
-
+import CardButton from '../components/CardButton';
+import DualButton from '../components/DualButton';
+const simSpeed = 500;
 export default class SeasonMenu extends React.Component {
 
   componentWillUnmount = () => {
@@ -19,22 +19,27 @@ export default class SeasonMenu extends React.Component {
     this.setState({ linked: func });
   }
 
-  saveFranchise = () => {
-    
+  updateUnreadNews = () => {
+    this.setState({unreadNews: franchise.season.news.newsStories.length - this.state.readNews})
   }
 
+  clearUnreadNewsNotification = () => {
+    let readNews = this.state.unreadNews + this.state.readNews;
+    this.setState({unreadNews: 0, readNews })
+  }
 
-  slowSim = () => {
+  slowSim = (oneWeek = false) => {
     let timer = setTimeout(
       function () {
         franchise.simDay();
         this.simulateStateChanges();
-        if (franchise.season.day >= franchise.season.games) {
+        this.updateUnreadNews();
+        if (franchise.season.day >= franchise.season.games || oneWeek) {
           this.stopSim();
         } else {
           this.slowSim();
         }
-      }.bind(this), 500);
+      }.bind(this), simSpeed);
     this.setState({ timer: timer });
 
   }
@@ -55,8 +60,9 @@ export default class SeasonMenu extends React.Component {
     team: selectedTeam,
     nextGame: '',
     previousGame: '',
-    saveName: ''
-
+    saveName: '',
+    unreadNews: franchise.season.news.newsStories.length,
+    readNews: 0
   }
 
   //passed to roster
@@ -134,42 +140,13 @@ export default class SeasonMenu extends React.Component {
         <Background>
 
           <ScrollView contentContainerStyle={{paddingBottom: 20}}>
-
-
-            {
-              // <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.sim20(), Actions.refresh() }}>
-
-              //   <Card
-              //     containerStyle={{
-              //       width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-              //       borderColor: 'black',
-              //       alignSelf:'center'
-              //     }}
-              //   >
-              //     <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim 20 Years</Text>
-              //   </Card>
-              // </TouchableOpacity>
-
-            }
-
                      
 {
-              <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.savesmenu({filtered: 'franchise', saveType: 'Franchise'}) }}>
+            <CardButton variation={1} onPress={() => { Actions.savesmenu({ filtered: 'franchise', saveType: 'Franchise' })}} title={"Save Franchise"} />
 
-                <Card
-                  containerStyle={{
-                    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                    borderColor: 'black',
-                    alignSelf: 'center'
-                  }}
-                >
-                  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Save Franchise</Text>
-                </Card>
-              </TouchableOpacity>
 
 
             }
-
 
 
 
@@ -178,16 +155,17 @@ export default class SeasonMenu extends React.Component {
               franchise.season.day < franchise.season.games ? (
                 <View>
 
-                  <TouchableOpacity style={{ width: '100%' }} onPress={() => { this.state.timer == null ? this.slowSim() : this.stopSim() }}>
-                    <Card containerStyle={{
-                      width: '95%', backgroundColor: 'rgba(0,0,0,0)', borderColor: 'black',
-                      alignSelf: 'center'
-                    }} >
-                      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                      </View>
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{this.state.timer == null ? ('Start Simulation') : 'Stop Simulation'}</Text>
-                    </Card>
-                  </TouchableOpacity>
+{
+                    this.state.timer == null ? (
+                      <DualButton  
+                    leftTitle={'Simulate Season'}
+                    leftOnPress={()=> {this.slowSim()}}
+                    rightTitle={'Simulate Game'}
+                    rightOnPress={()=> {this.slowSim(true)}}
+                    />
+                    ) :
+                    <CardButton variation={1} onPress={() => { this.stopSim() }} title={"Stop Simulation"} />
+                  }
 
          
                  {
@@ -239,7 +217,14 @@ export default class SeasonMenu extends React.Component {
 
 
 
-              ) : null
+              ) :
+              <CardButton variation={1} onPress={() => { 
+                this.props.teamListStage('playoffs'), 
+                franchise.advance = true, 
+                franchise.stage = 'playoffs', 
+                franchise.simStage(), 
+                Actions.replace('playoffmenu', { teamListStage: this.props.teamListStage }) }} 
+                title={collegeMode ? 'Advance To Tournament' : 'Advance To Playoffs'} />
             }
 
 
@@ -265,23 +250,7 @@ export default class SeasonMenu extends React.Component {
             }
 
 
-            <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.scheduleview({ franchise: franchise, refresh: this.refreshSeasonMenu, linkTimer: this.linkTimer })}>
 
-              <Card
-                containerStyle={{
-                  width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                  borderColor: 'black',
-                  alignSelf: 'center'
-                }}
-              >
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ flex: 1, textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'OVR: ' + selectedTeam.rating}</Text>
-                  <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
-                </View>
-                <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
-                <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.name + ' ' + 'Record: ' + selectedTeam.wins + "-" + (selectedTeam.losses-selectedTeam.otLosses) +"-" + selectedTeam.otLosses}</Text>
-              </Card>
-            </TouchableOpacity>
 
 
 
@@ -309,14 +278,12 @@ export default class SeasonMenu extends React.Component {
                 </TouchableOpacity>
                 ):
                 <TouchableOpacity style={{ width: '100%' }} onPress={() => { setSelectedTeam2(selectedTeam.schedule[franchise.season.day - 1]), Actions.gamestats({ currentGame: (franchise.season.day - 1) }) }}>
-
                   <Card
                     containerStyle={{
                       width: '95%', backgroundColor: 'rgba(0,0,0,0)',
                       borderColor: 'black',
                       alignSelf: 'center'
                     }}
-
                   >
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                       <Text style={{ flex:1 ,textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].userScore}</Text>
@@ -325,7 +292,6 @@ export default class SeasonMenu extends React.Component {
                                   <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginRight:5 }}>{this.state.team.seed <= 25? `#${this.state.team.seed}` : '  '}</Text>
                                 ):null
                               }
-                      
                       <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginRight: 20 }} source={{ uri: selectedTeam.logoSrc }} />
                       <Text style={{ textAlign: "center", fontSize: 35, color: selectedTeam.played[franchise.season.day - 1].userScore > selectedTeam.played[franchise.season.day - 1].oppScore ? 'green' : 'red', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].userScore > selectedTeam.played[franchise.season.day - 1].oppScore ? 'W' : 'L'}</Text>
                       <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5, marginLeft: 20 }} source={{ uri: selectedTeam.schedule[franchise.season.day - 1].logoSrc }} />
@@ -334,9 +300,7 @@ export default class SeasonMenu extends React.Component {
                                 <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro', marginLeft:5 }}>{this.state.team.schedule[franchise.season.day-1].seed <= 25? (`#${this.state.team.schedule[franchise.season.day-1].seed}`) : '  '}</Text>
                               ):null
                             }
-                     
                       <Text style={{ flex:1 , textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.played[franchise.season.day - 1].oppScore}</Text>
-
                     </View>
                     <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
                     <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Previous Game Results'}</Text>
@@ -345,6 +309,55 @@ export default class SeasonMenu extends React.Component {
 
               ) : null
             }
+
+{
+              
+              franchise.season.day > 0 ? (
+                <DualButton  
+                leftTitle={'League News'}
+                leftImage={selectedTeam.logoSrc} 
+                leftNotification={this.state.unreadNews}
+                leftOnPress={()=> {
+                  this.clearUnreadNewsNotification()
+                  Actions.news()}}
+                rightTitle={'League Scores'}
+                rightImage={selectedTeam.logoSrc} 
+                rightOnPress={()=> {Actions.othergames({day: franchise.season.day})}}
+                />
+              ):
+
+              <DualButton  
+              leftTitle={'League News'}
+              leftImage={selectedTeam.logoSrc} 
+              leftNotification={this.state.unreadNews}
+              leftOnPress={()=> {
+                this.clearUnreadNewsNotification()
+                Actions.news()}}
+              rightTitle={'Edit Schedule'}
+              rightImage={selectedTeam.logoSrc} 
+              rightOnPress={()=> Actions.editschedule({franchise: franchise, update: this.update})}
+              />
+              
+            }
+
+<TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.scheduleview({ franchise: franchise, refresh: this.refreshSeasonMenu, linkTimer: this.linkTimer })}>
+
+<Card
+  containerStyle={{
+    width: '95%', backgroundColor: 'rgba(0,0,0,0)',
+    borderColor: 'black',
+    alignSelf: 'center'
+  }}
+>
+  <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={{ flex: 1, textAlign: "center", fontSize: 30, color: 'black', fontFamily: 'advent-pro' }}>{'OVR: ' + selectedTeam.rating}</Text>
+    <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
+  </View>
+  <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
+  <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{selectedTeam.name + ' ' + 'Record: ' + selectedTeam.wins + "-" + (selectedTeam.losses-selectedTeam.otLosses) +"-" + selectedTeam.otLosses}</Text>
+</Card>
+</TouchableOpacity>
+
 
             <TouchableOpacity style={{ width: '100%' }} onPress={() => Actions.seasonstatsmenu({ linkTimer: this.linkTimer })}>
               <Card
@@ -412,48 +425,6 @@ export default class SeasonMenu extends React.Component {
                 </View>
               </Card>
             </TouchableOpacity>
-
-
-
-
-            {
-              franchise.season.day < franchise.season.games ? (
-                <TouchableOpacity style={{ width: '100%' }} onPress={this.simToEnd}>
-                  <Card
-                    containerStyle={{
-                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                      borderColor: 'black',
-                      alignSelf: 'center'
-                    }}
-                  >
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                      <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
-                    </View>
-                    <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{'Sim To End Of Season'}</Text>
-                  </Card>
-                </TouchableOpacity>
-              ) :
-                <TouchableOpacity style={{ width: '100%' }} onPress={() => { this.props.teamListStage('playoffs'), franchise.advance = true, franchise.stage = 'playoffs', franchise.simStage(), Actions.replace('playoffmenu', { teamListStage: this.props.teamListStage }) }}>
-                  <Card
-                    containerStyle={{
-                      width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                      borderColor: 'black',
-                      alignSelf: 'center'
-                    }}
-                  >
-
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                      <Picache style={{ flex: 1, overflow: 'hidden', resizeMode: 'contain', height: 75, width: 75, margin: 5 }} source={{ uri: selectedTeam.logoSrc }} />
-                    </View>
-                    <Divider style={{ backgroundColor: 'black', height: 1, margin: 5 }} ></Divider>
-                    <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>{collegeMode ? 'Advance To Tournament' : 'Advance To Playoffs'}</Text>
-                  </Card>
-                </TouchableOpacity>
-            }
-
-
           </ScrollView>
         </Background>
       )

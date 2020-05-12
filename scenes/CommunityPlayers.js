@@ -13,7 +13,7 @@ var {height, width} = Dimensions.get('window');
 
 let allPlayers = [];
 
-const URL = 'https://onpapersports.com/roster/players/basketball/'
+const URL = 'https://onpapersports.com/roster/players/hockey/'
 
 export default class CommunityPlayers extends React.Component {
 

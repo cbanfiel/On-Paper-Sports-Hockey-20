@@ -137,7 +137,7 @@ export default class FreeAgencyStage extends React.Component {
           }
 
 
-          <TouchableOpacity style={{ width: '100%' }} onPress={() => { setAutoSign(this.state.autoSign), franchise.stage = "freeagencyend", franchise.simStage(), this.props.teamListStage(franchise.stage), Actions.replace('trainingstage', { teamListStage: this.props.teamListStage }) }}>
+          <TouchableOpacity style={{ width: '100%' }} onPress={() => { setAutoSign(this.state.autoSign), franchise.stage = "freeagencyend", franchise.simStage(), this.props.teamListStage(franchise.stage), Actions.replace('news', {animate: true, next: () => {Actions.replace('trainingstage', { teamListStage: this.props.teamListStage })}})  }}>
 
             <Card
               containerStyle={{

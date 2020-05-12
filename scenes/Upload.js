@@ -15,8 +15,8 @@ import { getRosterJSON, exportDraftClassJson } from "../data/script.js";
 import CommunityRosterListItem from "../components/CommunityRosterListItem";
 var filter = require("leo-profanity");
 
-const GAME = "basketball";
-const URL = "https://onpapersports.com/roster/user/basketball/";
+const GAME = "hockey";
+const URL = "https://onpapersports.com/roster/user/hockey/";
 const DELETE_URL = "https://onpapersports.com/roster/delete/";
 
 export default class Upload extends Component {

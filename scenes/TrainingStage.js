@@ -6,7 +6,7 @@ import { selectedTeam, leaugeLeaders, setSelectedTeam2, franchise, sortedRoster,
 import Background from '../components/background';
 import Picache from 'picache';
 import CachedImage from '../components/CachedImage';
-
+import DualButton from '../components/DualButton';
 export default class TrainingStage extends React.Component{
 
 
@@ -15,7 +15,14 @@ export default class TrainingStage extends React.Component{
 return (
     <Background>
       <ScrollView contentContainerStyle={{paddingBottom: 20}}>
-
+      <DualButton  
+                leftTitle={'League News'}
+                leftImage={selectedTeam.logoSrc} 
+                leftOnPress={()=> {Actions.news()}}
+                rightTitle={collegeMode ? 'View Top Signings' : 'View All Signings'}
+                rightImage={selectedTeam.logoSrc} 
+                rightOnPress={()=> {Actions.offseasonsignings()}}
+                />
 
         <TouchableOpacity style={{ width: '100%' }} onPress={() => { Actions.rosterlist({view: 'training', selectedTeam: selectedTeam})}}>
          <Card

@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { franchise, selectedTeam, collegeMode } from '../data/script';
 import Background from '../components/background';
 import CachedImage from '../components/CachedImage';
-
+import DualButton from '../components/DualButton';
 export default class PlayoffMenu extends React.Component {
     back(){
         franchise.advance = true;
@@ -63,35 +63,12 @@ export default class PlayoffMenu extends React.Component {
           {
             !franchise.playoffs.completed ? (
               !franchise.playoffs.advance ? (
-                <View>
-
-                  <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.playoffs.simDay(), this.updateState()}}>
-
-                    <Card
-                      containerStyle={{
-                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                        borderColor: 'black',
-                        alignSelf:'center'
-                      }}
-                    >
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim Game</Text>
-                    </Card>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.playoffs.simRound(), this.updateState() }}>
-
-                    <Card
-                      containerStyle={{
-                        width: '95%', backgroundColor: 'rgba(0,0,0,0)',
-                        borderColor: 'black',
-                        alignSelf:'center'
-                      }}
-                    >
-                      <Text style={{ textAlign: "center", fontSize: 20, color: 'black', fontFamily: 'advent-pro' }}>Sim Round</Text>
-                    </Card>
-                  </TouchableOpacity>
-                </View>
-
+                <DualButton  
+                leftTitle={'Sim Game'}
+                leftOnPress={()=> { franchise.playoffs.simDay(), this.updateState()}}
+                rightTitle={'Sim Round'}
+                rightOnPress={()=> { franchise.playoffs.simRound(), this.updateState() }}
+                />
 
               ) :
                 <TouchableOpacity style={{ width: '100%' }} onPress={() => { franchise.playoffs.simDay(), this.updateState() }}>

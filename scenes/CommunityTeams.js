@@ -13,7 +13,7 @@ var {height, width} = Dimensions.get('window');
 
 let allPlayers = [];
 
-const URL = 'https://onpapersports.com/roster/teams/basketball/'
+const URL = 'https://onpapersports.com/roster/teams/hockey/'
 
 export default class CommunityTeams extends React.Component {
   search(value){
