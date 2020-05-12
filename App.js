@@ -54,6 +54,14 @@ import EditSchedule from './scenes/EditSchedule';
 import SecondChanceMenu from './scenes/SecondChanceMenu';
 import TradeFinder from './scenes/TradeFinder';
 import TradeFinderResults from './scenes/TradeFinderResults';
+import OtherGames from './scenes/OtherGames';
+import News from './scenes/News';
+import OffseasonSignings from './scenes/OffseasonSignings';
+import Login from './scenes/Login';
+import Upload from './scenes/Upload';
+import SelectRoster from './scenes/SelectRoster';
+import CommunityPlayers from './scenes/CommunityPlayers';
+import CommunityTeams from './scenes/CommunityTeams';
 export default class App extends React.Component {
 
 
@@ -117,7 +125,15 @@ export default class App extends React.Component {
           <Scene key="editschedule" component={EditSchedule} title="" hideNavBar />
           <Scene key="tradefinder" component={TradeFinder} title="" hideNavBar />
           <Scene key="tradefinderresults" component={TradeFinderResults} title="" hideNavBar />
-
+          <Scene key="othergames" component={OtherGames} title="" hideNavBar />
+          <Scene key="news" component={News} title="" hideNavBar />
+          <Scene key="offseasonsignings" component={OffseasonSignings} title="" hideNavBar />
+          <Scene key="login" component={Login} title="" hideNavBar />
+          <Scene key="upload" component={Upload} title="" hideNavBar />
+          <Scene key="selectroster" component={SelectRoster} title="" hideNavBar />
+          <Scene key="communityplayers" component={CommunityPlayers} title="" hideNavBar />
+          <Scene key="communityteams" component={CommunityTeams} title="" hideNavBar />
+          
         </Stack>
       </Router>
     );

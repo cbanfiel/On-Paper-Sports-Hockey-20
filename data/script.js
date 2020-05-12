@@ -11,7 +11,7 @@ export const portraits = require('./Portraits.json');
 
 import { Coach, generateFreeAgentCoaches, coachOffseasonSetup, coachSetup, coachSigning, availableCoaches, loadAvailableCoaches } from './Coach.js';
 
-
+import { News } from './NewsStories.js';
 import * as FileSystem from 'expo-file-system';
 
 //for draft trades
@@ -33,7 +33,7 @@ export const POS_LW = 1;
 export const POS_RW = 2;
 export const POS_D = 3;
 export const POS_G = 4;
-
+const requiredPositions = [POS_C, POS_LW, POS_RW, POS_D, POS_G];
 
 const rosterSize = 28;
 export const CAPROOM = 85000000;
@@ -581,6 +581,50 @@ class Team {
         }
 
 
+    }
+
+    checkRequirements() {
+        let amount = 0;
+        let arr = [];
+
+        requiredPositions.forEach(position => {
+            let plys = this.roster.filter(ply => ply.position == position);
+            if(position == POS_G && plys.length < POS_G_REQUIREMENTS){
+                amount = POS_G_REQUIREMENTS - plys.length;
+                console.log(this.name + ' is low on ' + position)
+                arr.push({
+                    position,
+                    amount
+                })
+            }
+            else if(position == POS_G && plys.length < POS_G_REQUIREMENTS){
+                amount = POS_G_REQUIREMENTS - plys.length;
+                console.log(this.name + ' is low on ' + position)
+                arr.push({
+                    position,
+                    amount
+                })
+            }else if(plys.length < POS_C_REQUIREMENTS){
+                amount = POS_C_REQUIREMENTS - plys.length;
+                arr.push({
+                    position,
+                    amount
+                })
+            }
+        })
+        return arr;
+    }
+
+
+    signMissingRequirements(){
+        let missingRequirements = this.checkRequirements();
+        missingRequirements.map(requirement => {
+            for(let i=0; i<requirement.amount; i++){
+                let available = availableFreeAgents.roster.filter(player => player.position == requirement.position);
+                signPlayer(this, available[0], 1, VETERANSMINIMUM, availableFreeAgents);
+                availableFreeAgents.manageRequirements();
+            }
+        })
     }
 
     manageHockeyLineups() {
@@ -1953,6 +1997,13 @@ export class Season {
 
         //setup rankings
         sortStandings();
+        setPowerRankings();
+        //generate news stories
+        this.news = new News();
+        //preseason stories
+        this.news.addPreseasonTopTeamStory(chooseATopTeam());
+        this.news.addPreseasonTopPlayerStory(chooseATopPlayer());
+        this.news.addGameOfTheWeekStory(pickGameOfTheWeek());
 
     }
 
@@ -2005,31 +2056,18 @@ export class Season {
                     if (game.homescore > game.awayscore) {
                         home.wins++;
                         if (game.overtime) {
+                            Math.random()*100 > 80 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
                             away.otLosses++;
                         }
                         away.losses++;
                     } else {
                         if (game.overtime) {
+                            Math.random()*100 > 80 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
                             home.otLosses++;
                         }
                         home.losses++;
                         away.wins++;
                     }
-
-
-                    //WHY WAS THIS IN HERE????? UHH WHAT
-
-                    // availableFreeAgents.roster[i].statsHistory.push({
-                    //     points: 0,
-                    //     twoPointersAtt: 0,
-                    //     twoPointersMade: 0,
-                    //     rebounds: 0,
-                    //     threePointersAtt: 0,
-                    //     threePointersMade: 0
-                    // });
-
-
-
                 }
             }
         }
@@ -2046,62 +2084,86 @@ export class Season {
         }
         this.day++;
 
-    }
-    simToEnd() {
-        while (this.day < this.games) {
-
-            if (this.games <= this.day) {
-                this.endOfSeason = true;
-                return;
-            }
-
-            for (let i = 0; i < teams.length; i++) {
-                home = teams[i];
-                away = home.schedule[this.day];
-                if (home === away) {
-                    //bye week
-                    home.played[this.day] = new Results(1, 0);
-                    home.wins++;
-                    for (let i = 0; i < home.roster.length; i++) {
-                        home.roster[i].statsHistory.push({
-                            goals: 0,
-                            saves: 0,
-                            goalsAllowed: 0,
-                            shots: 0,
-                            assists: 0
-                        });
-                    }
-
-                } else {
-
-                    if (home.played[this.day] == null) {
-                        let game = new Game();
-                        game.playGame();
-                        home.played[this.day] = new Results(game.homescore, game.awayscore);
-                        away.played[this.day] = new Results(game.awayscore, game.homescore);
-                        if (game.homescore > game.awayscore) {
-                            home.wins++;
-                            if (game.overtime) {
-                                away.otLosses++;
-                            }
-                            away.losses++;
-                        } else {
-                            if (game.overtime) {
-                                home.otLosses++;
-                            }
-                            home.losses++;
-                            away.wins++;
+                //adjust random numbers for 82 games
+                //check for random storyline
+                if(Math.random()*100 <= 2){
+                    this.news.addRandomPlayerStory(chooseARandomPlayer())
+                }
+        
+                if(!collegeMode){
+                //check for trade
+                if(Math.random()*100 <= 8 && ((this.day/this.games)*100 < 38)){
+                    let offer = [];
+                    let player = chooseARandomPlayer();
+                    if(player.teamName != selectedTeam.name){
+                        let team = teams.filter(team => team.name == player.teamName)[0]
+                        offer.push(player);
+                        let offers = getTradeFinderOffers(offer, team);
+                        if(offers.length > 0){
+                            let selected = offers[Math.floor(Math.random()*offers.length)];
+                            trade(team, selected.team,offer, selected.players,  true);
+                            team.signMissingRequirements();
+                            selected.team.signMissingRequirements();
                         }
-
-
-
                     }
                 }
+        
+                //check for signing
+                if(Math.random()*100 <= 5){
+                    let team = teams[Math.floor(Math.random()*teams.length)];
+                    if(team != selectedTeam){
+                        let rand = Math.floor(Math.random()*4);
+                        availableFreeAgents.reorderLineup();
+                        let player = availableFreeAgents.roster[rand];
+                        signPlayer(team, player, 1, VETERANSMINIMUM, availableFreeAgents);
+                    }
+                }
+            }else{
+                //college mode stories
+                //upset 
+                //top 5 team loss
+        
+                let loss = teams.filter(team => team.seed <= 1 && !team.played[this.day-1].won)
+        
+                if(loss){
+                    loss.forEach(l => this.news.addTopTeamLossStory(l, l.schedule[this.day-1], l.played[this.day-1].userScore, l.played[this.day-1].oppScore))
+                }
             }
-            this.day++;
+        
+        
+                if(this.day >= this.games){
+                    //end of season stories
+                    if(!collegeMode){
+                        this.news.addTopFreeAgentStory(chooseATopUpcomingFreeAgent());
+                    }
+        
+                    //poy
+                    let LL = leaugeLeaders()
+                    let ply = LL.roster[Math.floor(Math.random()*3)];
+                    this.news.addPlayerOfTheYearStory(ply);
+        
+        
+                    let team = getTopSeed();
+                    let skillPlayers = team.roster.filter(ply => requiredPositions.includes(ply.position));
+                    skillPlayers.sort(function(a, b) {
+                        if (a.rating > b.rating) return -1;
+                        if (a.rating < b.rating) return 1;
+                        return 0;
+                    });
+        
+                    let player = skillPlayers[0]
+        
+                    this.news.addEndOfSeasonPlayoffStory(team, player);
+                    }
 
+    }
+    simToEnd() {
+        while (!this.endOfSeason) {
+            if (this.games <= this.day) {
+                this.endOfSeason = true;
+            }
+            this.simDay();
         }
-        this.endOfSeason = true;
 
     }
 
@@ -2119,6 +2181,7 @@ export class Franchise {
         this.playoffs;
         this.pastChampions = [];
         this.classLength = 0;
+        this.offSeasonSignings = [];
 
         this.retirements = {
             name: 'Retirements',
@@ -2293,6 +2356,7 @@ export class Franchise {
             } else {
                 this.freeAgency();
             }
+            franchise.season.news.newsStories = [];
 
 
             setSalaryExpectations(availableFreeAgents);
@@ -2304,6 +2368,32 @@ export class Franchise {
             this.releasePlayers();
 
             this.trainingPoints();
+
+                     //add stories / clear array
+                     franchise.offSeasonSignings = shuffle(franchise.offSeasonSignings);
+                     franchise.offSeasonSignings.sort((a,b) => {
+                         if(a.player.rating > b.player.rating){ return -1}
+                         if(a.player.rating < b.player.rating){ return 1}
+                         return 0;
+                     })
+         
+                     
+                     if(collegeMode){
+                         //only top 150 players
+                         while(franchise.offSeasonSignings.length > 150){
+                             franchise.offSeasonSignings.pop();
+                         }
+                     }
+         
+                     let size = franchise.offSeasonSignings.length;
+                     if(size > 15){
+                         size = 15;
+                     }
+                     for(let i=0; i<size; i++){
+                         let team = franchise.offSeasonSignings[i].team;
+                         let player = franchise.offSeasonSignings[i].player;
+                         franchise.season.news.addSignPlayerStory(team, player)
+                     }
 
         }
 
@@ -2549,45 +2639,27 @@ export class Franchise {
                     if (teams[i].c < POS_C_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_C) {
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-                            teams[i].C++;
-                            availableFreeAgents.roster.splice(j, 1);
+                            let ply = availableFreeAgents.roster[j];
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
+                            teams[i].c++;
                         }
                     }
 
                     if (teams[i].lw < POS_LW_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_LW) {
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            let ply = availableFreeAgents.roster[j];
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                             teams[i].lw++;
-                            availableFreeAgents.roster.splice(j, 1);
                         }
                     }
 
                     if (teams[i].rw < POS_RW_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_RW) {
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            let ply = availableFreeAgents.roster[j];
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                             teams[i].rw++;
-                            availableFreeAgents.roster.splice(j, 1);
                         }
                     }
 
@@ -2595,30 +2667,18 @@ export class Franchise {
 
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
+                            let ply = availableFreeAgents.roster[j];
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                             teams[i].d++;
-                            availableFreeAgents.roster.splice(j, 1);
                         }
                     }
 
                     if (teams[i].g < POS_G_REQUIREMENTS && availableFreeAgents.roster[j].position === POS_G) {
 
                         if (canSign(teams[i], availableFreeAgents.roster[j].salary)) {
-
-                            availableFreeAgents.roster[j].teamName = teams[i].name;
-                            availableFreeAgents.roster[j].teamLogoSrc = teams[i].logoSrc;
-                            availableFreeAgents.roster[j].years = Math.floor(Math.random() * 4) + 1;
-                            teams[i].roster.push(availableFreeAgents.roster[j]);
-                            teams[i].salary += availableFreeAgents.roster[j].salary;
-
+                            let ply = availableFreeAgents.roster[j];
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                             teams[i].g++;
-                            availableFreeAgents.roster.splice(j, 1);
                         }
                     }
 
@@ -2634,23 +2694,15 @@ export class Franchise {
                         let signing = availableFreeAgents.roster[index];
                         signing.salary = VETERANSMINIMUM;
                         if (canSign(teams[i], signing.salary)) {
-                            signing.teamName = teams[i].name;
-                            signing.teamLogoSrc = teams[i].logoSrc;
-                            signing.years = 1
-                            teams[i].roster.push(signing);
-                            teams[i].salary += signing.salary;
-                            availableFreeAgents.roster.splice(index, 1);
+                            let ply = signing;
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                         }
                     } else {
                         let index = Math.floor(Math.random() * availableFreeAgents.roster.length);
                         let signing = availableFreeAgents.roster[index];
                         if (canSign(teams[i], signing.salary)) {
-                            signing.teamName = teams[i].name;
-                            signing.teamLogoSrc = teams[i].logoSrc;
-                            signing.years = 1
-                            teams[i].roster.push(signing);
-                            teams[i].salary += signing.salary;
-                            availableFreeAgents.roster.splice(index, 1);
+                            let ply = signing;
+                            signPlayer(teams[i], ply, Math.floor(Math.random()*4)+1, ply.salary, availableFreeAgents);
                         }
                     }
                 }
@@ -2726,6 +2778,8 @@ export class Franchise {
                 for (let j = 0; j < spliced.length; j++) {
                     let index = teams[i].interestedProspects.roster.indexOf(spliced[j]);
                     teams[i].interestedProspects.roster.splice(index, 1);
+                    franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+
                 }
 
                 spliced = [];
@@ -2819,6 +2873,8 @@ export class Franchise {
                 for (let j = 0; j < spliced.length; j++) {
                     let index = teams[i].interestedProspects.roster.indexOf(spliced[j]);
                     teams[i].interestedProspects.roster.splice(index, 1);
+                    franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+
                 }
 
 
@@ -2841,6 +2897,8 @@ export class Franchise {
                             signing.years = 1;
                             teams[i].roster.push(signing);
                             teams[i].interestedProspects.roster.splice(index, 1);
+                        franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+
                         } else {
                             teams[i].interestedProspects.roster.splice(index, 1);
                         }
@@ -2863,6 +2921,8 @@ export class Franchise {
                             signing.years = 1;
                             teams[i].roster.push(signing);
                             teams[i].interestedProspects.roster.splice(index, 1);
+                        franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+
                         } else {
                             teams[i].interestedProspects.roster.splice(index, 1);
                         }
@@ -3301,6 +3361,12 @@ export class Franchise {
         }
 
         console.log(`H: ${high} L: ${low} AVG: ${total/teams.length}`);
+
+                //make sure teams meet requirements
+                availableFreeAgents.manageRequirements();
+                teams.map(team => team.signMissingRequirements());
+        
+                franchise.offSeasonSignings = [];
 
         //added specific autosave names
         let teamName = selectedTeam.name.split(' ').join('');
@@ -3863,7 +3929,10 @@ export function trade(team1, team2, t1Offers, t2Offers, isForced) {
                 return -1;
             } else { return 0; }
         });
-
+        let bestT1 = getBestPlayer(t1Offers);
+        let bestT2 = getBestPlayer(t2Offers);
+        let best = getBestPlayer([bestT1, bestT2])
+        franchise.season.news.addTradeStory(bestT1, bestT2, team1, team2 , best);
         return true;
     } else {
         return false;
@@ -3885,6 +3954,14 @@ export function signPlayer(team, player, years, salary, playerpool) {
         team.reorderLineup();
     } catch (err) {
         console.log('Error Reordering Lineup, Most likely during offseason when teams are not at full rosters');
+    }
+
+    if(playerpool == availableFreeAgents){
+        if(franchise.offSeason){
+            franchise.offSeasonSignings.push({team, player})
+        }else{
+            franchise.season.news.addSignPlayerStory(team, player)
+        }
     }
 
 }
@@ -5508,22 +5585,12 @@ export const loadFranchise = (data) => {
 
         draftClass.reorderLineup();
 
-
-
-        // if(loadData.draftClass.roster.length > 0){
-        //     draftClass.roster = [];
-        //     for (let i = 0; i < loadedData.draftClass.roster.length; i++) {
-        //         availableFreeAgents.roster.push(new Player(draftClassData[i]));
-        //         availableFreeAgents.roster[i].calculateRating();
-        //         availableFreeAgents.roster[i].teamLogoSrc = availableFreeAgents.logoSrc;
-        //         availableFreeAgents.roster[i].teamName = availableFreeAgents.name;
-
-        //     }
-        // }
-
-
-
-
+        //generate news stories
+        franchise.season.news = new News();
+        //preseason stories
+        franchise.season.news.addPreseasonTopTeamStory(chooseATopTeam());
+        franchise.season.news.addPreseasonTopPlayerStory(chooseATopPlayer());
+        franchise.season.news.addGameOfTheWeekStory(pickGameOfTheWeek());
 
     } catch (err) {
         console.log(err);
@@ -5841,56 +5908,6 @@ export function sendRecruitOffer(ply, team) {
     }
 }
 
-//   export let checkRequirements = (team) => {
-//     team.manageFootballLineup();
-//     let diff = 0;
-//     let str = '';
-//     if(team.qbs.length < POS_QB_REQUIREMENTS){
-//       diff = POS_QB_REQUIREMENTS - team.qbs.length;
-//       str += diff + " more QB's"
-//     }
-//     if(team.rbs.length < POS_HB_REQUIREMENTS){
-//       diff = POS_HB_REQUIREMENTS - team.rbs.length;
-//       str += diff + " more hb's"
-//     }
-//     if(team.wrs.length < POS_WR_REQUIREMENTS){
-//       diff = POS_WR_REQUIREMENTS - team.wrs.length;
-//       str += diff + " more wr's"
-//     }
-//     if(team.tes.length < POS_TE_REQUIREMENTS){
-//       diff = POS_TE_REQUIREMENTS - team.tes.length;
-//       str += diff + " more te's"
-//     }
-//     if(team.ol.length < POS_OL_REQUIREMENTS){
-//       diff = POS_OL_REQUIREMENTS - team.ol.length;
-//       str += diff + " more O-linemen"
-//     }
-//     if(team.dl.length < POS_DL_REQUIREMENTS){
-//       diff = POS_DL_REQUIREMENTS - team.dl.length;
-//       str += diff + " more D-linemen"
-//     }
-//     if(team.dbs.length < POS_DB_REQUIREMENTS){
-//       diff = POS_DB_REQUIREMENTS - team.dbs.length;
-//       str += diff + " more db's"
-//     }
-//     if(team.ks.length < POS_K_REQUIREMENTS){
-//       diff = POS_K_REQUIREMENTS - team.ks.length;
-//       str += diff + " more k's"
-//     }
-//     if(team.ps.length < POS_P_REQUIREMENTS){
-//       diff = POS_P_REQUIREMENTS - team.ps.length;
-//       str += diff + " more p's"
-//     }
-
-//     if(str===''){
-//       return false;
-//     }else{
-//       return str;
-//     }
-//   }
-
-
-
 export function played(roster) {
     let plyed = [];
     for (let i = 0; i < roster.length; i++) {
@@ -5926,4 +5943,290 @@ export function played(roster) {
     })
 
     return plyed;
+}
+
+function getAllPlayers() {
+    let allPlayers = [];
+    for(let i=0; i<teams.length; i++){
+        for(let j=0; j<teams[i].roster.length; j++){
+            let player = teams[i].roster[j];
+            allPlayers.push(player);
+        }
+    }
+
+    allPlayers.sort(function(a,b){
+        if(tradeValueCalculation(a) < tradeValueCalculation(b)){
+            return 1;
+        }
+        if(tradeValueCalculation(a) > tradeValueCalculation(b)){
+            return -1;
+        }
+
+        return 0;
+    })
+    return allPlayers;
+}
+
+function chooseATopPlayer() {
+    let allPlayers = getAllPlayers();
+    let rand = Math.floor(Math.random()*4);
+    return allPlayers[rand]
+}
+
+function chooseATopTeam() {
+    teams.sort(function(a,b){
+        if(a.rating < b.rating){
+            return 1;
+        }
+        if(a.rating > b.rating){
+            return -1;
+        }
+        return 0;
+    })
+    let rand = Math.floor(Math.random()*4)
+    return teams[rand];
+}
+
+function chooseATopUpcomingFreeAgent() {
+            let allPlayers = getAllPlayers(teams, tradeValueCalculation);
+            let expiring = allPlayers.filter(player => player.years < 2);
+            return expiring[Math.floor(Math.random()*4)];
+}
+
+function chooseARandomPlayer() {
+    let allPlayers = getAllPlayers(teams, tradeValueCalculation);
+    return allPlayers[Math.floor(Math.random()*allPlayers.length)]
+}
+
+function pickGameOfTheWeek() {
+    let games = [];
+    let teamsIn = []
+    teams.forEach(team => {
+        if(!teamsIn.includes(team)){
+            teamsIn.push(team);
+            teamsIn.push(team.schedule[0])
+            let hype = (team.rating + team.schedule[0].rating) / 2
+    
+            let game = {
+                team1: team,
+                team2: team.schedule[0],
+                hype
+            }
+    
+            games.push(game)
+        }
+    })
+    games.sort(function(a,b){
+        if(a.hype < b.hype){
+            return 1;
+        }
+        if(a.hype > b.hype){
+            return -1;
+        }
+
+        return 0;
+    })
+    if(games[0].team1 == games[0].team2){
+        return games[1];
+    }
+    return games[0]
+}
+
+function getTopSeed(){
+    let tms = teams.filter(team => team.seed == 1)
+    return tms[Math.floor(Math.random()*tms.length)]
+}
+
+
+function getBestPlayer(players) {
+    players.sort(function(a,b){
+        if(tradeValueCalculation(a) < tradeValueCalculation(b)){
+            return 1;
+        }
+        if(tradeValueCalculation(a) > tradeValueCalculation(b)){
+            return -1;
+        }
+
+        return 0;
+    })
+
+    return players[0];
+}
+
+export function getRosterJSON(roster = null) {
+    let data = {
+        teams: [],
+        freeAgents: '',
+    }
+    if(roster){
+        for (let i = 0; i < roster.teams.length; i++) {
+            let teamDat = {
+                name: roster.teams[i].name,
+                id: roster.teams[i].id,
+                conferenceId: roster.teams[i].conferenceId,
+                logoSrc: roster.teams[i].logoSrc,
+                roster: []
+            };
+
+            roster.teams[i].roster.forEach(ply => {
+                let {
+                    name,
+                    position,
+                    faceSrc,
+                    number,
+                    height,
+                    off,
+                    def,
+                    positioning,
+                    reflexes,
+                    faceOff,
+                    pass,
+                    years,
+                    salary,
+                    age
+                } = ply;
+                teamDat.roster.push({
+                    name,
+                    position,
+                    faceSrc,
+                    number,
+                    height,
+                    off,
+                    def,
+                    positioning,
+                    reflexes,
+                    faceOff,
+                    pass,
+                    years,
+                    salary,
+                    age
+                })
+            })
+
+            data.teams.push(teamDat);
+        }
+        let freeAgents = {name: availableFreeAgents.name, logoSrc: availableFreeAgents.logoSrc, roster:[] };
+        roster.freeAgents.roster.forEach(ply => {
+            let {
+                name,
+                position,
+                faceSrc,
+                number,
+                height,
+                off,
+                def,
+                positioning,
+                reflexes,
+                faceOff,
+                pass,
+                years,
+                salary,
+                age
+            } = ply;
+            freeAgents.roster.push({
+                name,
+                position,
+                faceSrc,
+                number,
+                height,
+                off,
+                def,
+                positioning,
+                reflexes,
+                faceOff,
+                pass,
+                years,
+                salary,
+                age
+            })
+    
+        });
+
+        data.freeAgents = freeAgents;
+
+    }else{
+    for (let i = 0; i < teams.length; i++) {
+        let teamDat = {
+            name: teams[i].name,
+            id: teams[i].id,
+            conferenceId: teams[i].conferenceId,
+            logoSrc: teams[i].logoSrc,
+            roster: [],
+        };
+        teams[i].roster.forEach(ply => {
+            let {
+                name,
+                position,
+                faceSrc,
+                number,
+                height,
+                off,
+                def,
+                positioning,
+                reflexes,
+                faceOff,
+                pass,
+                years,
+                salary,
+                age
+            } = ply;
+            teamDat.roster.push({
+                name,
+                position,
+                faceSrc,
+                number,
+                height,
+                off,
+                def,
+                positioning,
+                reflexes,
+                faceOff,
+                pass,
+                years,
+                salary,
+                age
+            })
+        })
+        data.teams.push(teamDat);
+    }
+    let freeAgents = {name: availableFreeAgents.name, logoSrc: availableFreeAgents.logoSrc, roster:[] };
+    availableFreeAgents.roster.forEach(ply => {
+        let {
+            name,
+            position,
+            faceSrc,
+            number,
+            height,
+            off,
+            def,
+            positioning,
+            reflexes,
+            faceOff,
+            pass,
+            years,
+            salary,
+            age
+        } = ply;
+        freeAgents.roster.push({
+            name,
+            position,
+            faceSrc,
+            number,
+            height,
+            off,
+            def,
+            positioning,
+            reflexes,
+            faceOff,
+            pass,
+            years,
+            salary,
+            age
+        })
+
+    });
+
+    data.freeAgents = freeAgents;
+}
+    return data;
 }

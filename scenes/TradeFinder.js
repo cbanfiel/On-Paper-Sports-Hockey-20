@@ -252,7 +252,7 @@ export default class TradeFinder extends React.Component {
                 </View>
                 {
 
-                    <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0.75)' }} title="View Offers" onPress={() => { Actions.tradefinderresults({ userOffer: this.state.t1Offers, offers: getTradeFinderOffers(this.state.t1Offers), popTo: this.props.popTo, requirementsOff: this.props.requirementsOff, updateScene: this.props.updateScene }) }}></Button>
+                    <Button titleStyle={{ fontFamily: 'advent-pro', color: 'black' }} disabled={this.state.t1Offers.length < 1} disabledStyle={{ backgroundColor: 'rgba(255,255,255,0.4)' }} buttonStyle={{ padding: 15, borderRadius: 0, borderBottomWidth: 1, backgroundColor: 'rgba(255,255,255,0)', borderColor: 'rgba(0,0,0,0.75)' }} title="View Offers" onPress={() => { Actions.tradefinderresults({ userOffer: this.state.t1Offers, offers: getTradeFinderOffers(this.state.t1Offers), popTo: this.props.popTo, requirementsOff: this.props.requirementsOff, updateScene: this.props.updateScene }) }}></Button>
 
                 }
                 <PositionFilter roster={this.state.arrayForFilter} setPositionFilter={this.setPositionFilter} draftPicks={selectedTeam.draftPicks} team={selectedTeam}></PositionFilter>
