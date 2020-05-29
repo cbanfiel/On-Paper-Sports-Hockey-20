@@ -593,20 +593,14 @@ export class Team {
             let plys = this.roster.filter(ply => ply.position == position);
             if(position == POS_G && plys.length < POS_G_REQUIREMENTS){
                 amount = POS_G_REQUIREMENTS - plys.length;
-                console.log(this.name + ' is low on ' + position)
+                console.log(this.name + ' is low on GOALIES')
                 arr.push({
                     position,
                     amount
                 })
             }
-            else if(position == POS_G && plys.length < POS_G_REQUIREMENTS){
-                amount = POS_G_REQUIREMENTS - plys.length;
+            else if(position != POS_G && plys.length < POS_C_REQUIREMENTS){
                 console.log(this.name + ' is low on ' + position)
-                arr.push({
-                    position,
-                    amount
-                })
-            }else if(plys.length < POS_C_REQUIREMENTS){
                 amount = POS_C_REQUIREMENTS - plys.length;
                 arr.push({
                     position,
@@ -2069,13 +2063,13 @@ export class Season {
                     if (game.homescore > game.awayscore) {
                         home.wins++;
                         if (game.overtime) {
-                            Math.random()*100 > 80 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
+                            Math.random()*100 > 96 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
                             away.otLosses++;
                         }
                         away.losses++;
                     } else {
                         if (game.overtime) {
-                            Math.random()*100 > 80 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
+                            Math.random()*100 > 96 ? this.news.addOvertimeNewsStory(home, away, game.homescore, game.awayscore): null;
                             home.otLosses++;
                         }
                         home.losses++;
@@ -2910,7 +2904,7 @@ export class Franchise {
                             signing.years = 1;
                             teams[i].roster.push(signing);
                             teams[i].interestedProspects.roster.splice(index, 1);
-                        franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+                        franchise.offSeasonSignings.push({team: teams[i], player: signing})
 
                         } else {
                             teams[i].interestedProspects.roster.splice(index, 1);
@@ -2934,7 +2928,7 @@ export class Franchise {
                             signing.years = 1;
                             teams[i].roster.push(signing);
                             teams[i].interestedProspects.roster.splice(index, 1);
-                        franchise.offSeasonSignings.push({team: teams[i], player: spliced[j]})
+                        franchise.offSeasonSignings.push({team: teams[i], player: signing})
 
                         } else {
                             teams[i].interestedProspects.roster.splice(index, 1);
@@ -3665,7 +3659,7 @@ export class Franchise {
 
 
 
-var shuffle = function(array) {
+export var shuffle = function(array) {
 
     var currentIndex = array.length;
     var temporaryValue, randomIndex;
