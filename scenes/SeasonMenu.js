@@ -8,8 +8,19 @@ import Picache from 'picache';
 import CachedImage from '../components/CachedImage';
 import CardButton from '../components/CardButton';
 import DualButton from '../components/DualButton';
+import { requestReview } from '../data/RequestReview';
+
 const simSpeed = 500;
 export default class SeasonMenu extends React.Component {
+
+  componentDidMount = () => {
+    if(selectedTeam.history.length === 2){
+      let timer = setTimeout(() => {
+        requestReview('On Paper Sports Hockey');
+        timer = null;
+      }, 750);
+    }
+  }
 
   componentWillUnmount = () => {
     this.stopSim();

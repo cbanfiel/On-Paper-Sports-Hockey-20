@@ -5,7 +5,7 @@ import Background from "../components/background";
 import Button from "../components/Button";
 import { Actions } from "react-native-router-flux";
 import isEmail from "validator/lib/isEmail";
-import * as FileSystem from "expo-file-system";
+import * as FileSystem from "../data/FileSystem";
 var filter = require("leo-profanity");
 const VIEW = {
   LOGIN: 0,
@@ -13,16 +13,9 @@ const VIEW = {
 };
 export default class Login extends Component {
   async componentDidMount() {
-    await FileSystem.readAsStringAsync(
-      FileSystem.documentDirectory + "settings.json"
-    )
-      .then((value) => {
-        let data = JSON.parse(value);
-        this.setState({ email: data.email, password: data.password });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    FileSystem.loadFromFileSystem(FileSystem.FILES.SETTINGS, user => {
+      this.setState({email: user.email, password: user.password})
+    })
   }
 
   state = {
@@ -34,21 +27,18 @@ export default class Login extends Component {
     error: null,
   };
 
-  saveUserToFileSystem = async () => {
-    await FileSystem.writeAsStringAsync(
-      FileSystem.documentDirectory + "settings.json",
-      JSON.stringify({ email: this.state.email, password: this.state.password })
-    )
-      .then(() => {
-        console.log("saved user to file system");
-      })
-      .catch((err) => {
-        console.log(err);
+  updateUser = () => {
+    FileSystem.loadFromFileSystem(FileSystem.FILES.SETTINGS,
+      obj => {
+        obj.email = this.state.email;
+        obj.password = this.state.password;
+        console.log(obj);
+        FileSystem.saveToFileSystem(FileSystem.FILES.SETTINGS, obj);
       });
-  };
+  }
 
   login = () => {
-    this.saveUserToFileSystem();
+    this.updateUser();
 
     if (isEmail(this.state.email)) {
       fetch("https://onpapersports.com/users/login", {
@@ -103,7 +93,7 @@ export default class Login extends Component {
       return;
     }
 
-    this.saveUserToFileSystem();
+    this.updateUser();
 
     if (isEmail(this.state.email)) {
       fetch("https://onpapersports.com/users/register", {

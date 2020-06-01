@@ -25,7 +25,8 @@
     "ios": {
       "bundleIdentifier": "com.chadbanfield.onpapersportshockey20",
       "supportsTablet": true,
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.2",
+      "appStoreUrl": "https://apps.apple.com/us/app/on-paper-sports-hockey-20/id1475676554"
     },
     "android": {
       "package": "com.chadbanfield.onpapersportshockey20",
