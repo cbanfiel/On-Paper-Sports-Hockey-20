@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, ScrollView, Alert, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import { Button, Card, Icon, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
-import { selectedTeam, selectedTeam2, trade, sortedRoster, displaySalary, CAPROOM, setPowerRankings, getDraftPickProjectedPick, inDraft, teams, returnStatsView } from '../data/script';
+import { selectedTeam, selectedTeam2, trade, sortedRoster, displaySalary, CAPROOM, setPowerRankings, getDraftPickProjectedPick, inDraft, teams, returnStatsView, GENERIC_PLAYER_PORTRAIT } from '../data/script';
 import Background from '../components/background';
 import CachedImage from '../components/CachedImage';
 import ListItem from '../components/ListItem';
@@ -130,7 +130,7 @@ export default class TradeMenu extends React.Component {
                     title={pick.originalTeam + ' Draft Pick'}
                     subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
                     bottomDivider={true}
-                    leftAvatar={'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'}
+                    leftAvatar={GENERIC_PLAYER_PORTRAIT}
                     rightTitle={this.state.t1Offers.includes(pick) ? "SELECTED" : null}
 
                 ></ListItem>
@@ -159,7 +159,7 @@ export default class TradeMenu extends React.Component {
                     title={pick.originalTeam + ' Draft Pick'}
                     subtitle={'Round: ' + pick.round + ' Projected Pick: ' + getDraftPickProjectedPick(pick)}
                     bottomDivider={true}
-                    leftAvatar={'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'}
+                    leftAvatar={GENERIC_PLAYER_PORTRAIT}
                     rightTitle={this.state.t2Offers.includes(pick) ? "SELECTED" : null}
 
                 ></ListItem>

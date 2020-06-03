@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native';
 import CachedImage from './CachedImage';
 import { Divider } from 'react-native-elements';
-import { getDraftPickProjectedPick } from '../data/script';
+import { getDraftPickProjectedPick, GENERIC_PLAYER_PORTRAIT } from '../data/script';
 
 
 
@@ -56,7 +56,7 @@ export default class TradeFinderListItem extends React.Component {
                         <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
                             {
-                                <CachedImage uri={this.props.offer.players[0].isPick === true ? 'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png' : this.props.offer.players[0].faceSrc} style={{ height: 100, width: 100, resizeMode: 'contain', position: 'relative', bottom: 0 }} />
+                                <CachedImage uri={this.props.offer.players[0].isPick === true ? GENERIC_PLAYER_PORTRAIT : this.props.offer.players[0].faceSrc} style={{ height: 100, width: 100, resizeMode: 'contain', position: 'relative', bottom: 0 }} />
                             }
 
                         </View>

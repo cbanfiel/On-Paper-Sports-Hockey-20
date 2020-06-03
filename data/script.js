@@ -18,7 +18,7 @@ import * as FileSystem from 'expo-file-system';
 export let inDraft = false;
 
 export const REDSHIRT_LOGO = 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Redshirt.svg/1280px-Redshirt.svg.png';
-const GENERIC_PLAYER_PORTRAIT = 'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'
+export const GENERIC_PLAYER_PORTRAIT = 'https://on-paper-sports.s3.us-east-2.amazonaws.com/player_portraits/NBA-Player.png'
 
 export function setInDraft() {
     inDraft = true;
